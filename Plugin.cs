@@ -38,7 +38,6 @@ public partial class EpicMMOSystem : BaseUnityPlugin
     public static Localization localization;
     private static string MonsterDB = "[]";
     //Config
-    public static ConfigEntry<bool> defaultLangueage;
     public static ConfigEntry<string> language;
     //LevelSystem
     public static ConfigEntry<int> maxLevel;
@@ -76,8 +75,7 @@ public partial class EpicMMOSystem : BaseUnityPlugin
     {
         string general = "0.General";
         _serverConfigLocked = config(general, "Force Server Config", true, "Force Server Config");
-        language = config(general, "Language", "eng", "Language prefix, if defaultLanguage = false create localization file");
-        defaultLangueage = config(general, "DefaultLanguage", true, "Default language: rus and eng");
+        language = config(general, "Language", "eng", "Language prefix");
         string levelSystem = "1.LevelSystem";
         maxLevel = config(levelSystem, "MaxLevel", 100, "Максимальный уровень");
         priceResetPoints = config(levelSystem, "PriceResetPoints", 3, "Цена сброса за один поинт");

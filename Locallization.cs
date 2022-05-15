@@ -15,7 +15,16 @@ public class Localization
 
     public Localization()
     {
-        if (!EpicMMOSystem.defaultLangueage.Value)
+        var currentLanguage = global::Localization.instance.GetSelectedLanguage();
+        if (currentLanguage == "Russian")
+        {
+            RusLocalization();
+        }
+        else if (currentLanguage == "English")
+        {
+            EngLocalization();
+        }
+        else
         {
             var fileName = $"{EpicMMOSystem.language.Value}_emmosLocalization.txt";
             var basePath = Path.Combine(Paths.PluginPath, EpicMMOSystem.ModName, fileName);
@@ -26,19 +35,6 @@ public class Localization
             }
             CreateLocalizationFile();
         }
-        else
-        {
-            var currentLanguage = global::Localization.instance.GetSelectedLanguage();
-            if (currentLanguage == "Russian")
-            {
-                RusLocalization();
-            }
-            else
-            {
-                EngLocalization();
-            }
-        }
-        
     }
 
     private void ReadLocalization(string path)
