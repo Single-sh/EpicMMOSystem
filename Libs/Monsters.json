@@ -1,0 +1,217 @@
+﻿[
+    {
+        "name": "Seagal",
+        "minExp": 5,
+        "maxExp": 10
+    },
+    {
+        "name": "Crow",
+        "minExp": 5,
+        "maxExp": 10
+    },
+    {
+        "name": "Boar",
+        "minExp": 15,
+        "maxExp": 20
+    },
+    {
+        "name": "Deer",
+        "minExp": 10,
+        "maxExp": 20
+    },
+    {
+        "name": "Neck",
+        "minExp": 15,
+        "maxExp": 20
+    },
+    {
+        "name": "Greyling",
+        "minExp": 25,
+        "maxExp": 40
+    },
+
+
+
+
+    {
+        "name": "Greydwarf",
+        "minExp": 50,
+        "maxExp": 60
+    },
+    {
+        "name": "Greydwarf_Elite",
+        "minExp": 100,
+        "maxExp": 150
+    },
+    {
+        "name": "Greydwarf_Shaman",
+        "minExp": 80,
+        "maxExp": 120
+    },
+    {
+        "name": "Skeleton",
+        "minExp": 60,
+        "maxExp": 80
+    },
+    {
+        "name": "Skeleton_Poison",
+        "minExp": 100,
+        "maxExp": 150
+    },
+    {
+        "name": "Skeleton_NoArcher",
+        "minExp": 60,
+        "maxExp": 80
+    },
+    {
+        "name": "Ghost",
+        "minExp": 80,
+        "maxExp": 120
+    },
+    
+    {
+        "name": "Troll",
+        "minExp": 300,
+        "maxExp": 500
+    },
+
+
+
+
+
+    {
+        "name": "Blob",
+        "minExp": 120,
+        "maxExp": 180
+    },
+
+    {
+        "name": "Leech",
+        "minExp": 120,
+        "maxExp": 180
+    },
+    {
+        "name": "Wraith",
+        "minExp": 200,
+        "maxExp": 250
+    },
+    {
+        "name": "Draugr",
+        "minExp": 100,
+        "maxExp": 150
+    },
+    {
+        "name": "Draugr_Ranged",
+        "minExp": 180,
+        "maxExp": 220
+    },
+    {
+        "name": "Surtling",
+        "minExp": 100,
+        "maxExp": 130
+    },
+    {
+        "name": "Draugr_Elite",
+        "minExp": 300,
+        "maxExp": 500
+    },
+    {
+        "name": "BlobElite",
+        "minExp": 180,
+        "maxExp": 250
+    },
+
+
+
+
+    {
+        "name": "Wolf",
+        "minExp": 250,
+        "maxExp": 350
+    },
+    {
+        "name": "Fenring",
+        "minExp": 300,
+        "maxExp": 400
+    },
+    {
+        "name": "Hatchling",
+        "minExp": 250,
+        "maxExp": 300
+    },
+    {
+        "name": "StoneGolem",
+        "minExp": 450,
+        "maxExp": 600
+    },
+
+
+
+
+
+    {
+        "name": "Goblin",
+        "minExp": 350,
+        "maxExp": 450
+    },
+    {
+        "name": "GoblinArcher",
+        "minExp": 380,
+        "maxExp": 480
+    },
+    {
+        "name": "Deathsquito",
+        "minExp": 200,
+        "maxExp": 300
+    },
+    {
+        "name": "Lox",
+        "minExp": 500,
+        "maxExp": 700
+    },
+    {
+        "name": "GoblinBrute",
+        "minExp": 450,
+        "maxExp": 650
+    },
+    {
+        "name": "GoblinShaman",
+        "minExp": 400,
+        "maxExp": 500
+    },
+
+
+
+
+
+    {
+        "name": "Eikthyr",
+        "minExp": 150,
+        "maxExp": 200
+    },
+    {
+        "name": "gd_king",
+        "minExp": 300,
+        "maxExp": 500
+    },
+    {
+        "name": "Serpent",
+        "minExp": 400,
+        "maxExp": 500
+    },
+    {
+        "name": "Bonemass",
+        "minExp": 700,
+        "maxExp": 900
+    },
+    {
+        "name": "Dragon",
+        "minExp": 1000,
+        "maxExp": 1400
+    },
+    {
+        "name": "GoblinKing",
+        "minExp": 1500,
+        "maxExp": 2000
+    }
+]
