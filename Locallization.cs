@@ -24,13 +24,11 @@ public class Localization
                 ReadLocalization(basePath);
                 return;
             }
-            EpicMMOSystem.print("Создаем");
             CreateLocalizationFile();
         }
         else
         {
             var currentLanguage = global::Localization.instance.GetSelectedLanguage();
-            EpicMMOSystem.print(currentLanguage);
             if (currentLanguage == "Russian")
             {
                 RusLocalization();
@@ -45,7 +43,6 @@ public class Localization
 
     private void ReadLocalization(string path)
     {
-        EpicMMOSystem.print("Считываем");
         var lines = File.ReadAllLines(path);
         
         foreach (var line in lines)
