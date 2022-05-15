@@ -17,12 +17,13 @@ public static class MonsterDeath_Path
         public static void Postfix()
         {
             ZRoutedRpc.instance.Register($"{EpicMMOSystem.ModName} DeadMonsters", new Action<long, ZPackage>(RPC_DeadMonster));
-            ZRoutedRpc.instance.Register($"{EpicMMOSystem.ModName} AddGroupExp", new Action<long, int>(RPC_AddGroupExp));
+            ZRoutedRpc.instance.Register($"{EpicMMOSystem.ModName} AddGroupExp", new Action<long, int, Vector3>(RPC_AddGroupExp));
         }
     }
 
-    public static void RPC_AddGroupExp(long sender, int exp)
+    public static void RPC_AddGroupExp(long sender, int exp, Vector3 position)
     {
+        if ((double)Vector3.Distance(position, Player.m_localPlayer.transform.position) >= 50f) return;
         LevelSystem.Instance.AddExp(exp);
     }
     
@@ -41,7 +42,7 @@ public static class MonsterDeath_Path
             return;
         }
         
-        if ((double)Vector3.Distance(position, Player.m_localPlayer.transform.position) >= 60f) return;
+        if ((double)Vector3.Distance(position, Player.m_localPlayer.transform.position) >= 50f) return;
 
         int expMonster = DataMonsters.getExp(monsterName);
         int maxExp = DataMonsters.getMaxExp(monsterName);
@@ -56,7 +57,7 @@ public static class MonsterDeath_Path
             if (playerReference.name != Player.m_localPlayer.GetPlayerName())
             {
                 var sendExp = exp * groupFactor;
-                ZRoutedRpc.instance.InvokeRoutedRPC(playerReference.peerId, $"{EpicMMOSystem.ModName} AddGroupExp", new object[] { (int)sendExp });
+                ZRoutedRpc.instance.InvokeRoutedRPC(playerReference.peerId, $"{EpicMMOSystem.ModName} AddGroupExp", new object[] { (int)sendExp, position });
             }
         }
     }

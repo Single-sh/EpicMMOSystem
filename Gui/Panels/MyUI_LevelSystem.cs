@@ -49,7 +49,9 @@ public partial class MyUI
         alertResetPointPanel = UI.transform.Find("Canvas/ApplyReset").gameObject;
         alertResetPointText = alertResetPointPanel.transform.Find("Text").GetComponent<Text>();
         alertResetPointPanel.transform.Find("Buttons/Yes").GetComponent<Button>().onClick.AddListener(ResetYes);
+        alertResetPointPanel.transform.Find("Buttons/Yes/Text").GetComponent<Text>().text = localization["$yes"];
         alertResetPointPanel.transform.Find("Buttons/No").GetComponent<Button>().onClick.AddListener(ResetNo);
+        alertResetPointPanel.transform.Find("Buttons/No/Text").GetComponent<Text>().text = localization["$no"];
         
         
         //Stats
@@ -82,7 +84,7 @@ public partial class MyUI
         Transform contentStats = levelSystemPanel.transform.Find("DescriptionStats/Scroll View/Viewport/Content");
         contentStats.transform.Find("HeaderDamage/Text").GetComponent<Text>().text = localization["$damage"];
         contentStats.transform.Find("HeaderDefence/Text").GetComponent<Text>().text = localization["$armor"];
-        contentStats.transform.Find("HeaderSurvarior/Text").GetComponent<Text>().text = localization["$survarior"];
+        contentStats.transform.Find("HeaderSurvarior/Text").GetComponent<Text>().text = localization["$survival"];
         //Description strength
         physicDamageText = contentStats.transform.Find("PhysicDamage").GetComponent<Text>();
         addWeightText = contentStats.transform.Find("Weight").GetComponent<Text>();
