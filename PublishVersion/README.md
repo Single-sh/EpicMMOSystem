@@ -11,3 +11,8 @@ Features:
  ![https://i.imgur.com/lkCcVOo.png](https://i.imgur.com/lkCcVOo.png)
 
 
+<details><summary>Changelog:</summary>
+
+ - 1.0.1: Fix localization and append english text for config comments.
+ - 1.0.0: Release
+</details> 

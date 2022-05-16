@@ -290,7 +290,6 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="DataMonsters.cs" />
         <Compile Include="Data\Monster.cs" />
         <Compile Include="EpicMMOSystem_API.cs" />
         <Compile Include="Gui\MyUI.cs" />
@@ -299,6 +298,8 @@
         <Compile Include="Gui\Panels\MyUI_NavigationPanel.cs" />
         <Compile Include="Gui\Unity\DragMenu.cs" />
         <Compile Include="ItemControl.cs" />
+        <Compile Include="LevelSystem\DataMonsters.cs" />
+        <Compile Include="LevelSystem\MonsterDeath_Path.cs" />
         <Compile Include="LevelSystem\PlayerFVX.cs" />
         <Compile Include="LevelSystem\LevelSystem.cs" />
         <Compile Include="LevelSystem\LevelSystem_Agility.cs" />
@@ -306,7 +307,6 @@
         <Compile Include="LevelSystem\LevelSystem_Intellect.cs" />
         <Compile Include="LevelSystem\LevelSystem_Strength.cs" />
         <Compile Include="Locallization.cs" />
-        <Compile Include="MonsterDeath_Path.cs" />
         <Compile Include="Plugin.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="StatusEffects\EffectPatches.cs" />

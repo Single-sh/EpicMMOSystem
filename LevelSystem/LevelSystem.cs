@@ -38,6 +38,7 @@ public partial class LevelSystem
     
     public int getLevel()
     {
+        if (!Player.m_localPlayer) return 1;
         if (!Player.m_localPlayer.m_knownTexts.ContainsKey($"{pluginKey}_{midleKey}_Level"))
         {
             return 1;
@@ -47,11 +48,13 @@ public partial class LevelSystem
     
     private void setLevel(int value)
     {
+        if (!Player.m_localPlayer) return;
         Player.m_localPlayer.m_knownTexts[$"{pluginKey}_{midleKey}_Level"]= value.ToString();
     }
     
     public long getCurrentExp()
     {
+        if (!Player.m_localPlayer) return 0;
         if (!Player.m_localPlayer.m_knownTexts.ContainsKey($"{pluginKey}_{midleKey}_CurrentExp"))
         {
             return 0;
@@ -61,17 +64,20 @@ public partial class LevelSystem
     
     private void setCurrentExp(long value)
     {
+        if (!Player.m_localPlayer) return;
         Player.m_localPlayer.m_knownTexts[$"{pluginKey}_{midleKey}_CurrentExp"]= value.ToString();
     }
     
     private void setParameter(Parameter parameter, int value)
     {
+        if (!Player.m_localPlayer) return;
         int setValue = Math.Max(0, value);
         Player.m_localPlayer.m_knownTexts[$"{pluginKey}_{midleKey}_{parameter.ToString()}"] = setValue.ToString();
     }
     
     public int getParameter(Parameter parameter)
     {
+        if (!Player.m_localPlayer) return 0;
         if (!Player.m_localPlayer.m_knownTexts.ContainsKey($"{pluginKey}_{midleKey}_{parameter.ToString()}"))
         {
             return 0;

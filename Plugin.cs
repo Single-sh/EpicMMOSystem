@@ -17,7 +17,7 @@ namespace EpicMMOSystem;
 public partial class EpicMMOSystem : BaseUnityPlugin
 {
     internal const string ModName = "EpicMMOSystem";
-    internal const string ModVersion = "1.0.1";
+    internal const string ModVersion = "1.1.0";
     internal const string Author = "LambaSun";
     private const string ModGUID = Author + "." + ModName;
     private static string ConfigFileName = ModGUID + ".cfg";
@@ -49,7 +49,9 @@ public partial class EpicMMOSystem : BaseUnityPlugin
     public static ConfigEntry<float> expForLvlMonster;
     public static ConfigEntry<int> rateExp;
     public static ConfigEntry<float> groupExp;
-    
+    public static ConfigEntry<int> maxLevelExp;
+    public static ConfigEntry<int> minLevelExp;
+
     #region Parameters
     //LevelSystem arg property <Strength>
     public static ConfigEntry<float> physicDamage;
@@ -86,6 +88,10 @@ public partial class EpicMMOSystem : BaseUnityPlugin
         expForLvlMonster = config(levelSystem, "ExpForLvlMonster", 0.25f, "Extra experience (from the sum of the basic experience) for the level of the monster. Доп опыт (из суммы основного опыта) за уровень монстра");
         rateExp = config(levelSystem, "RateExp", 1, "Experience multiplier. Множитель опыта");
         groupExp = config(levelSystem, "GroupExp", 0.70f, "Experience multiplier that the other players in the group get. Множитель опыта который получают остальные игроки в группе");
+        minLevelExp = config(levelSystem, "MinLevelRange", 10, "Character level - MinLevelRange is less than the level of the monster, then you will receive reduced experience. Уровень персонажа - MinLevelRange меньше уровня монстра, то вы будете получать урезанный опыт");
+        maxLevelExp = config(levelSystem, "MaxLevelRange", 10, "Character level + MaxLevelRange is less than the level of the monster, then you will not receive experience. Уровень персонажа + MaxLevelRange меньше уровня монстра, то вы не будете получать опыт");
+        
+        
         
         #region ParameterCofig
         string levelSystemStrngth = "1.LevelSystem Strength";
