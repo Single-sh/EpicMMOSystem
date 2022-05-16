@@ -1,19 +1,26 @@
 using System;
 using System.Reflection;
 using EpicMMOSystem;
+using UnityEngine.PostProcessing;
 
 namespace API;
 
 public static class EpicMMOSystem_API
 {
-    private static MO_API_State state = MO_API_State.NotReady;
+    private static API_State state = API_State.NotReady;
     private static MethodInfo eGetLevel;
     private static MethodInfo eAddExp;
+    private static MethodInfo eGetAttribute;
 
 
-    private enum MO_API_State
+    private enum API_State
     {
         NotReady, NotInstalled, Ready 
+    }
+
+    public enum Attribut
+    {
+        Strength = 0, Agility = 1, Intellect = 2, Body = 3
     }
 
     public static int GetLevel()
@@ -21,6 +28,14 @@ public static class EpicMMOSystem_API
         int result = 0;
         Init();
         if (eGetLevel != null) result = (int)eGetLevel.Invoke(null, null);
+        return result;
+    }
+    
+    public static int GetAttribute(Attribut attribute)
+    {
+        int result = 0;
+        Init();
+        if (eGetAttribute != null) result = (int)eGetAttribute.Invoke(null, new object[] {attribute});
         return result;
     }
 
@@ -32,18 +47,19 @@ public static class EpicMMOSystem_API
  
     private static void Init()
     { 
-        if (state is MO_API_State.Ready or MO_API_State.NotInstalled) return;
+        if (state is API_State.Ready or API_State.NotInstalled) return;
         if (Type.GetType("EpicMMOSystem.EpicMMOSystem, EpicMMOSystem") == null)
         {
-            state = MO_API_State.NotInstalled;
+            state = API_State.NotInstalled;
             return;
         }
 
-        state = MO_API_State.Ready;
+        state = API_State.Ready;
 
         Type actionsMO = Type.GetType("API.EMMOS_API, EpicMMOSystem");
         eGetLevel = actionsMO.GetMethod("GetLevel", BindingFlags.Public | BindingFlags.Static);
         eAddExp = actionsMO.GetMethod("AddExp", BindingFlags.Public | BindingFlags.Static);
+        eAddExp = actionsMO.GetMethod("GetAttribute", BindingFlags.Public | BindingFlags.Static);
     }
 }
 
@@ -57,5 +73,11 @@ public static class EMMOS_API
     public static void AddExp(int exp)
     {
         LevelSystem.Instance.AddExp(exp);
+    }
+
+    public static int GetAttribute(EpicMMOSystem_API.Attribut attribute)
+    {
+        var index = (int)attribute;
+        return LevelSystem.Instance.getParameter((Parameter)index);
     }
 }
