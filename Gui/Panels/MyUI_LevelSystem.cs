@@ -44,6 +44,7 @@ public partial class MyUI
         levelSystemPanel = UI.transform.Find("Canvas/PointPanel").gameObject;
         levelSystemPanel.transform.Find("Background").gameObject.AddComponent<DragMenu>().menu = levelSystemPanel.transform;
         levelSystemPanel.transform.Find("Header").gameObject.AddComponent<DragMenu>().menu = levelSystemPanel.transform;
+        levelSystemPanel.transform.Find("Header/Text").GetComponent<Text>().text = localization["$attributes"];
         
         //alertReset
         alertResetPointPanel = UI.transform.Find("Canvas/ApplyReset").gameObject;
@@ -55,8 +56,8 @@ public partial class MyUI
         
         
         //Stats
-        var strenght = levelSystemPanel.transform.Find("Points/ListStat/Strength");
-        parameterButtons.Add(new ParameterButton(strenght, Parameter.Strength));
+        var strength = levelSystemPanel.transform.Find("Points/ListStat/Strength");
+        parameterButtons.Add(new ParameterButton(strength, Parameter.Strength));
         var agility = levelSystemPanel.transform.Find("Points/ListStat/Agility");
         parameterButtons.Add(new ParameterButton(agility, Parameter.Agility));
         var intellect = levelSystemPanel.transform.Find("Points/ListStat/Intelect");

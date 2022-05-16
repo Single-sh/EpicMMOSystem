@@ -40,13 +40,22 @@ public class Localization
     private void ReadLocalization(string path)
     {
         var lines = File.ReadAllLines(path);
-        
+        EngLocalization();
+        bool update = _dictionary.Count > lines.Length;
         foreach (var line in lines)
         {
-            EpicMMOSystem.print(line);
             var pair = line.Split('=');
             var text = pair[1].Replace('*', '\n');
-            _dictionary.Add(pair[0].Trim(), text.TrimStart());
+            _dictionary[pair[0].Trim()] = text.TrimStart();
+        }
+        if (update)
+        {
+            List<string> list = new List<string>();
+            foreach (var pair in _dictionary)
+            {
+                list.Add($"{pair.Key} = {pair.Value}");
+            }
+            File.WriteAllLines(path, list);
         }
     }
 
@@ -65,6 +74,7 @@ public class Localization
 
     private void RusLocalization()
     {
+        _dictionary.Add("$attributes", "Параметры");
         _dictionary.Add("$parameter_strength", "Сила");
         _dictionary.Add("$parameter_agility", "Ловкость");
         _dictionary.Add("$parameter_intellect", "Интеллект");
@@ -98,6 +108,7 @@ public class Localization
     }
     private void EngLocalization()
     {
+        _dictionary.Add("$attributes", "Attributes");
         _dictionary.Add("$parameter_strength", "Strength");
         _dictionary.Add("$parameter_agility", "Agility");
         _dictionary.Add("$parameter_intellect", "Intellect");

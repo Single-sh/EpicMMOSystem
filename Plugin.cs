@@ -77,35 +77,35 @@ public partial class EpicMMOSystem : BaseUnityPlugin
         _serverConfigLocked = config(general, "Force Server Config", true, "Force Server Config");
         language = config(general, "Language", "eng", "Language prefix");
         string levelSystem = "1.LevelSystem";
-        maxLevel = config(levelSystem, "MaxLevel", 100, "Максимальный уровень");
-        priceResetPoints = config(levelSystem, "PriceResetPoints", 3, "Цена сброса за один поинт");
-        freePointForLevel = config(levelSystem, "FreePointForLevel", 5, "Свободных поинтов за один уровень");
-        startFreePoint = config(levelSystem, "StartFreePoint", 5, "Доболнительных свободных поинтов");
-        levelExp = config(levelSystem, "FirstLevelExperience", 500, "Количество опыта необходимого на 1 уровень");
-        multiNextLevel = config(levelSystem, "MultiplyNextLevelExperience", 1.04f, "Умножитель опыта для следующего уровня");
-        expForLvlMonster = config(levelSystem, "ExpForLvlMonster", 0.25f, "Доп опыт (из суммы основного опыта) за уровень монстра");
-        rateExp = config(levelSystem, "RateExp", 1, "Множитель опыта");
-        groupExp = config(levelSystem, "GroupExp", 0.70f, "Множитель опыта который получают остальные игроки в группе");
+        maxLevel = config(levelSystem, "MaxLevel", 100, "Maximum level. Максимальный уровень");
+        priceResetPoints = config(levelSystem, "PriceResetPoints", 3, "Reset price per point. Цена сброса за один поинт");
+        freePointForLevel = config(levelSystem, "FreePointForLevel", 5, "Free points per level. Свободных поинтов за один уровень");
+        startFreePoint = config(levelSystem, "StartFreePoint", 5, "Additional free points start. Дополнительных свободных поинтов");
+        levelExp = config(levelSystem, "FirstLevelExperience", 500, "Amount of experience needed per level. Количество опыта необходимого на 1 уровень");
+        multiNextLevel = config(levelSystem, "MultiplyNextLevelExperience", 1.04f, "Experience multiplier for the next level. Умножитель опыта для следующего уровня");
+        expForLvlMonster = config(levelSystem, "ExpForLvlMonster", 0.25f, "Extra experience (from the sum of the basic experience) for the level of the monster. Доп опыт (из суммы основного опыта) за уровень монстра");
+        rateExp = config(levelSystem, "RateExp", 1, "Experience multiplier. Множитель опыта");
+        groupExp = config(levelSystem, "GroupExp", 0.70f, "Experience multiplier that the other players in the group get. Множитель опыта который получают остальные игроки в группе");
         
         #region ParameterCofig
         string levelSystemStrngth = "1.LevelSystem Strength";
-        physicDamage = config(levelSystemStrngth, "PhysicDamage", 0.20f, "Умножитель урона за один поинт");
-        addWeight = config(levelSystemStrngth, "AddWeight", 2, "Добавляет переносимый вес за один поинт");
+        physicDamage = config(levelSystemStrngth, "PhysicDamage", 0.20f, "Damage multiplier per point. Умножитель урона за один поинт");
+        addWeight = config(levelSystemStrngth, "AddWeight", 2, "Adds carry weight per point. Добавляет переносимый вес за один поинт");
         
         string levelSystemAgility = "1.LevelSystem Agility";
-        speedAttack = config(levelSystemAgility, "StaminaAttack", 0.1f, "Уменьшает потребление стамины на атаку");
-        staminaReduction = config(levelSystemAgility, "StaminaReduction", 0.15f, "Уменьшение расхода выносливости на бег, прыжок за один поинт");
-        addStamina = config(levelSystemAgility, "AddStamina", 1f, "Увелечение выносливости за один поинт");
+        speedAttack = config(levelSystemAgility, "StaminaAttack", 0.1f, "Reduces attack stamina consumption. Уменьшает потребление стамины на атаку");
+        staminaReduction = config(levelSystemAgility, "StaminaReduction", 0.15f, "Decrease stamina consumption for running, jumping for one point. Уменьшение расхода выносливости на бег, прыжок за один поинт");
+        addStamina = config(levelSystemAgility, "AddStamina", 1f, "One Point Stamina Increase. Увеличение  выносливости за один поинт");
         
         string levelSystemIntellect = "1.LevelSystem Intellect";
-        magicDamage = config(levelSystemIntellect, "MagicAttack", 0.20f, "Увелечение магической атаки за один поинт");
-        magicArmor = config(levelSystemIntellect, "MagicArmor", 0.1f, "Увелечение магической защиты за один поинт");
+        magicDamage = config(levelSystemIntellect, "MagicAttack", 0.20f, "Increase magic attack per point. Увеличение магической атаки за один поинт");
+        magicArmor = config(levelSystemIntellect, "MagicArmor", 0.1f, "Increase magical protection per point. Увеличение магической защиты за один поинт");
         
         string levelSystemBody = "1.LevelSystem Body";
-        addHp = config(levelSystemBody, "AddHp", 2f, "Увелечение здоровья за один поинт");
-        staminaBlock = config(levelSystemBody, "StaminaBlock", 0.2f, "Уменьшение расхода выносливости на блок за один поинт");
-        physicArmor = config(levelSystemBody, "PhysicArmor", 0.15f, "Увелечение физической защиты за один поинт");
-        regenHp = config(levelSystemBody, "RegenHp", 0.1f, "Увелечение регенерации здоровья за один поинт");
+        addHp = config(levelSystemBody, "AddHp", 2f, "One Point Health Increase. Увеличение здоровья за один поинт");
+        staminaBlock = config(levelSystemBody, "StaminaBlock", 0.2f, "Decrease stamina consumption per unit per point. Уменьшение расхода выносливости на блок за один поинт");
+        physicArmor = config(levelSystemBody, "PhysicArmor", 0.15f, "Increase in physical protection per point. Увеличение физической защиты за один поинт");
+        regenHp = config(levelSystemBody, "RegenHp", 0.1f, "Increase health regeneration per point. Увеличение регенерации здоровья за один поинт");
         #endregion
         _ = ConfigSync.AddLockingConfigEntry(_serverConfigLocked);
 
