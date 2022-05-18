@@ -18,7 +18,6 @@ public static class MonsterDeath_Path
         {
             ZRoutedRpc.instance.Register($"{EpicMMOSystem.ModName} DeadMonsters", new Action<long, ZPackage>(RPC_DeadMonster));
             ZRoutedRpc.instance.Register($"{EpicMMOSystem.ModName} AddGroupExp", new Action<long, int, Vector3, int>(RPC_AddGroupExp));
-            // ZRoutedRpc.instance.Register($"{EpicMMOSystem.ModName} ModifierDamage", new Action<long, string, HitData>(RPC_ModifierDamage));
         }
     }
 
@@ -50,7 +49,7 @@ public static class MonsterDeath_Path
             EpicMMOSystem.print($"{EpicMMOSystem.ModName}: Can't find monster {monsterName}");
             return;
         }
-        int monsterLevel = DataMonsters.getLevel(monsterName);
+        int monsterLevel = DataMonsters.getLevel(monsterName) + level - 1;
         
         int maxRangeLevel = LevelSystem.Instance.getLevel() + EpicMMOSystem.maxLevelExp.Value;
         if (monsterLevel > maxRangeLevel) return;
@@ -84,19 +83,24 @@ public static class MonsterDeath_Path
         }
     }
 
-    // public static void RPC_ModifierDamage(long sender, string monsterName, HitData hitData)
-    // {
-    //     EpicMMOSystem.print("3");
-    //     if (!DataMonsters.contains(monsterName)) return;
-    //     int maxLevelExp = LevelSystem.Instance.getLevel() + EpicMMOSystem.maxLevelExp.Value;
-    //     int monsterLevel = DataMonsters.getLevel(monsterName);
-    //     if (monsterLevel > maxLevelExp)
-    //     {
-    //         var damageFactor = (float)maxLevelExp / monsterLevel;
-    //         hitData.ApplyModifier(damageFactor);
-    //         EpicMMOSystem.print($"4: {damageFactor}");
-    //     }
-    // }
+    [HarmonyPatch(typeof(Character), nameof(Character.Damage))]
+    public static class ModifierDamage
+    {
+        public static void Prefix(Character __instance, HitData hit)
+        {
+            if (__instance.IsPlayer()) return;
+            if (!DataMonsters.contains(__instance.gameObject.name)) return;
+            int playerLevel = LevelSystem.Instance.getLevel();
+            int maxLevelExp = playerLevel + EpicMMOSystem.maxLevelExp.Value;
+            int monsterLevel = DataMonsters.getLevel(__instance.gameObject.name) + __instance.m_level - 1;
+            if (monsterLevel > maxLevelExp)
+            {
+                var damageFactor = (float)playerLevel / monsterLevel;
+                hit.ApplyModifier(damageFactor);
+            }
+        }
+    }
+    
         
     
     
@@ -119,28 +123,11 @@ public static class MonsterDeath_Path
                         CharacterLastDamageList[__instance] = 100;
                     }
                 }
-                
-                // if (!__instance.IsPlayer() && attacker.IsPlayer())
-                // {
-                    // EpicMMOSystem.print($"1: {hit.GetTotalDamage()}");
-                    // if (!DataMonsters.contains(__instance.gameObject.name));
-                    // int maxLevelExp = LevelSystem.Instance.getLevel() + EpicMMOSystem.maxLevelExp.Value;
-                    // int monsterLevel = DataMonsters.getLevel(__instance.gameObject.name);
-                    // if (monsterLevel > maxLevelExp)
-                    // {
-                    //     var damageFactor = (float)maxLevelExp / monsterLevel;
-                    //     hit.ApplyModifier(damageFactor);
-                    //     EpicMMOSystem.print($"4: {damageFactor}");
-                    // }
-                    // ZRoutedRpc.instance.InvokeRoutedRPC(sender, $"{EpicMMOSystem.ModName} ModifierDamage", new object[] { __instance.gameObject.name, hit });
-                // }
-               
             }
         }
         
         static void Postfix(Character __instance, long sender, HitData hit)
         {
-            // EpicMMOSystem.print($"2: {hit.GetTotalDamage()}");
             if (__instance.GetHealth() <= 0f && CharacterLastDamageList.ContainsKey(__instance))
             {
                 var pkg = new ZPackage();
@@ -159,7 +146,6 @@ public static class MonsterDeath_Path
     {
         public static void Postfix(Character __instance, HitData hit)
         {
-            // EpicMMOSystem.print($"5: {hit.GetTotalDamage()}");
             if (__instance.GetHealth() <= 0f && CharacterLastDamageList.ContainsKey(__instance))
             {
                 var pkg = new ZPackage();
