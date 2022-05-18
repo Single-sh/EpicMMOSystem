@@ -22,7 +22,7 @@ public partial class EpicMMOSystem : BaseUnityPlugin
     private const string ModGUID = Author + "." + ModName;
     private static string ConfigFileName = ModGUID + ".cfg";
     private static string ConfigFileFullPath = Paths.ConfigPath + Path.DirectorySeparatorChar + ConfigFileName;
-    private static bool _isServer => SystemInfo.graphicsDeviceType == GraphicsDeviceType.Null;
+    public static bool _isServer => SystemInfo.graphicsDeviceType == GraphicsDeviceType.Null;
     internal static string ConnectionError = "";
 
     private readonly Harmony _harmony = new(ModGUID);
@@ -36,7 +36,6 @@ public partial class EpicMMOSystem : BaseUnityPlugin
     public static AssetBundle _asset;
 
     public static Localization localization;
-    private static string MonsterDB = "[]";
     //Config
     public static ConfigEntry<string> language;
     //LevelSystem
@@ -49,8 +48,6 @@ public partial class EpicMMOSystem : BaseUnityPlugin
     public static ConfigEntry<float> expForLvlMonster;
     public static ConfigEntry<int> rateExp;
     public static ConfigEntry<float> groupExp;
-    public static ConfigEntry<int> maxLevelExp;
-    public static ConfigEntry<int> minLevelExp;
 
     #region Parameters
     //LevelSystem arg property <Strength>
@@ -73,6 +70,16 @@ public partial class EpicMMOSystem : BaseUnityPlugin
     public static ConfigEntry<float> regenHp;
     #endregion
     
+    
+    //Creature level control
+    public static ConfigEntry<bool> enabledLevelControl;
+    public static ConfigEntry<bool> removeDrop;
+    public static ConfigEntry<bool> disableExp;
+    public static ConfigEntry<bool> lowDamageLevel;
+    public static ConfigEntry<int> maxLevelExp;
+    public static ConfigEntry<int> minLevelExp;
+    
+
     public void Awake()
     {
         string general = "0.General";
@@ -88,11 +95,7 @@ public partial class EpicMMOSystem : BaseUnityPlugin
         expForLvlMonster = config(levelSystem, "ExpForLvlMonster", 0.25f, "Extra experience (from the sum of the basic experience) for the level of the monster. Доп опыт (из суммы основного опыта) за уровень монстра");
         rateExp = config(levelSystem, "RateExp", 1, "Experience multiplier. Множитель опыта");
         groupExp = config(levelSystem, "GroupExp", 0.70f, "Experience multiplier that the other players in the group get. Множитель опыта который получают остальные игроки в группе");
-        minLevelExp = config(levelSystem, "MinLevelRange", 10, "Character level - MinLevelRange is less than the level of the monster, then you will receive reduced experience. Уровень персонажа - MinLevelRange меньше уровня монстра, то вы будете получать урезанный опыт");
-        maxLevelExp = config(levelSystem, "MaxLevelRange", 10, "Character level + MaxLevelRange is less than the level of the monster, then you will not receive experience. Уровень персонажа + MaxLevelRange меньше уровня монстра, то вы не будете получать опыт");
-        
-        
-        
+
         #region ParameterCofig
         string levelSystemStrngth = "1.LevelSystem Strength";
         physicDamage = config(levelSystemStrngth, "PhysicDamage", 0.20f, "Damage multiplier per point. Умножитель урона за один поинт");
@@ -113,6 +116,19 @@ public partial class EpicMMOSystem : BaseUnityPlugin
         physicArmor = config(levelSystemBody, "PhysicArmor", 0.15f, "Increase in physical protection per point. Увеличение физической защиты за один поинт");
         regenHp = config(levelSystemBody, "RegenHp", 0.1f, "Increase health regeneration per point. Увеличение регенерации здоровья за один поинт");
         #endregion
+        
+        string creatureLevelControl = "2.Creature level control";
+        enabledLevelControl = config(creatureLevelControl, "Enabled_creature_level", true, "Enable creature Level control");
+        removeDrop = config(creatureLevelControl, "Remove_drop", true, "Monsters after death do not give items if their level is less than the character by player level + MaxLevelRange");
+        disableExp = config(creatureLevelControl, "Disable_exp", true, "Monsters after death do not give exp if their level is less than the character by player level + MaxLevelRange");
+        lowDamageLevel = config(creatureLevelControl, "Low_damage_level", true, "Decreased damage to the monster if the level is insufficient");
+        minLevelExp = config(creatureLevelControl, "MinLevelRange", 10, "Character level - MinLevelRange is less than the level of the monster, then you will receive reduced experience. Уровень персонажа - MinLevelRange меньше уровня монстра, то вы будете получать урезанный опыт");
+        maxLevelExp = config(creatureLevelControl, "MaxLevelRange", 10, "Character level + MaxLevelRange is less than the level of the monster, then you will not receive experience. Уровень персонажа + MaxLevelRange меньше уровня монстра, то вы не будете получать опыт");
+    
+        
+        
+        
+        
         _ = ConfigSync.AddLockingConfigEntry(_serverConfigLocked);
 
         Assembly assembly = Assembly.GetExecutingAssembly();
@@ -127,20 +143,7 @@ public partial class EpicMMOSystem : BaseUnityPlugin
 
     private void Start()
     {
-        var path = Path.Combine(Paths.PluginPath, ModName, "MonsterDB.json");
-        if (!File.Exists(path))
-        {
-            var json = DataMonsters.getDefaultJsonMonster();
-            DirectoryInfo dir = new DirectoryInfo(Paths.PluginPath);
-            dir.CreateSubdirectory(Path.Combine(Paths.PluginPath, ModName));
-            File.WriteAllText(path,json);
-            MonsterDB = json;
-        }
-        else
-        {
-            MonsterDB = File.ReadAllText(path);
-        }
-        DataMonsters.createNewDataMonsters(MonsterDB);
+        DataMonsters.Init();
     }
 
     private void ReadConfigValues(object sender, FileSystemEventArgs e)
@@ -215,35 +218,7 @@ public partial class EpicMMOSystem : BaseUnityPlugin
         }
     }
     
-    [HarmonyPatch(typeof(ZNetScene), nameof(ZNetScene.Awake))]
-    private static class ZrouteMethodsServerFeedback
-    {
-        private static void Postfix()
-        {
-            if (_isServer) return;
-            ZRoutedRpc.instance.Register($"{ModName} SetMonsterDB",
-                new Action<long, string>(SetMonsterDB));
-        }
-    }
-
-    private static void SetMonsterDB(long peer, string json)
-    {
-        DataMonsters.createNewDataMonsters(json);
-    }
     
-    
-    [HarmonyPatch(typeof(ZNet), "RPC_PeerInfo")]
-    private static class ZnetSyncServerInfo
-    {
-        private static void Postfix(ZRpc rpc)
-        {
-            if (!_isServer) return;
-            if (!(ZNet.instance.IsServer() && ZNet.instance.IsDedicated())) return;
-            ZNetPeer peer = ZNet.instance.GetPeer(rpc);
-            if(peer == null) return;
-            ZRoutedRpc.instance.InvokeRoutedRPC(peer.m_uid, $"{ModName} SetMonsterDB", MonsterDB);
-        }
-    }
     
     //VersionControl
     [HarmonyPatch(typeof(ZNet), nameof(ZNet.RPC_PeerInfo))]

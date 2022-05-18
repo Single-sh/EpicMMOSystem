@@ -51,8 +51,7 @@ public static class MonsterDeath_Path
         }
         int monsterLevel = DataMonsters.getLevel(monsterName) + level - 1;
         
-        int maxRangeLevel = LevelSystem.Instance.getLevel() + EpicMMOSystem.maxLevelExp.Value;
-        if (monsterLevel > maxRangeLevel) return;
+        
         
         if ((double)Vector3.Distance(position, Player.m_localPlayer.transform.position) >= 50f) return;
 
@@ -62,11 +61,17 @@ public static class MonsterDeath_Path
         float rate = EpicMMOSystem.rateExp.Value;
         var resultExp = expMonster + (maxExp * lvlExp * (level - 1));
         var exp = Convert.ToInt32(resultExp * rate);
-        int minRangeLevel = LevelSystem.Instance.getLevel() - EpicMMOSystem.minLevelExp.Value;
-        if (monsterLevel < minRangeLevel)
+        if (EpicMMOSystem.enabledLevelControl.Value && EpicMMOSystem.disableExp.Value)
         {
-            exp = Convert.ToInt32( exp / (minRangeLevel - monsterLevel));
+            int maxRangeLevel = LevelSystem.Instance.getLevel() + EpicMMOSystem.maxLevelExp.Value;
+            if (monsterLevel > maxRangeLevel) return;
+            int minRangeLevel = LevelSystem.Instance.getLevel() - EpicMMOSystem.minLevelExp.Value;
+            if (monsterLevel < minRangeLevel)
+            {
+                exp = Convert.ToInt32( exp / (minRangeLevel - monsterLevel));
+            }
         }
+        
         LevelSystem.Instance.AddExp(exp);
         var groupFactor = EpicMMOSystem.groupExp.Value;
         foreach (var playerReference in Groups.API.GroupPlayers())
@@ -88,15 +93,20 @@ public static class MonsterDeath_Path
     {
         public static void Prefix(Character __instance, HitData hit)
         {
-            if (__instance.IsPlayer()) return;
-            if (!DataMonsters.contains(__instance.gameObject.name)) return;
-            int playerLevel = LevelSystem.Instance.getLevel();
-            int maxLevelExp = playerLevel + EpicMMOSystem.maxLevelExp.Value;
-            int monsterLevel = DataMonsters.getLevel(__instance.gameObject.name) + __instance.m_level - 1;
-            if (monsterLevel > maxLevelExp)
+            if (!EpicMMOSystem.enabledLevelControl.Value) return;
+            if (EpicMMOSystem.removeDrop.Value) hit.m_toolTier = LevelSystem.Instance.getLevel();
+            if (EpicMMOSystem.lowDamageLevel.Value)
             {
-                var damageFactor = (float)playerLevel / monsterLevel;
-                hit.ApplyModifier(damageFactor);
+                if (__instance.IsPlayer()) return;
+                if (!DataMonsters.contains(__instance.gameObject.name)) return;
+                int playerLevel = LevelSystem.Instance.getLevel();
+                int maxLevelExp = playerLevel + EpicMMOSystem.maxLevelExp.Value;
+                int monsterLevel = DataMonsters.getLevel(__instance.gameObject.name) + __instance.m_level - 1;
+                if (monsterLevel > maxLevelExp)
+                {
+                    var damageFactor = (float)playerLevel / monsterLevel;
+                    hit.ApplyModifier(damageFactor);
+                }
             }
         }
     }
@@ -109,18 +119,27 @@ public static class MonsterDeath_Path
     {
         static void Prefix(Character __instance, long sender, HitData hit)
         {
+            
             var attacker = hit.GetAttacker();
             if (attacker)
             {
                 if (attacker.IsPlayer())
                 {
                     CharacterLastDamageList[__instance] = sender;
+                    if (EpicMMOSystem.enabledLevelControl.Value && EpicMMOSystem.removeDrop.Value)
+                    {
+                        __instance.m_nview.m_zdo.Set("epic playerLevel", hit.m_toolTier);
+                    }
                 }
                 else
                 {
                     if (!attacker.IsTamed())
                     {
                         CharacterLastDamageList[__instance] = 100;
+                        if (EpicMMOSystem.enabledLevelControl.Value && EpicMMOSystem.removeDrop.Value)
+                        {
+                            __instance.m_nview.m_zdo.Set("epic playerLevel", 0);
+                        }
                     }
                 }
             }
@@ -128,6 +147,7 @@ public static class MonsterDeath_Path
         
         static void Postfix(Character __instance, long sender, HitData hit)
         {
+            if (__instance.IsTamed()) return;
             if (__instance.GetHealth() <= 0f && CharacterLastDamageList.ContainsKey(__instance))
             {
                 var pkg = new ZPackage();
@@ -146,6 +166,7 @@ public static class MonsterDeath_Path
     {
         public static void Postfix(Character __instance, HitData hit)
         {
+            if (__instance.IsTamed()) return;
             if (__instance.GetHealth() <= 0f && CharacterLastDamageList.ContainsKey(__instance))
             {
                 var pkg = new ZPackage();

@@ -291,6 +291,7 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Data\Monster.cs" />
+        <Compile Include="Data\MonsterOld.cs" />
         <Compile Include="EpicMMOSystem_API.cs" />
         <Compile Include="Gui\MyUI.cs" />
         <Compile Include="Gui\Panels\MyUI_ExpPanel.cs" />

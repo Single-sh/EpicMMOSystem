@@ -6,6 +6,8 @@ using System.Net.Mime;
 using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Runtime.Remoting.Messaging;
+using BepInEx;
+using fastJSON;
 using HarmonyLib;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,6 +20,7 @@ namespace EpicMMOSystem;
 public static class DataMonsters
 {
     private static Dictionary<string, Monster> dictionary = new();
+    private static string MonsterDB = "[]";
 
     public static bool contains(string name)
     {
@@ -41,7 +44,7 @@ public static class DataMonsters
         return dictionary[name].level;
     }
 
-    public static void createNewDataMonsters(string json)
+    private static void createNewDataMonsters(string json)
     {
         dictionary.Clear();
         var monsters = fastJSON.JSON.ToObject<Monster[]>(json);
@@ -51,7 +54,65 @@ public static class DataMonsters
         }
     }
 
-    public static string getDefaultJsonMonster()
+    public static void Init()
+    {
+        var path = Path.Combine(Paths.PluginPath, EpicMMOSystem.ModName, $"MonsterDB_{2}.json");
+        if (File.Exists(path))
+        {
+            MonsterDB = File.ReadAllText(path);
+            
+        }
+        else
+        {
+            var pathOld = Path.Combine(Paths.PluginPath, EpicMMOSystem.ModName, $"MonsterDB.json");
+            if (!File.Exists(pathOld))
+            {
+                var json = getDefaultJsonMonster();
+                DirectoryInfo dir = new DirectoryInfo(Paths.PluginPath);
+                dir.CreateSubdirectory(Path.Combine(Paths.PluginPath, EpicMMOSystem.ModName));
+                File.WriteAllText(path,json);
+                MonsterDB = json;
+            }
+            else
+            {
+                string newJson = getDefaultJsonMonster();
+                createNewDataMonsters(newJson);
+                string jsonOld = File.ReadAllText(pathOld);
+                var monsters = fastJSON.JSON.ToObject<MonsterOld[]>(jsonOld);
+                foreach (var monster in monsters)
+                {
+                    if (dictionary.ContainsKey($"{monster.name}(Clone)"))
+                    {
+                        var m = dictionary[$"{monster.name}(Clone)"];
+                        m.minExp = monster.minExp;
+                        m.maxExp = monster.maxExp;
+                        dictionary[$"{monster.name}(Clone)"] = m;
+                    }
+                    else
+                    {
+                        dictionary.Add(
+                            $"{monster.name}(Clone)", 
+                            new Monster(
+                                monster.name, 
+                                monster.minExp, 
+                                monster.maxExp, 
+                                1)
+                            );
+                    }
+                    
+                }
+
+                var obj = dictionary.Values.ToArray();
+                string text = JSON.ToJSON(obj, new JSONParameters(){UseExtensions = false});
+                File.WriteAllText(path,text);
+                return;
+            }
+            
+        }
+        createNewDataMonsters(MonsterDB);
+    }
+
+    private static string getDefaultJsonMonster()
     {
         var assembly = Assembly.GetExecutingAssembly();
         string resourceName = assembly.GetManifestResourceNames()
@@ -61,6 +122,35 @@ public static class DataMonsters
         using (StreamReader reader = new StreamReader(stream))
         {
             return reader.ReadToEnd();
+        }
+    }
+    
+    [HarmonyPatch(typeof(ZNetScene), nameof(ZNetScene.Awake))]
+    private static class ZrouteMethodsServerFeedback
+    {
+        private static void Postfix()
+        {
+            if (EpicMMOSystem._isServer) return;
+            ZRoutedRpc.instance.Register($"{EpicMMOSystem.ModName} SetMonsterDB",
+                new Action<long, string>(SetMonsterDB));
+        }
+    }
+
+    private static void SetMonsterDB(long peer, string json)
+    {
+        createNewDataMonsters(json);
+    }
+
+    [HarmonyPatch(typeof(ZNet), "RPC_PeerInfo")]
+    private static class ZnetSyncServerInfo
+    {
+        private static void Postfix(ZRpc rpc)
+        {
+            if (!EpicMMOSystem._isServer) return;
+            if (!(ZNet.instance.IsServer() && ZNet.instance.IsDedicated())) return;
+            ZNetPeer peer = ZNet.instance.GetPeer(rpc);
+            if(peer == null) return;
+            ZRoutedRpc.instance.InvokeRoutedRPC(peer.m_uid, $"{EpicMMOSystem.ModName} SetMonsterDB", MonsterDB);
         }
     }
     
@@ -94,6 +184,8 @@ public static class DataMonsters
     {
         public static void Postfix(EnemyHud __instance, Character c, Dictionary<Character, EnemyHud.HudData> ___m_huds, bool __state)
         {
+            if (c.IsTamed()) return;
+            if (!EpicMMOSystem.enabledLevelControl.Value) return;
             if (!contains(c.gameObject.name)) return;
             Transform go = ___m_huds[c].m_gui.transform.Find("Name/Name(Clone)");
             if (go) return;
@@ -120,9 +212,11 @@ public static class DataMonsters
         {
             private static void Postfix(Dictionary<Character, EnemyHud.HudData> ___m_huds)
             {
+                if (!EpicMMOSystem.enabledLevelControl.Value) return;
                 foreach (KeyValuePair<Character, EnemyHud.HudData> keyValuePair in ___m_huds)
                 {
                     Character key = keyValuePair.Key;
+                    if (key.IsTamed()) return;
                     if (key != null && keyValuePair.Value.m_gui)
                     {
                         if (!contains(key.gameObject.name)) return;
@@ -160,12 +254,18 @@ public static class DataMonsters
     {
         public static void Postfix(CharacterDrop __instance, ref List<KeyValuePair<GameObject, int>> __result)
         {
-            if (!contains(__instance.m_character.gameObject.name)) return;
-            int maxLevelExp = LevelSystem.Instance.getLevel() + EpicMMOSystem.maxLevelExp.Value;
-            int monsterLevel = getLevel(__instance.m_character.gameObject.name) + __instance.m_character.m_level - 1;
-            if (monsterLevel > maxLevelExp)
+            if (__instance.m_character.IsTamed()) return;
+            if (EpicMMOSystem.enabledLevelControl.Value && EpicMMOSystem.removeDrop.Value)
             {
-                __result = new();
+                var playerLevel = __instance.m_character.m_nview.GetZDO().GetInt("epic playerLevel");
+                if (playerLevel == 0) return;
+                if (!contains(__instance.m_character.gameObject.name)) return;
+                int maxLevelExp = playerLevel + EpicMMOSystem.maxLevelExp.Value;
+                int monsterLevel = getLevel(__instance.m_character.gameObject.name) + __instance.m_character.m_level - 1;
+                if (monsterLevel > maxLevelExp)
+                {
+                    __result = new();
+                }
             }
         }
     }
