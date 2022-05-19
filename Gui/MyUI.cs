@@ -21,10 +21,8 @@ public static partial class MyUI
         UI.SetActive(false);
         InitNavigationPanel();
         InitLevelSystem();
+        InitFriendsList();
     }
-
-        
-
 
     public static void Hide()
     {
