@@ -10,6 +10,7 @@ public static class FriendsSystem
     private static bool isServer => SystemInfo.graphicsDeviceType == GraphicsDeviceType.Null;
     private static string modName => EpicMMOSystem.ModName;
 
+    private static Localization local => EpicMMOSystem.localization;
     public static void Init()
     {
         
@@ -48,11 +49,10 @@ public static class FriendsSystem
                     $"{modName} InviteFriend",
                     level, Player.m_localPlayer.GetZDO().GetInt("MagicOverhaulClass", 0)
                 );
-                Chat.instance.RPC_ChatMessage(200, Vector3.zero, 0, "", $"Запрос дружбы отправлен для {name} отправлен.");
+                Chat.instance.RPC_ChatMessage(200, Vector3.zero, 0, local["$notify"], String.Format(local["$send_invite"], name));
             }
         }
-        Chat.instance.RPC_ChatMessage(200, Vector3.zero, 0, "", $" Игрок {name} не найден");
-        Chat.instance.SendText( Talker.Type.Whisper, $"Player {name} not found!");
+        Chat.instance.RPC_ChatMessage(200, Vector3.zero, 0, local["$notify"], String.Format(local["$not_found"], name));
     }
 
     public static void acceptInvite(FriendInfo info, ZNet.PlayerInfo player)
@@ -83,7 +83,7 @@ public static class FriendsSystem
         info.host = senderInfo.m_host;
         info.level = level;
         info.moClass = moClass;
-        Chat.instance.RPC_ChatMessage(200, Vector3.zero, 0, "", $"{info.name} отправил запрос дружбы.");
+        Chat.instance.RPC_ChatMessage(200, Vector3.zero, 0, local["$notify"], String.Format(local["$get_invite"], info.name));
         MyUI.addInviteFriend(info, senderInfo);
     }
     
@@ -97,7 +97,7 @@ public static class FriendsSystem
         info.host = senderInfo.m_host;
         info.level = level;
         info.moClass = moClass;
-        Chat.instance.RPC_ChatMessage(200, Vector3.zero, 0, "", $"{info.name} принял предложение дружбы");
+        Chat.instance.RPC_ChatMessage(200, Vector3.zero, 0, local["$notify"], String.Format(local["$accept_invite"], info.name));
         MyUI.acceptInvited(info);
         
     }
@@ -105,6 +105,6 @@ public static class FriendsSystem
     //Отклонили приглашение в друзья
     private static void RPC_RejectFriend(long sender, string name)
     {
-        Chat.instance.RPC_ChatMessage(200, Vector3.zero, 0, "", $"{name} отказал в дружбе");
+        Chat.instance.RPC_ChatMessage(200, Vector3.zero, 0, local["$notify"], String.Format(local["$cancel_invite"], name));
     }
 }

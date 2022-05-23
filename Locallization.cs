@@ -105,6 +105,19 @@ public class Localization
         _dictionary.Add("$damage", "Урон");
         _dictionary.Add("$armor", "Защита");
         _dictionary.Add("$survival", "Выживание");
+        //Friends list
+        _dictionary.Add("$notify", "<color=#00E6FF>Оповещение</color>");
+        _dictionary.Add("$friends_list", "Список друзей");
+        _dictionary.Add("$send", "Отправить");
+        _dictionary.Add("$invited", "Приглашения");
+        _dictionary.Add("$friends", "Друзья");
+        _dictionary.Add("$online", "В игре");
+        _dictionary.Add("$offline", "Нет в игре");
+        _dictionary.Add("$not_found", "Игрок {0} не найден.");
+        _dictionary.Add("$send_invite", "Игроку {0}, отправлен запрос в друзья.");
+        _dictionary.Add("$get_invite", "Получен запрос в друзья от {0}.");
+        _dictionary.Add("$accept_invite", "Игрок {0}, принял запрос в друзья.");
+        _dictionary.Add("$cancel_invite", "Игрок {0}, отменил запрос в друзья.");
     }
     private void EngLocalization()
     {
@@ -139,6 +152,19 @@ public class Localization
         _dictionary.Add("$damage", "Damage");
         _dictionary.Add("$armor", "Armor");
         _dictionary.Add("$survival", "Survival");
+        //Friends list
+        _dictionary.Add("$notify", "<color=#00E6FF>Alert</color>");
+        _dictionary.Add("$friends_list", "Friends list");
+        _dictionary.Add("$send", "Send");
+        _dictionary.Add("$invited", "Invitations");
+        _dictionary.Add("$friends", "Friends");
+        _dictionary.Add("$online", "Online");
+        _dictionary.Add("$offline", "Offline");
+        _dictionary.Add("$not_found", "Player {0} is not found.");
+        _dictionary.Add("$send_invite", "A friend request has been sent to player {0}.");
+        _dictionary.Add("$get_invite", "Received a friend request from {0}.");
+        _dictionary.Add("$accept_invite", "Player {0}, accepted the friend request.");
+        _dictionary.Add("$cancel_invite", "Player {0}, canceled his friend request.");
     }
     
     public string this[string key]

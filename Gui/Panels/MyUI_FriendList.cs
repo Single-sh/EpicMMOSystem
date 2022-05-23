@@ -32,6 +32,11 @@ public partial class MyUI
     private static void InitFriendsList()
     {
         friendsListPanel = UI.transform.Find("Canvas/FriendList").gameObject;
+        friendsListPanel.transform.Find("Background").gameObject.AddComponent<DragMenu>().menu =
+            friendsListPanel.transform;
+        friendsListPanel.transform.Find("Header").gameObject.AddComponent<DragMenu>().menu =
+            friendsListPanel.transform;
+        friendsListPanel.transform.Find("Header/Text").GetComponent<Text>().text = localization["$friends_list"];
         friendsCell = EpicMMOSystem._asset.LoadAsset<GameObject>("FriendCell");
         friendsListPanel.transform.Find("Border").GetComponent<Image>().raycastTarget = false;
         friendsListPanel.transform.Find("Add").GetComponent<Button>().onClick.AddListener(clickButtonAdd);
@@ -42,10 +47,16 @@ public partial class MyUI
         headerFriends = friendsListPanel.transform.Find("Scroll View/Viewport/Content/HeaderFriends").gameObject;
         contentFriends = friendsListPanel.transform.Find("Scroll View/Viewport/Content/Friends").gameObject;
 
+        headerInvited.transform.Find("Text").GetComponent<Text>().text = localization["$invited"];
+        headerFriends.transform.Find("Text").GetComponent<Text>().text = localization["$friends"];
+        
+        
         addFriendAlert = UI.transform.Find("Canvas/SendInvite").gameObject;
         textField = addFriendAlert.transform.Find("InputField").GetComponent<InputField>();
         addFriendAlert.transform.Find("Buttons/Send").GetComponent<Button>().onClick.AddListener(clickButtonSend);
+        addFriendAlert.transform.Find("Buttons/Send/Text").GetComponent<Text>().text = localization["$send"];
         addFriendAlert.transform.Find("Buttons/Cancel").GetComponent<Button>().onClick.AddListener(clickButtonCancel);
+        addFriendAlert.transform.Find("Buttons/Cancel/Text").GetComponent<Text>().text = localization["$cancel"];
         
         sprites.Add(EpicMMOSystem._asset.LoadAsset<Sprite>("manIcon"));
         for (int i = 1; i < 15; i++)
@@ -70,26 +81,22 @@ public partial class MyUI
         }
         
         var friends = friendsData.getFriends();
-        EpicMMOSystem.print($"ContainsFriend: {friends.Count}");
         headerFriends.SetActive(friends.Count > 0);
         List<FriendInfo> offline = new();
         foreach (var friend in friends)
         {
             if (playersInfo.ContainsKey(friend.Key))
             {
-                EpicMMOSystem.print("Online");
                 var playerOnly = playersInfo[friend.Key];
                 var cell = Object.Instantiate(friendsCell, contentFriends.transform);
                 if (cell)
                 {
-                    EpicMMOSystem.print("Create cell");
                     var fCell = new FriendsCell(cell, friend.Value, playerOnly, FriendsCell.StatusFriend.online);
                     friendsCells.Add(fCell);
                 }
             }
             else
             {
-                EpicMMOSystem.print("Offline");
                 offline.Add(friend.Value);
             }
         }
@@ -208,8 +215,7 @@ public partial class MyUI
                     var zdo = ZDOMan.instance.GetZDO(info.m_characterID);
                     level = zdo.GetInt($"{EpicMMOSystem.ModName}_level", 1);
                     moClass = zdo.GetInt("MagicOverhaulClass", 0);
-                    levelText.text = $"Level: {level}";
-                    cell.transform.Find("Status").GetComponent<Text>().text = "Online";
+                    cell.transform.Find("Status").GetComponent<Text>().text = localization["$online"];
                     cell.transform.Find("Status").GetComponent<Text>().color = Color.green;
                     cell.transform.Find("Buttons/Accept").gameObject.SetActive(false);
                     if (Groups.API.GroupPlayers().Count > 0
@@ -221,7 +227,7 @@ public partial class MyUI
                 case StatusFriend.offline:
                     cell.transform.Find("Buttons/AddGroup").gameObject.SetActive(false);
                     cell.transform.Find("Buttons/Accept").gameObject.SetActive(false);
-                    cell.transform.Find("Status").GetComponent<Text>().text = "Offline";
+                    cell.transform.Find("Status").GetComponent<Text>().text = localization["$offline"];
                     cell.transform.Find("Status").GetComponent<Text>().color = Color.red;
                     break;
                 case StatusFriend.invite:
@@ -229,7 +235,7 @@ public partial class MyUI
                     cell.transform.Find("Status").GetComponent<Text>().text = "";
                     break;
             }
-            levelText.text = $"Level: {level}";
+            levelText.text = $"{localization["$level"]}: {level}";
             if (moClass != 0)
             {
                 icon.sprite = sprites[moClass];
