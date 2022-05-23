@@ -26,7 +26,7 @@ public partial class MyUI
 
     private static void ClickButtonFriendsList()
     {
-        if (!friendsListPanel.activeSelf) UpdateParameterPanel();
+        if (!friendsListPanel.activeSelf) updateList();
         friendsListPanel.SetActive(!friendsListPanel.activeSelf);
     }
 

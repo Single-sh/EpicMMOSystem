@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using HarmonyLib;
 using UnityEngine;
 
 namespace EpicMMOSystem;
@@ -162,6 +163,7 @@ public partial class LevelSystem
         current += count;
         setLevel(Mathf.Clamp(current,1, EpicMMOSystem.maxLevel.Value));
         PlayerFVX.levelUp();
+        Player.m_localPlayer.GetZDO().Set($"{pluginKey}_level", current);
     }
 
     public bool hasDepositPoints()
@@ -217,8 +219,8 @@ public partial class LevelSystem
     private void FillLevelsExp()
     {
         var levelExp = EpicMMOSystem.levelExp.Value;
-        var multiply =  EpicMMOSystem.multiNextLevel.Value;
-        var maxLevel =  EpicMMOSystem.maxLevel.Value;
+        var multiply = EpicMMOSystem.multiNextLevel.Value;
+        var maxLevel = EpicMMOSystem.maxLevel.Value;
         levelsExp = new ();
         long current = 0;
         for (int i = 1; i <= maxLevel; i++)
@@ -226,5 +228,14 @@ public partial class LevelSystem
             current = (long) Math.Round(current * multiply + levelExp);
             levelsExp[i + 1] = current;
         }
+    }
+}
+
+[HarmonyPatch(typeof(Game), nameof(Game.SpawnPlayer))]
+public static class SetZDOLevel
+{
+    public static void Postfix()
+    {
+        Player.m_localPlayer.GetZDO().Set($"{EpicMMOSystem.ModName}_level", LevelSystem.Instance.getLevel());
     }
 }

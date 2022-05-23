@@ -18,13 +18,13 @@ public partial class EpicMMOSystem
         }
     }
     
-    //Не выводить сохраненные значения в компендиум
-    [HarmonyPatch(typeof(Player), nameof(Player.GetKnownTexts))]
-    private static class FixCompendium
-    {
-        private static void Postfix(ref List<KeyValuePair<string, string>> __result)
-        {
-            __result = __result.Where(p => !p.Key.StartsWith(ModName)).ToList();
-        }
-    }
+    // Не выводить сохраненные значения в компендиум
+     [HarmonyPatch(typeof(Player), nameof(Player.GetKnownTexts))]
+     private static class FixCompendium
+     {
+         private static void Postfix(ref List<KeyValuePair<string, string>> __result)
+         {
+             __result = __result.Where(p => !p.Key.StartsWith(ModName)).ToList();
+         }
+     }
 }
