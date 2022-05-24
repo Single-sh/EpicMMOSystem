@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using HarmonyLib;
 
 namespace EpicMMOSystem;
 
@@ -62,6 +63,11 @@ public class FriendsData
             friends.Add(friendInfo.name, friendInfo);
         }
     }
+
+    public void ClearFriend()
+    {
+        friends.Clear();
+    }
 }
 
 [Serializable]
@@ -72,3 +78,4 @@ public class FriendInfo
     public int level;
     public int moClass;
 }
+

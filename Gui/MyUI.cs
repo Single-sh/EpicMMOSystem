@@ -33,6 +33,7 @@ public static partial class MyUI
         friendsListPanel.SetActive(false);
         friendsListPanel.GetComponent<CanvasGroup>().interactable = true;
         alertResetPointPanel.SetActive(false);
+        addFriendAlert.SetActive(false);
         UI.SetActive(false);
         LevelSystem.Instance.cancelDepositPoints();
     }

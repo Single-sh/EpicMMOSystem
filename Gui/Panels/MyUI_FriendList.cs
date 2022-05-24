@@ -256,6 +256,10 @@ public partial class MyUI
         {
             if (Groups.API.GroupPlayers().Count > 0)
             {
+                foreach (var playerReference in Groups.API.GroupPlayers())
+                {
+                    if (playerReference.name == friend.name) return;
+                }
                 var selfName = Player.m_localPlayer.GetPlayerName();
                 if ((Groups.API.GetLeader()?.name ?? "") == selfName)
                 {
@@ -298,6 +302,16 @@ public partial class MyUI
         public void Destroy()
         {
             Object.Destroy(cell);
+        }
+    }
+    
+    [HarmonyPatch(typeof(Game), nameof(Game.Logout))]
+    public static class DataFriendsClear
+    {
+        public static void Prefix()
+        {
+            inviteList.Clear();
+            friendsData.ClearFriend();
         }
     }
 }

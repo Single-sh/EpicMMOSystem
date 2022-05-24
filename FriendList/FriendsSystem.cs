@@ -50,6 +50,7 @@ public static class FriendsSystem
                     level, Player.m_localPlayer.GetZDO().GetInt("MagicOverhaulClass", 0)
                 );
                 Chat.instance.RPC_ChatMessage(200, Vector3.zero, 0, local["$notify"], String.Format(local["$send_invite"], name));
+                return;
             }
         }
         Chat.instance.RPC_ChatMessage(200, Vector3.zero, 0, local["$notify"], String.Format(local["$not_found"], name));
