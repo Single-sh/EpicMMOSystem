@@ -17,7 +17,7 @@ namespace EpicMMOSystem;
 public partial class EpicMMOSystem : BaseUnityPlugin
 {
     internal const string ModName = "EpicMMOSystem";
-    internal const string ModVersion = "1.1.0";
+    internal const string ModVersion = "1.2.0";
     internal const string Author = "LambaSun";
     private const string ModGUID = Author + "." + ModName;
     private static string ConfigFileName = ModGUID + ".cfg";
@@ -124,17 +124,12 @@ public partial class EpicMMOSystem : BaseUnityPlugin
         lowDamageLevel = config(creatureLevelControl, "Low_damage_level", true, "Decreased damage to the monster if the level is insufficient");
         minLevelExp = config(creatureLevelControl, "MinLevelRange", 10, "Character level - MinLevelRange is less than the level of the monster, then you will receive reduced experience. Уровень персонажа - MinLevelRange меньше уровня монстра, то вы будете получать урезанный опыт");
         maxLevelExp = config(creatureLevelControl, "MaxLevelRange", 10, "Character level + MaxLevelRange is less than the level of the monster, then you will not receive experience. Уровень персонажа + MaxLevelRange меньше уровня монстра, то вы не будете получать опыт");
-    
-        
-        
-        
         
         _ = ConfigSync.AddLockingConfigEntry(_serverConfigLocked);
 
         Assembly assembly = Assembly.GetExecutingAssembly();
         _harmony.PatchAll(assembly);
         
-
         _asset = GetAssetBundle("epicasset");
 
         localization = new Localization();
@@ -144,6 +139,7 @@ public partial class EpicMMOSystem : BaseUnityPlugin
     private void Start()
     {
         DataMonsters.Init();
+        FriendsSystem.Init();
     }
 
     private void ReadConfigValues(object sender, FileSystemEventArgs e)

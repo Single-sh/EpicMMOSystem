@@ -118,7 +118,7 @@ public partial class MyUI
         var price = LevelSystem.Instance.getPriceResetPoints();
         var text = localization["$reset_point_text"];
         alertResetPointText.text = String.Format(text,price);
-        levelSystemPanel.SetActive(false);
+        levelSystemPanel.GetComponent<CanvasGroup>().interactable = false;
         alertResetPointPanel.SetActive(true);
     }
 
@@ -131,7 +131,7 @@ public partial class MyUI
     private static void ResetNo()
     {
         alertResetPointPanel.SetActive(false);
-        levelSystemPanel.SetActive(true);
+        levelSystemPanel.GetComponent<CanvasGroup>().interactable = true;
     }
 
     public static void UpdateParameterPanel()

@@ -293,8 +293,11 @@
         <Compile Include="Data\Monster.cs" />
         <Compile Include="Data\MonsterOld.cs" />
         <Compile Include="EpicMMOSystem_API.cs" />
+        <Compile Include="FriendList\FriendsData.cs" />
+        <Compile Include="FriendList\FriendsSystem.cs" />
         <Compile Include="Gui\MyUI.cs" />
         <Compile Include="Gui\Panels\MyUI_ExpPanel.cs" />
+        <Compile Include="Gui\Panels\MyUI_FriendList.cs" />
         <Compile Include="Gui\Panels\MyUI_LevelSystem.cs" />
         <Compile Include="Gui\Panels\MyUI_NavigationPanel.cs" />
         <Compile Include="Gui\Unity\DragMenu.cs" />

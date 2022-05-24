@@ -21,16 +21,19 @@ public static partial class MyUI
         UI.SetActive(false);
         InitNavigationPanel();
         InitLevelSystem();
+        InitFriendsList();
     }
-
-        
-
 
     public static void Hide()
     {
         navigationPanel.SetActive(false);
         levelSystemPanel.SetActive(false);
+        levelSystemPanel.GetComponent<CanvasGroup>().interactable = true;
         alertResetPointPanel.SetActive(false);
+        friendsListPanel.SetActive(false);
+        friendsListPanel.GetComponent<CanvasGroup>().interactable = true;
+        alertResetPointPanel.SetActive(false);
+        addFriendAlert.SetActive(false);
         UI.SetActive(false);
         LevelSystem.Instance.cancelDepositPoints();
     }
@@ -57,6 +60,15 @@ public static partial class MyUI
         public static void Postfix()
         {
             Hide();
+        }
+    }
+    
+    [HarmonyPatch(typeof(Menu), nameof(Menu.IsVisible))]
+    private static class BufferUIFix
+    {
+        private static void Postfix(ref bool __result)
+        {
+            if (textField.isFocused) __result = true;
         }
     }
 
