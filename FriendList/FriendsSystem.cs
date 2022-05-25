@@ -47,7 +47,7 @@ public static class FriendsSystem
                 ZRoutedRpc.instance.InvokeRoutedRPC(
                     playerInfo.m_characterID.m_userID, 
                     $"{modName} InviteFriend",
-                    level, Player.m_localPlayer.GetZDO().GetInt("MagicOverhaulClass", 0)
+                    level, Player.m_localPlayer.m_nview.GetZDO().GetInt("MagicOverhaulClass", 0)
                 );
                 Chat.instance.RPC_ChatMessage(200, Vector3.zero, 0, local["$notify"], String.Format(local["$send_invite"], name));
                 return;
@@ -61,7 +61,7 @@ public static class FriendsSystem
         ZRoutedRpc.instance.InvokeRoutedRPC(
             player.m_characterID.m_userID,
             $"{modName} AcceptInviteFriend",
-            info.level, Player.m_localPlayer.GetZDO().GetInt("MagicOverhaulClass", 0)
+            info.level, Player.m_localPlayer.m_nview.GetZDO().GetInt("MagicOverhaulClass", 0)
         );
     }
     

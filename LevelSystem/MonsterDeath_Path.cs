@@ -73,6 +73,7 @@ public static class MonsterDeath_Path
         }
         
         LevelSystem.Instance.AddExp(exp);
+        if (!Groups.API.IsLoaded()) return;
         var groupFactor = EpicMMOSystem.groupExp.Value;
         foreach (var playerReference in Groups.API.GroupPlayers())
         {
@@ -128,7 +129,7 @@ public static class MonsterDeath_Path
                     CharacterLastDamageList[__instance] = sender;
                     if (EpicMMOSystem.enabledLevelControl.Value && EpicMMOSystem.removeDrop.Value)
                     {
-                        __instance.m_nview.m_zdo.Set("epic playerLevel", hit.m_toolTier);
+                        __instance.m_nview.GetZDO().Set("epic playerLevel", hit.m_toolTier);
                     }
                 }
                 else
@@ -138,7 +139,7 @@ public static class MonsterDeath_Path
                         CharacterLastDamageList[__instance] = 100;
                         if (EpicMMOSystem.enabledLevelControl.Value && EpicMMOSystem.removeDrop.Value)
                         {
-                            __instance.m_nview.m_zdo.Set("epic playerLevel", 0);
+                            __instance.m_nview.GetZDO().Set("epic playerLevel", 0);
                         }
                     }
                 }

@@ -163,7 +163,8 @@ public partial class LevelSystem
         current += count;
         setLevel(Mathf.Clamp(current,1, EpicMMOSystem.maxLevel.Value));
         PlayerFVX.levelUp();
-        Player.m_localPlayer.GetZDO().Set($"{pluginKey}_level", current);
+        var zdo = Player.m_localPlayer.m_nview.GetZDO();
+        zdo.Set($"{pluginKey}_level", current);
     }
 
     public bool hasDepositPoints()
@@ -231,11 +232,13 @@ public partial class LevelSystem
     }
 }
 
-[HarmonyPatch(typeof(Game), nameof(Game.SpawnPlayer))]
+[HarmonyPatch(typeof(Player), nameof(Player.OnSpawned))]
 public static class SetZDOLevel
 {
     public static void Postfix()
     {
-        Player.m_localPlayer.GetZDO().Set($"{EpicMMOSystem.ModName}_level", LevelSystem.Instance.getLevel());
+        var zdo = Player.m_localPlayer.m_nview.GetZDO();
+        zdo.Set($"{EpicMMOSystem.ModName}_level", LevelSystem.Instance.getLevel());
+        EpicMMOSystem.print("All okey");
     }
 }

@@ -5,6 +5,7 @@
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSourceModding_005CMyCustomModes_005CEpickMooSystem_005CLibs_005CGroupsAPI_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSourceModding_005CMyCustomModes_005CEpicMMOSystem_005CLibs_005CfastJSON_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSourceModding_005CMyCustomModes_005CEpicMMOSystem_005CLibs_005CGroupsAPI_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSourceModding_005CMyCustomModes_005CEpicMMOSystem_005CLibs_005CGroups_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSourceModding_005CMyCustomModes_005CEpicMMOSystem_005CLibs_005CServerSync_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSourceModding_005CMyCustomModes_005CSafeItemsAndRespawnRune_005CLibs_005Cpublicized_005Fassemblies_005CEquipmentAndQuickSlots_005Fpublicized_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSteamLibrary_005Csteamapps_005Ccommon_005CValheim_005Cunstripped_005Fcorlib_005CUnityEngine_002EAccessibilityModule_002Edll/@EntryIndexedValue">True</s:Boolean>
@@ -84,4 +85,6 @@
 	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
   &lt;Assembly Path="A:\SteamLibrary\steamapps\common\Valheim\valheim_Data\Managed\publicized_assemblies\assembly_valheim_publicized.dll" /&gt;&#xD;
   &lt;Assembly Path="A:\SteamLibrary\steamapps\common\Valheim\valheim_Data\Managed\publicized_assemblies\assembly_guiutils_publicized.dll" /&gt;&#xD;
+  &lt;Assembly Path="A:\SourceModding\MyCustomModes\EpicMMOSystem\Libs\GroupsAPI.dll" /&gt;&#xD;
+  &lt;Assembly Path="A:\SourceModding\MyCustomModes\EpicMMOSystem\Libs\Groups.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String></wpf:ResourceDictionary>

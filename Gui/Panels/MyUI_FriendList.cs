@@ -146,7 +146,10 @@ public partial class MyUI
     public static void acceptInvited(FriendInfo friendInfo)
     {
         friendsData.addFriends(friendInfo);
-        updateList();
+        if (friendsListPanel.activeSelf)
+        {
+            updateList();
+        }
     }
 
     private static void clickButtonAdd()
@@ -218,10 +221,17 @@ public partial class MyUI
                     cell.transform.Find("Status").GetComponent<Text>().text = localization["$online"];
                     cell.transform.Find("Status").GetComponent<Text>().color = Color.green;
                     cell.transform.Find("Buttons/Accept").gameObject.SetActive(false);
-                    if (Groups.API.GroupPlayers().Count > 0
-                        && (Groups.API.GetLeader()?.name ?? "") != Player.m_localPlayer.GetPlayerName())
+                    if (!Groups.API.IsLoaded())
                     {
                         cell.transform.Find("Buttons/AddGroup").gameObject.SetActive(false);
+                    }
+                    else
+                    {
+                        if (Groups.API.GroupPlayers().Count > 0
+                            && (Groups.API.GetLeader()?.name ?? "") != Player.m_localPlayer.GetPlayerName())
+                        {
+                            cell.transform.Find("Buttons/AddGroup").gameObject.SetActive(false);
+                        }
                     }
                     break;
                 case StatusFriend.offline:

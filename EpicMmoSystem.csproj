@@ -86,14 +86,11 @@
         <Reference Include="BepInEx, Version=5.4.19.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>$(GamePath)\BepInEx\core\BepInEx.dll</HintPath>
         </Reference>
-        <Reference Include="EquipmentAndQuickSlots, Version=2.0.14.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>Libs\publicized_assemblies\EquipmentAndQuickSlots_publicized.dll</HintPath>
-        </Reference>
         <Reference Include="fastJSON, Version=2.4.0.0, Culture=neutral, PublicKeyToken=6b75a806b86095cd">
           <HintPath>Libs\fastJSON.dll</HintPath>
         </Reference>
         <Reference Include="Groups, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\..\..\Games\Valheim\BepInEx\plugins\Groups.dll</HintPath>
+          <HintPath>Libs\Groups.dll</HintPath>
         </Reference>
         <Reference Include="GroupsAPI, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>Libs\GroupsAPI.dll</HintPath>
@@ -321,6 +318,8 @@
       <EmbeddedResource Include="asset\epicasset" />
       <EmbeddedResource Include="Data\MonstersDB.json" />
       <Content Include="ILRepack.targets" />
+      <Content Include="Libs\fastJSON.dll" />
+      <Content Include="Libs\GroupsAPI.dll" />
       <Content Include="Libs\ServerSync.dll">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>

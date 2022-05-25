@@ -48,6 +48,7 @@ You can ask questions or suggest ideas in the discord channel [Odin Plus Team](h
 
 <details><summary>Changelog</summary>
 
+ - 1.2.1: Fix errors with EAQS
  - 1.2.0: Add friends list
  - 1.1.0: Add creature level control
  - 1.0.1: Fix localization and append english text for config comments.
