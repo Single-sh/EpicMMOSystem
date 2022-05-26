@@ -308,6 +308,8 @@
         <Compile Include="LevelSystem\LevelSystem_Intellect.cs" />
         <Compile Include="LevelSystem\LevelSystem_Strength.cs" />
         <Compile Include="Locallization.cs" />
+        <Compile Include="OtherApi\Marketplace_API.cs" />
+        <Compile Include="OtherApi\Professions_API.cs" />
         <Compile Include="Plugin.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="StatusEffects\EffectPatches.cs" />

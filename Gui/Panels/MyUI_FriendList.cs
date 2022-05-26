@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Groups;
@@ -7,6 +8,7 @@ using UnityEngine.UI;
 using UnityEngine.UIElements;
 using Button = UnityEngine.UI.Button;
 using Image = UnityEngine.UI.Image;
+using Object = UnityEngine.Object;
 
 namespace EpicMMOSystem;
 
@@ -72,14 +74,17 @@ public partial class MyUI
     }
     private static void updateFriendsList()
     {
-        friendsCells.ForEach(f => f.Destroy());
-        friendsCells.Clear();
+        if (friendsCells.Count > 0)
+        {
+            friendsCells.ForEach(f => f.Destroy());
+            friendsCells.Clear();
+        }
+        
         Dictionary<string, ZNet.PlayerInfo> playersInfo = new ();
         foreach (var player in ZNet.instance.GetPlayerList())
         {
             playersInfo.Add(player.m_name, player);
         }
-        
         var friends = friendsData.getFriends();
         headerFriends.SetActive(friends.Count > 0);
         List<FriendInfo> offline = new();
@@ -114,8 +119,11 @@ public partial class MyUI
 
     private static void updateInviteList()
     {
-        inviteCells.ForEach(f => f.Destroy());
-        inviteCells.Clear();
+        if (inviteCells.Count > 0)
+        {
+            inviteCells.ForEach(f => f.Destroy());
+            inviteCells.Clear();
+        }
         headerInvited.SetActive(inviteList.Count > 0);
         foreach (var friend in inviteList)
         {
@@ -215,9 +223,13 @@ public partial class MyUI
             switch (status)
             {
                 case StatusFriend.online:
-                    var zdo = ZDOMan.instance.GetZDO(info.m_characterID);
-                    level = zdo.GetInt($"{EpicMMOSystem.ModName}_level", 1);
-                    moClass = zdo.GetInt("MagicOverhaulClass", 0);
+                    try
+                    {
+                        var zdo = ZDOMan.instance.GetZDO(info.m_characterID);
+                        level = zdo.GetInt($"{EpicMMOSystem.ModName}_level", 1);
+                        moClass = zdo.GetInt("MagicOverhaulClass", 0);
+                    }
+                    catch (Exception e){}
                     cell.transform.Find("Status").GetComponent<Text>().text = localization["$online"];
                     cell.transform.Find("Status").GetComponent<Text>().color = Color.green;
                     cell.transform.Find("Buttons/Accept").gameObject.SetActive(false);
