@@ -11,6 +11,7 @@ public static class Professions_API
     private static GameObject mShowProfessions;
     private static MethodInfo mUpdateSelected;
     private static MethodInfo mRequestServerTime;
+    private static bool firstOpen = true;
 
 
     private enum API_State
@@ -18,6 +19,12 @@ public static class Professions_API
         NotReady, NotInstalled, Ready 
     }
 
+    
+    public static bool IsInstalled()
+    {
+        Init();
+        return state is API_State.Ready;
+    }
 
     public static void showProfessions()
     {
@@ -28,12 +35,16 @@ public static class Professions_API
         {
             mUpdateSelected.Invoke(null, null);
             mRequestServerTime.Invoke(null, null);
+            firstOpen = false;
         }
     }
  
     private static void Init()
-    { 
-        if (state is API_State.Ready or API_State.NotInstalled) return;
+    {
+        if (!firstOpen)
+        {
+            if (state is API_State.Ready or API_State.NotInstalled) return;
+        }
         if (Type.GetType("Professions.Professions, Professions") == null)
         {
             state = API_State.NotInstalled;

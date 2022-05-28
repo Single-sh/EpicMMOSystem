@@ -26,14 +26,13 @@ public partial class MyUI
             buttonQuestPanel.GetComponent<Button>().onClick.AddListener(ClickQuestPanel);
             buttonQuestPanel.gameObject.SetActive(true);
         }
-        
-        
-        buttonProfessionsPanel = navigationPanel.transform.Find("Buttons/ButtonProffesions");
-        buttonProfessionsPanel.GetComponent<Button>().onClick.AddListener(ClickProfessionsPanel);
-        buttonProfessionsPanel.gameObject.SetActive(true);
-        
-        
-        
+
+        if (Professions_API.IsInstalled())
+        {
+            buttonProfessionsPanel = navigationPanel.transform.Find("Buttons/ButtonProffesions");
+            buttonProfessionsPanel.GetComponent<Button>().onClick.AddListener(ClickProfessionsPanel);
+            buttonProfessionsPanel.gameObject.SetActive(true);
+        }
     }
 
     private static void ClickButtonLevelSystem()
