@@ -118,6 +118,9 @@ public class Localization
         _dictionary.Add("$get_invite", "Получен запрос в друзья от {0}.");
         _dictionary.Add("$accept_invite", "Игрок {0}, принял запрос в друзья.");
         _dictionary.Add("$cancel_invite", "Игрок {0}, отменил запрос в друзья.");
+        //Terminal
+        _dictionary.Add("$terminal_set_level", "Вы получили {0} уровень");
+        _dictionary.Add("$terminal_reset_points", "Ваши очки характеристик были сброшены");
     }
     private void EngLocalization()
     {
@@ -165,6 +168,9 @@ public class Localization
         _dictionary.Add("$get_invite", "Received a friend request from {0}.");
         _dictionary.Add("$accept_invite", "Player {0}, accepted the friend request.");
         _dictionary.Add("$cancel_invite", "Player {0}, canceled his friend request.");
+        //Terminal
+        _dictionary.Add("$terminal_set_level", "You got {0} level");
+        _dictionary.Add("$terminal_reset_points", "Your attributes points have been reset");
     }
     
     public string this[string key]

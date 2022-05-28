@@ -152,23 +152,23 @@ public partial class MyUI
 
         #region parameter
         //Description strength
-        physicDamageText.text = $"{localization["$physic_damage"]}: {LevelSystem.Instance.getAddPhysicDamage()}%";
-        addWeightText.text = $"{localization["$add_weight"]}: {LevelSystem.Instance.getAddWeight()}";
-        addStaminaText.text = $"{localization["$add_stamina"]}: {LevelSystem.Instance.getAddStamina()}";
-        
+        physicDamageText.text = $"{localization["$physic_damage"]}: +{LevelSystem.Instance.getAddPhysicDamage()}%";
+        addWeightText.text = $"{localization["$add_weight"]}: +{LevelSystem.Instance.getAddWeight()}";
+
         //Description agility
-        speedAttackText.text = $"{localization["$speed_attack"]}: {LevelSystem.Instance.getAddStaminaAttack()}%";
-        reducedStaminaText.text = $"{localization["$reduced_stamina"]}: {LevelSystem.Instance.getStaminaReduction()}%";
+        speedAttackText.text = $"{localization["$speed_attack"]}: -{LevelSystem.Instance.getAddStaminaAttack()}%";
+        reducedStaminaText.text = $"{localization["$reduced_stamina"]}: -{LevelSystem.Instance.getStaminaReduction()}%";
+        addStaminaText.text = $"{localization["$add_stamina"]}: +{LevelSystem.Instance.getAddStamina()}";
     
         //Description intellect
-        magicDamageText.text = $"{localization["$magic_damage"]}: {LevelSystem.Instance.getAddMagicDamage()}%";
+        magicDamageText.text = $"{localization["$magic_damage"]}: +{LevelSystem.Instance.getAddMagicDamage()}%";
         magicArmorText.text = $"{localization["$magic_armor"]}: +{LevelSystem.Instance.getAddMagicArmor()}%";
     
         //Description body
-        addHpText.text = $"{localization["$add_hp"]}: {LevelSystem.Instance.getAddHp()}";
-        physicArmorText.text = $"{localization["$physic_armor"]}: {LevelSystem.Instance.getAddPhysicArmor()}%";
-        reducedStaminaBlockText.text = $"{localization["$reduced_stamina_block"]}: {LevelSystem.Instance.getReducedStaminaBlock()}%";
-        regenHpText.text = $"{localization["$regen_hp"]}: {LevelSystem.Instance.getAddRegenHp()}%";
+        addHpText.text = $"{localization["$add_hp"]}: +{LevelSystem.Instance.getAddHp()}";
+        physicArmorText.text = $"{localization["$physic_armor"]}: +{LevelSystem.Instance.getAddPhysicArmor()}%";
+        reducedStaminaBlockText.text = $"{localization["$reduced_stamina_block"]}: -{LevelSystem.Instance.getReducedStaminaBlock()}%";
+        regenHpText.text = $"{localization["$regen_hp"]}: +{LevelSystem.Instance.getAddRegenHp()}%";
         #endregion
     }
 

@@ -18,7 +18,7 @@ namespace EpicMMOSystem;
 public partial class EpicMMOSystem : BaseUnityPlugin
 {
     internal const string ModName = "EpicMMOSystem";
-    internal const string ModVersion = "1.2.2";
+    internal const string ModVersion = "1.2.3";
     internal const string Author = "LambaSun";
     private const string ModGUID = Author + "." + ModName;
     private static string ConfigFileName = ModGUID + ".cfg";
@@ -31,7 +31,7 @@ public partial class EpicMMOSystem : BaseUnityPlugin
     public static readonly ManualLogSource MLLogger =
         BepInEx.Logging.Logger.CreateLogSource(ModName);
 
-    private static readonly ConfigSync ConfigSync = new(ModGUID)
+    public static readonly ConfigSync ConfigSync = new(ModGUID)
         { DisplayName = ModName, CurrentVersion = ModVersion, MinimumRequiredVersion = ModVersion };
 
     public static AssetBundle _asset;
@@ -47,13 +47,13 @@ public partial class EpicMMOSystem : BaseUnityPlugin
     public static ConfigEntry<int> levelExp;
     public static ConfigEntry<float> multiNextLevel;
     public static ConfigEntry<float> expForLvlMonster;
-    public static ConfigEntry<int> rateExp;
+    public static ConfigEntry<float> rateExp;
     public static ConfigEntry<float> groupExp;
 
     #region Parameters
     //LevelSystem arg property <Strength>
     public static ConfigEntry<float> physicDamage;
-    public static ConfigEntry<int> addWeight;
+    public static ConfigEntry<float> addWeight;
     
     //LevelSystem arg property <Agility>
     public static ConfigEntry<float> speedAttack;
@@ -94,13 +94,13 @@ public partial class EpicMMOSystem : BaseUnityPlugin
         levelExp = config(levelSystem, "FirstLevelExperience", 500, "Amount of experience needed per level. Количество опыта необходимого на 1 уровень");
         multiNextLevel = config(levelSystem, "MultiplyNextLevelExperience", 1.04f, "Experience multiplier for the next level. Умножитель опыта для следующего уровня");
         expForLvlMonster = config(levelSystem, "ExpForLvlMonster", 0.25f, "Extra experience (from the sum of the basic experience) for the level of the monster. Доп опыт (из суммы основного опыта) за уровень монстра");
-        rateExp = config(levelSystem, "RateExp", 1, "Experience multiplier. Множитель опыта");
+        rateExp = config(levelSystem, "RateExp", 1f, "Experience multiplier. Множитель опыта");
         groupExp = config(levelSystem, "GroupExp", 0.70f, "Experience multiplier that the other players in the group get. Множитель опыта который получают остальные игроки в группе");
 
         #region ParameterCofig
         string levelSystemStrngth = "1.LevelSystem Strength";
         physicDamage = config(levelSystemStrngth, "PhysicDamage", 0.20f, "Damage multiplier per point. Умножитель урона за один поинт");
-        addWeight = config(levelSystemStrngth, "AddWeight", 2, "Adds carry weight per point. Добавляет переносимый вес за один поинт");
+        addWeight = config(levelSystemStrngth, "AddWeight", 2f, "Adds carry weight per point. Добавляет переносимый вес за один поинт");
         
         string levelSystemAgility = "1.LevelSystem Agility";
         speedAttack = config(levelSystemAgility, "StaminaAttack", 0.1f, "Reduces attack stamina consumption. Уменьшает потребление стамины на атаку");

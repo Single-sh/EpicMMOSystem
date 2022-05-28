@@ -230,6 +230,18 @@ public partial class LevelSystem
             levelsExp[i + 1] = current;
         }
     }
+    
+    //Terminal
+    public void terminalSetLevel(int value)
+    {
+        var level = Mathf.Clamp(value, 1, EpicMMOSystem.maxLevel.Value);
+        setLevel(level);
+        setCurrentExp(0);
+        PlayerFVX.levelUp();
+        MyUI.updateExpBar();
+        var zdo = Player.m_localPlayer.m_nview.GetZDO();
+        zdo.Set($"{pluginKey}_level", level);
+    }
 }
 
 [HarmonyPatch(typeof(Player), nameof(Player.OnSpawned))]

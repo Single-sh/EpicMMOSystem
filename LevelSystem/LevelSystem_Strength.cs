@@ -1,3 +1,4 @@
+using System;
 using HarmonyLib;
 
 namespace EpicMMOSystem;
@@ -40,7 +41,7 @@ public partial class LevelSystem
     {
         static void Postfix(ref float __result)
         {
-            __result += Instance.getAddWeight();
+            __result += (float)Math.Round(Instance.getAddWeight());
         }
     }
 }
