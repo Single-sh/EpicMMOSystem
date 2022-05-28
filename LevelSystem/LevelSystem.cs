@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using HarmonyLib;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace EpicMMOSystem;
 
@@ -215,6 +216,20 @@ public partial class LevelSystem
         count *= EpicMMOSystem.priceResetPoints.Value;
         return count;
     }
+
+    public void DeathPlayer()
+    {
+        if (!EpicMMOSystem.lossExp.Value) return;
+        if (!Player.m_localPlayer.HardDeath()) return;
+        var minExp = EpicMMOSystem.minLossExp.Value;
+        var maxExp = EpicMMOSystem.maxLossExp.Value;
+        var lossExp = 1f - Random.Range(minExp, maxExp);
+        var currentExp = getCurrentExp();
+        long newExp = (long)(currentExp * lossExp);
+        setCurrentExp(newExp);
+        MyUI.updateExpBar();
+        
+    }
     
     //FillLevelExp
     private void FillLevelsExp()
@@ -252,5 +267,14 @@ public static class SetZDOLevel
         var zdo = Player.m_localPlayer.m_nview.GetZDO();
         zdo.Set($"{EpicMMOSystem.ModName}_level", LevelSystem.Instance.getLevel());
         EpicMMOSystem.print("All okey");
+    }
+}
+
+[HarmonyPatch(typeof(Player), nameof(Player.OnDeath))]
+public static class Death
+{
+    public static void Prefix()
+    {
+        LevelSystem.Instance.DeathPlayer();
     }
 }

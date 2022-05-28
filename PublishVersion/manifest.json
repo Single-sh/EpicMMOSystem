@@ -1,6 +1,6 @@
 {
     "name": "EpicMMOSystem",
-    "version_number": "1.2.2",
+    "version_number": "1.2.3",
     "website_url": "",
     "description": "Adds to your Valheim world a system of levels and distribution of characteristics",
     "dependencies": [

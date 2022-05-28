@@ -1,6 +1,6 @@
 ﻿﻿# Description
 Adds to your Valheim world a system of levels and distribution of characteristics:
-![https://i.imgur.com/5Tzgs0R.png](https://i.imgur.com/5Tzgs0R.png)
+![https://i.imgur.com/iA4JRuM.png](https://i.imgur.com/iA4JRuM.png)
 
 Features:
  - Works with group mods. You can gain experience together playing in a group. Without a group, the experience goes to the one who last hit the monster.
@@ -41,13 +41,22 @@ If you didn't do anything then just delete file and it will create new one with 
 
 </details>
 
+
+<details><summary>Console commands</summary>
+
+Commands only admin.
+ - Set level: epicmmosystem level [value] [name] - if name have space change space on &.
+ - Reset points attribute: epicmmosystem reset_points [name] - if name have space change space on &.
+</details> 
+
 <details><summary>Feedback</summary>
 
 You can ask questions or suggest ideas in the discord channel [Odin Plus Team](https://discord.gg/uf44CtCm), look for me there under the nickname LambaSun or my [mod branch](https://discord.com/channels/826573164371902465/977656428670111794).
 </details> 
 
 <details><summary>Changelog</summary>
-
+ 
+ - 1.2.3: Add console command and loss exp if dead
  - 1.2.2: Add button for open quest journal (Marketplace) and profession
  - 1.2.1: Fix errors with EAQS
  - 1.2.0: Add friends list

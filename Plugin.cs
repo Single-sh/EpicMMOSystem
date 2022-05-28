@@ -49,6 +49,9 @@ public partial class EpicMMOSystem : BaseUnityPlugin
     public static ConfigEntry<float> expForLvlMonster;
     public static ConfigEntry<float> rateExp;
     public static ConfigEntry<float> groupExp;
+    public static ConfigEntry<bool> lossExp;
+    public static ConfigEntry<float> minLossExp;
+    public static ConfigEntry<float> maxLossExp;
 
     #region Parameters
     //LevelSystem arg property <Strength>
@@ -96,7 +99,10 @@ public partial class EpicMMOSystem : BaseUnityPlugin
         expForLvlMonster = config(levelSystem, "ExpForLvlMonster", 0.25f, "Extra experience (from the sum of the basic experience) for the level of the monster. Доп опыт (из суммы основного опыта) за уровень монстра");
         rateExp = config(levelSystem, "RateExp", 1f, "Experience multiplier. Множитель опыта");
         groupExp = config(levelSystem, "GroupExp", 0.70f, "Experience multiplier that the other players in the group get. Множитель опыта который получают остальные игроки в группе");
-
+        minLossExp = config(levelSystem, "MinLossExp", 0.05f, "Minimum Loss Exp if player death, default 5% loss");
+        maxLossExp = config(levelSystem, "MaxLossExp", 0.25f, "Maximum Loss Exp if player death, default 25% loss");
+        lossExp = config(levelSystem, "LossExp", true, "Enabled exp loss");
+        
         #region ParameterCofig
         string levelSystemStrngth = "1.LevelSystem Strength";
         physicDamage = config(levelSystemStrngth, "PhysicDamage", 0.20f, "Damage multiplier per point. Умножитель урона за один поинт");
@@ -160,10 +166,10 @@ public partial class EpicMMOSystem : BaseUnityPlugin
 
     // private void Update()
     // {
-    //     if (Input.GetKeyDown(KeyCode.Mouse4))
+    //     if (Input.GetKeyDown(KeyCode.Mouse3))
     //     {
     //         // LevelSystem.Instance.ResetAllParameter();
-    //         PlayerFVX.levelUp();
+    //         Player.m_localPlayer.m_timeSinceDeath = 3000f;
     //     }
     // }
 
