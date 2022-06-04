@@ -85,7 +85,7 @@ public partial class MyUI
         {
             playersInfo.Add(player.m_name, player);
         }
-        var friends = friendsData.getFriends();
+        var friends = new Dictionary<string, FriendInfo>(friendsData.getFriends());
         headerFriends.SetActive(friends.Count > 0);
         List<FriendInfo> offline = new();
         foreach (var friend in friends)
@@ -229,7 +229,10 @@ public partial class MyUI
                         level = zdo.GetInt($"{EpicMMOSystem.ModName}_level", 1);
                         moClass = zdo.GetInt("MagicOverhaulClass", 0);
                     }
-                    catch (Exception e){}
+                    catch (Exception e)
+                    {
+                        EpicMMOSystem.print($"Ошибка в получении значений из здо: {e.Message}");
+                    }
                     cell.transform.Find("Status").GetComponent<Text>().text = localization["$online"];
                     cell.transform.Find("Status").GetComponent<Text>().color = Color.green;
                     cell.transform.Find("Buttons/Accept").gameObject.SetActive(false);
@@ -336,4 +339,6 @@ public partial class MyUI
             friendsData.ClearFriend();
         }
     }
+    
+    
 }

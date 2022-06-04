@@ -166,6 +166,7 @@ public partial class LevelSystem
         PlayerFVX.levelUp();
         var zdo = Player.m_localPlayer.m_nview.GetZDO();
         zdo.Set($"{pluginKey}_level", current);
+        ZDOMan.instance.ForceSendZDO(zdo.m_uid);
     }
 
     public bool hasDepositPoints()
@@ -252,21 +253,35 @@ public partial class LevelSystem
         var level = Mathf.Clamp(value, 1, EpicMMOSystem.maxLevel.Value);
         setLevel(level);
         setCurrentExp(0);
+        ResetAllParameter();
         PlayerFVX.levelUp();
         MyUI.updateExpBar();
         var zdo = Player.m_localPlayer.m_nview.GetZDO();
         zdo.Set($"{pluginKey}_level", level);
+        ZDOMan.instance.ForceSendZDO(zdo.m_uid);
     }
 }
 
-[HarmonyPatch(typeof(Player), nameof(Player.OnSpawned))]
+[HarmonyPatch(typeof(Game), nameof(Game.SpawnPlayer))]
+[HarmonyPriority(1000)]
 public static class SetZDOLevel
 {
     public static void Postfix()
     {
         var zdo = Player.m_localPlayer.m_nview.GetZDO();
         zdo.Set($"{EpicMMOSystem.ModName}_level", LevelSystem.Instance.getLevel());
-        EpicMMOSystem.print("All okey");
+    }
+}
+
+[HarmonyPatch(typeof(ZNet), nameof(ZNet.RPC_CharacterID))]
+public static class SetZDOPeer
+{
+    public static void Postfix()
+    {
+        foreach (var peer in ZNet.instance.m_peers)
+        {
+            ZDOMan.instance.ForceSendZDO(peer.m_characterID);
+        }
     }
 }
 

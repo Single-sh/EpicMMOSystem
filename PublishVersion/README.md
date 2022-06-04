@@ -1,6 +1,6 @@
 ﻿﻿# Description
 Adds to your Valheim world a system of levels and distribution of characteristics:
-![https://i.imgur.com/iA4JRuM.png](https://i.imgur.com/iA4JRuM.png)
+![https://i.imgur.com/5Tzgs0R.png](https://i.imgur.com/5Tzgs0R.png)
 
 Features:
  - Works with group mods. You can gain experience together playing in a group. Without a group, the experience goes to the one who last hit the monster.
@@ -56,6 +56,7 @@ You can ask questions or suggest ideas in the discord channel [Odin Plus Team](h
 
 <details><summary>Changelog</summary>
  
+ - 1.2.4: Fix version check
  - 1.2.3: Add console command and loss exp if dead
  - 1.2.2: Add button for open quest journal (Marketplace) and profession
  - 1.2.1: Fix errors with EAQS

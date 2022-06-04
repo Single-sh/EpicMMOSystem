@@ -21,8 +21,9 @@ public partial class LevelSystem
     [HarmonyPatch(typeof(ItemDrop.ItemData), nameof(ItemDrop.ItemData.GetDamage), typeof(int))]
     public class AddDamageIntellect_Path
     {
-        public static void Postfix(ref HitData.DamageTypes __result)
-        {
+        public static void Postfix(ref ItemDrop.ItemData __instance, ref HitData.DamageTypes __result)
+        {   
+            if (!Player.m_localPlayer.m_inventory.ContainsItem(__instance)) return;
             float add = Instance.getAddMagicDamage();
             var value = add / 100 + 1;
 
