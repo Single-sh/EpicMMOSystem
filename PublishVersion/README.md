@@ -1,4 +1,4 @@
-﻿﻿# Description
+﻿﻿# Description:
 This mod adds an RPG-like system of levels and attribute increases:
 ![https://i.imgur.com/5Tzgs0R.png](https://i.imgur.com/5Tzgs0R.png)
 
@@ -16,7 +16,7 @@ Features:
 
 Click the plus button at the bottom of the friends bar. Enter the name of the character you wish to add, starting with a capital letter.
    ![https://i.imgur.com/rC8RDYe.png](https://i.imgur.com/rC8RDYe.png)
-The player will receive a friend request. Once accepted, it the character will appear in your friends list. Group invites can be sent from the friends list. 
+The player will receive a friend request. Once accepted, the character will appear in your friends list. Group invites can be sent from the friends list. 
    ![https://i.imgur.com/W460hdu.png](https://i.imgur.com/W460hdu.png)
 
 # Warning: 
