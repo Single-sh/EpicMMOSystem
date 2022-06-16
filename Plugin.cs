@@ -18,7 +18,7 @@ namespace EpicMMOSystem;
 public partial class EpicMMOSystem : BaseUnityPlugin
 {
     internal const string ModName = "EpicMMOSystem";
-    internal const string ModVersion = "1.2.6";
+    internal const string ModVersion = "1.2.7";
     internal const string Author = "LambaSun";
     private const string ModGUID = Author + "." + ModName;
     private static string ConfigFileName = ModGUID + ".cfg";
@@ -264,7 +264,7 @@ public partial class EpicMMOSystem : BaseUnityPlugin
     [HarmonyPatch(typeof(Version), nameof(Version.GetVersionString))]
     private static class PatchVersionGetVersionString
     {
-        [HarmonyPriority(Priority.Last)]
+        [HarmonyPriority(70)]
         private static void Postfix(ref string __result)
         {
             if (ZNet.instance?.IsServer() == true) __result += $"-{ModName}{ModVersion}";

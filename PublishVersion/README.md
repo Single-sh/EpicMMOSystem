@@ -58,6 +58,7 @@ Discord nickname: LambaSun or my [mod branch](https://discord.com/channels/82657
 
 <details><summary>Changelog</summary>
  
+ - 1.2.7: Fix version check
  - 1.2.6: Fixed bug of different amount of experience. Added ability to add your own items or currency to reset attributes.
  - 1.2.5: Fix damage monsters and fix error for friends list
  - 1.2.4: Fix version check
