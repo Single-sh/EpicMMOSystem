@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using HarmonyLib;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -128,10 +129,13 @@ public partial class LevelSystem
 
     public void ResetAllParameterPayment()
     {
+        var text = EpicMMOSystem.prefabNameCoins.Value;
+        var pref = ZNetScene.instance.GetPrefab(text);
+        var name = pref.GetComponent<ItemDrop>().m_itemData.m_shared.m_name;
         var price = getPriceResetPoints();
-        var currentCoins = Player.m_localPlayer.m_inventory.CountItems("$item_coins");
+        var currentCoins = Player.m_localPlayer.m_inventory.CountItems(name);
         if (currentCoins < price) return;
-        Player.m_localPlayer.m_inventory.RemoveItem("$item_coins", price);
+        Player.m_localPlayer.m_inventory.RemoveItem(name, price);
         ResetAllParameter();
     }
 

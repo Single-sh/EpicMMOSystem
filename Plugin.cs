@@ -18,7 +18,7 @@ namespace EpicMMOSystem;
 public partial class EpicMMOSystem : BaseUnityPlugin
 {
     internal const string ModName = "EpicMMOSystem";
-    internal const string ModVersion = "1.2.5";
+    internal const string ModVersion = "1.2.6";
     internal const string Author = "LambaSun";
     private const string ModGUID = Author + "." + ModName;
     private static string ConfigFileName = ModGUID + ".cfg";
@@ -82,7 +82,11 @@ public partial class EpicMMOSystem : BaseUnityPlugin
     public static ConfigEntry<bool> lowDamageLevel;
     public static ConfigEntry<int> maxLevelExp;
     public static ConfigEntry<int> minLevelExp;
-
+    
+    //Reset attributes items
+    public static ConfigEntry<String> prefabNameCoins;
+    public static ConfigEntry<String> viewTextCoins;
+    
 
     public void Awake()
     {
@@ -131,6 +135,10 @@ public partial class EpicMMOSystem : BaseUnityPlugin
         lowDamageLevel = config(creatureLevelControl, "Low_damage_level", true, "Decreased damage to the monster if the level is insufficient");
         minLevelExp = config(creatureLevelControl, "MinLevelRange", 10, "Character level - MinLevelRange is less than the level of the monster, then you will receive reduced experience. Уровень персонажа - MinLevelRange меньше уровня монстра, то вы будете получать урезанный опыт");
         maxLevelExp = config(creatureLevelControl, "MaxLevelRange", 10, "Character level + MaxLevelRange is less than the level of the monster, then you will not receive experience. Уровень персонажа + MaxLevelRange меньше уровня монстра, то вы не будете получать опыт");
+        
+        string resetAttributesItems = "3.Reset attributes items";
+        prefabNameCoins = config(resetAttributesItems, "prefabName", "Coins", "Name prefab item");
+        viewTextCoins = config(resetAttributesItems, "viewText", "coins", "Name item");
         
         _ = ConfigSync.AddLockingConfigEntry(_serverConfigLocked);
 

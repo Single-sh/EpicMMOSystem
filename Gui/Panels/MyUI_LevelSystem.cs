@@ -115,9 +115,10 @@ public partial class MyUI
 
     private static void ResetParameters()
     {
+        var textCoin = EpicMMOSystem.viewTextCoins.Value;
         var price = LevelSystem.Instance.getPriceResetPoints();
         var text = localization["$reset_point_text"];
-        alertResetPointText.text = String.Format(text,price);
+        alertResetPointText.text = String.Format(text, price, textCoin);
         levelSystemPanel.GetComponent<CanvasGroup>().interactable = false;
         alertResetPointPanel.SetActive(true);
     }

@@ -89,7 +89,7 @@ public class Localization
         _dictionary.Add("$no", "Нет");
         _dictionary.Add("$yes", "Да");
         _dictionary.Add("$get_exp", "Получено опыта");
-        _dictionary.Add("$reset_point_text", "Вы действительно хотите сбросить все поинты за {0} золотых ?");
+        _dictionary.Add("$reset_point_text", "Вы действительно хотите сбросить все поинты за {0} {1}?");
         //Parameter
         _dictionary.Add("$physic_damage", "Ув. физ. урона");
         _dictionary.Add("$add_weight", "Ув. переносимого веса");
@@ -139,7 +139,7 @@ public class Localization
         _dictionary.Add("$no", "No");
         _dictionary.Add("$yes", "Yes");
         _dictionary.Add("$get_exp", "Experience received");
-        _dictionary.Add("$reset_point_text", "Do you really want to drop all the points for {0} gold?");
+        _dictionary.Add("$reset_point_text", "Do you really want to drop all the points for {0} {1}?");
         //Parameter
         _dictionary.Add("$physic_damage", "Physical Damage");
         _dictionary.Add("$add_weight", "Carry weight");
