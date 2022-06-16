@@ -233,7 +233,7 @@ public partial class LevelSystem
     }
     
     //FillLevelExp
-    private void FillLevelsExp()
+    public void FillLevelsExp()
     {
         var levelExp = EpicMMOSystem.levelExp.Value;
         var multiply = EpicMMOSystem.multiNextLevel.Value;

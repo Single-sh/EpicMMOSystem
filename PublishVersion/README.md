@@ -56,6 +56,7 @@ You can ask questions or suggest ideas in the discord channel [Odin Plus Team](h
 
 <details><summary>Changelog</summary>
  
+ - 1.2.5: Fix damage monsters and fix error for friends list
  - 1.2.4: Fix version check
  - 1.2.3: Add console command and loss exp if dead
  - 1.2.2: Add button for open quest journal (Marketplace) and profession
