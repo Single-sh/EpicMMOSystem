@@ -10,6 +10,12 @@ public partial class MyUI
     private static Text eLevelText;
     private static Text eExpText;
     private static Image eBarImage;
+    
+    private static Text hpText;
+    private static Image hpImage;
+    
+    private static Text staminaText;
+    private static Image staminaImage;
 
 
     public static void updateExpBar()
@@ -28,12 +34,71 @@ public partial class MyUI
     {
         static void Postfix(Hud __instance)
         {
-            GameObject panel = EpicMMOSystem._asset.LoadAsset<GameObject>("ExpPanel");
+            if (EpicMMOSystem.oldExpBar.Value)
+            {
+                GameObject oldPanel = EpicMMOSystem._asset.LoadAsset<GameObject>("ExpPanel");
+                Transform oldExpPanel = EpicMMOSystem.Instantiate(oldPanel, __instance.m_rootObject.transform).transform;
+                eLevelText = oldExpPanel.Find("Lvl").GetComponent<Text>();
+                eExpText = oldExpPanel.Find("Exp").GetComponent<Text>();
+                eBarImage = oldExpPanel.Find("Bar/Fil").GetComponent<Image>();
+                return;
+            }
+            
+            GameObject panel = EpicMMOSystem._asset.LoadAsset<GameObject>("EpicHudPanel");
             Transform expPanel = EpicMMOSystem.Instantiate(panel, __instance.m_rootObject.transform).transform;
-            eLevelText = expPanel.Find("Lvl").GetComponent<Text>();
-            eExpText = expPanel.Find("Exp").GetComponent<Text>();
-            eBarImage = expPanel.Find("Bar/Fil").GetComponent<Image>();
-            EpicMMOSystem.print("spawn expbar");
+            eLevelText = expPanel.Find("Conteiner/Exp/Lvl").GetComponent<Text>();
+            eExpText = expPanel.Find("Conteiner/Exp/Exp").GetComponent<Text>();
+            eBarImage = expPanel.Find("Conteiner/Exp/Bar/Fil").GetComponent<Image>();
+            
+            hpText = expPanel.Find("Conteiner/Hp/Text").GetComponent<Text>();
+            hpImage = expPanel.Find("Conteiner/Hp/Bar/Fill").GetComponent<Image>();
+            
+            staminaText = expPanel.Find("Conteiner/Stamina/Text").GetComponent<Text>();
+            staminaImage = expPanel.Find("Conteiner/Stamina/Bar/Fill").GetComponent<Image>();
+            
+            __instance.m_healthPanel.Find("Health").gameObject.SetActive(false);
+            __instance.m_healthPanel.Find("healthicon").gameObject.SetActive(false);
+        }
+    }
+    
+    
+    [HarmonyPatch(typeof(Hud), nameof(Hud.UpdateHealth))]
+    public static class UpdateHealth
+    {
+        static bool Prefix(Player player)
+        {
+            if (EpicMMOSystem.oldExpBar.Value)
+            {
+                return true;
+            }
+            
+            var current = player.GetHealth();
+            var max = player.GetMaxHealth();
+            
+            hpText.text = Mathf.CeilToInt(current).ToString();
+            hpImage.fillAmount = current / max;
+
+            return false;
+        }
+    }
+    
+    [HarmonyPatch(typeof(Hud), nameof(Hud.UpdateStamina))]
+    public static class UpdateStamina
+    {
+        static bool Prefix(Player player)
+        {
+            if (EpicMMOSystem.oldExpBar.Value)
+            {
+                return true;
+            }
+            
+            var current = player.GetStamina();
+            var max = player.GetMaxStamina();
+            
+            staminaText.text = Mathf.CeilToInt(current).ToString();
+            staminaImage.fillAmount = current / max;
+
+            return false;
         }
     }
     

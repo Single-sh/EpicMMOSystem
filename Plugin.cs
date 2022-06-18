@@ -88,12 +88,14 @@ public partial class EpicMMOSystem : BaseUnityPlugin
     public static ConfigEntry<String> prefabNameCoins;
     public static ConfigEntry<String> viewTextCoins;
     
+    //Hud
+    public static ConfigEntry<bool> oldExpBar;
 
     public void Awake()
     {
         string general = "0.General";
         _serverConfigLocked = config(general, "Force Server Config", true, "Force Server Config");
-        language = config(general, "Language", "eng", "Language prefix");
+        language = config(general, "Language", "eng", "Language prefix", false);
         string levelSystem = "1.LevelSystem";
         maxLevel = config(levelSystem, "MaxLevel", 100, "Maximum level. Максимальный уровень");
         priceResetPoints = config(levelSystem, "PriceResetPoints", 3, "Reset price per point. Цена сброса за один поинт");
@@ -141,6 +143,9 @@ public partial class EpicMMOSystem : BaseUnityPlugin
         string resetAttributesItems = "3.Reset attributes items";
         prefabNameCoins = config(resetAttributesItems, "prefabName", "Coins", "Name prefab item");
         viewTextCoins = config(resetAttributesItems, "viewText", "coins", "Name item");
+        
+        string hud = "4.Hud";
+        oldExpBar = config(hud, "UseOldExpBar", false, "Use old xp bar without health and stamina bars (need restart, don't use server sunc)", false);
         
         _ = ConfigSync.AddLockingConfigEntry(_serverConfigLocked);
 
