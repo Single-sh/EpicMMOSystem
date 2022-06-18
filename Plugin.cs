@@ -18,7 +18,7 @@ namespace EpicMMOSystem;
 public partial class EpicMMOSystem : BaseUnityPlugin
 {
     internal const string ModName = "EpicMMOSystem";
-    internal const string ModVersion = "1.2.7";
+    internal const string ModVersion = "1.2.8";
     internal const string Author = "LambaSun";
     private const string ModGUID = Author + "." + ModName;
     private static string ConfigFileName = ModGUID + ".cfg";
@@ -52,6 +52,7 @@ public partial class EpicMMOSystem : BaseUnityPlugin
     public static ConfigEntry<bool> lossExp;
     public static ConfigEntry<float> minLossExp;
     public static ConfigEntry<float> maxLossExp;
+    public static ConfigEntry<int> maxValueAttribute;
 
     #region Parameters
     //LevelSystem arg property <Strength>
@@ -106,6 +107,7 @@ public partial class EpicMMOSystem : BaseUnityPlugin
         minLossExp = config(levelSystem, "MinLossExp", 0.05f, "Minimum Loss Exp if player death, default 5% loss");
         maxLossExp = config(levelSystem, "MaxLossExp", 0.25f, "Maximum Loss Exp if player death, default 25% loss");
         lossExp = config(levelSystem, "LossExp", true, "Enabled exp loss");
+        maxValueAttribute = config(levelSystem, "MaxValueAttribute", 200, "Maximum number of points you can put into one attribute");
         
         #region ParameterCofig
         string levelSystemStrngth = "1.LevelSystem Strength";

@@ -205,8 +205,10 @@ public partial class MyUI
 
         public void UpdateParameters(int freePoints)
         {
-            text.text = $"{localization[$"$parameter_{parameter.ToString().ToLower()}"]}: {LevelSystem.Instance.getParameter(parameter)}";
-            buttons.SetActive(freePoints > 0);
+            var max = EpicMMOSystem.maxValueAttribute.Value;
+            var current = LevelSystem.Instance.getParameter(parameter);
+            text.text = $"{localization[$"$parameter_{parameter.ToString().ToLower()}"]}: {current}";
+            buttons.SetActive(freePoints > 0 && current < max);
         }
     }
     #endregion

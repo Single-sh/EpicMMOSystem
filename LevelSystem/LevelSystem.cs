@@ -74,7 +74,8 @@ public partial class LevelSystem
     private void setParameter(Parameter parameter, int value)
     {
         if (!Player.m_localPlayer) return;
-        int setValue = Math.Max(0, value);
+        int max = EpicMMOSystem.maxValueAttribute.Value;
+        int setValue = Mathf.Clamp(value, 0, max);
         Player.m_localPlayer.m_knownTexts[$"{pluginKey}_{midleKey}_{parameter.ToString()}"] = setValue.ToString();
     }
     
@@ -85,7 +86,9 @@ public partial class LevelSystem
         {
             return 0;
         }
-        return int.Parse(Player.m_localPlayer.m_knownTexts[$"{pluginKey}_{midleKey}_{parameter.ToString()}"]);
+        int value = int.Parse(Player.m_localPlayer.m_knownTexts[$"{pluginKey}_{midleKey}_{parameter.ToString()}"]);
+        int max = EpicMMOSystem.maxValueAttribute.Value;
+        return Mathf.Clamp(value, 0, max);
     }
 
     public int getFreePoints()
