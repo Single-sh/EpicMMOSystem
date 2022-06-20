@@ -58,6 +58,12 @@ public partial class MyUI
             
             __instance.m_healthPanel.Find("Health").gameObject.SetActive(false);
             __instance.m_healthPanel.Find("healthicon").gameObject.SetActive(false);
+
+            var buildInfo = __instance.m_buildHud.transform.Find("SelectedInfo");
+            if (buildInfo)
+            {
+                buildInfo.localPosition += new Vector3(0, 30, 0);
+            }
         }
     }
     
@@ -75,9 +81,17 @@ public partial class MyUI
             var current = player.GetHealth();
             var max = player.GetMaxHealth();
             
-            hpText.text = Mathf.CeilToInt(current).ToString();
             hpImage.fillAmount = current / max;
-
+            string text = "";
+            if (EpicMMOSystem.showMaxHp.Value)
+            {
+                text = $"{Mathf.CeilToInt(current).ToString()} / {Mathf.CeilToInt(max).ToString()}";
+            }
+            else
+            {
+                text = Mathf.CeilToInt(current).ToString();
+            }
+            hpText.text = text;
             return false;
         }
     }
@@ -95,9 +109,17 @@ public partial class MyUI
             var current = player.GetStamina();
             var max = player.GetMaxStamina();
             
-            staminaText.text = Mathf.CeilToInt(current).ToString();
             staminaImage.fillAmount = current / max;
-
+            string text = "";
+            if (EpicMMOSystem.showMaxHp.Value)
+            {
+                text = $"{Mathf.CeilToInt(current).ToString()} / {Mathf.CeilToInt(max).ToString()}";
+            }
+            else
+            {
+                text = Mathf.CeilToInt(current).ToString();
+            }
+            staminaText.text = text;
             return false;
         }
     }

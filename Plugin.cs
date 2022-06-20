@@ -90,6 +90,7 @@ public partial class EpicMMOSystem : BaseUnityPlugin
     
     //Hud
     public static ConfigEntry<bool> oldExpBar;
+    public static ConfigEntry<bool> showMaxHp;
 
     public void Awake()
     {
@@ -146,6 +147,7 @@ public partial class EpicMMOSystem : BaseUnityPlugin
         
         string hud = "4.Hud";
         oldExpBar = config(hud, "UseOldExpBar", false, "Use old xp bar without health and stamina bars (need restart, don't use server sunc)", false);
+        showMaxHp = config(hud, "ShowMaxHp", true, "Show max hp (100 / 100)", false);
         
         _ = ConfigSync.AddLockingConfigEntry(_serverConfigLocked);
 
