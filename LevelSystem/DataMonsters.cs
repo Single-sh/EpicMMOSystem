@@ -233,6 +233,7 @@ public static class DataMonsters
                             GameObject component = keyValuePair.Value.m_gui.transform.Find("Name").gameObject;
                             transform = Object.Instantiate(component, component.transform).transform;
                             transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(37, -30);
+                            transform.GetComponent<Text>().fontSize = 13;
                             transform.GetComponent<Text>().text = $"[{monsterLevel}]";
                         }
                         Color color = monsterLevel > maxLevelExp ? Color.red : Color.white;
