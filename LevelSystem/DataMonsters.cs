@@ -187,27 +187,15 @@ public static class DataMonsters
             if (c.IsTamed()) return;
             if (!EpicMMOSystem.enabledLevelControl.Value) return;
             if (!contains(c.gameObject.name)) return;
-            if (c.IsBoss()) return;
-            Transform go = ___m_huds[c].m_gui.transform.Find("Health/level");
+            Transform go = ___m_huds[c].m_gui.transform.Find("Name/Name(Clone)");
             if (go) return;
             int maxLevelExp = LevelSystem.Instance.getLevel() + EpicMMOSystem.maxLevelExp.Value;
             int minLevelExp = LevelSystem.Instance.getLevel() - EpicMMOSystem.minLevelExp.Value;
             int monsterLevel = getLevel(c.gameObject.name) + c.m_level - 1;
-            GameObject component = ___m_huds[c].m_name.gameObject;
-            var bar = ___m_huds[c].m_gui.transform.Find("Health");
-            GameObject HpText = Object.Instantiate(component, bar);
-            ___m_huds[c].m_healthText = HpText.GetComponent<Text>();
-            ___m_huds[c].m_healthText.fontSize = 13;
-            HpText.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
-            bar.GetComponent<RectTransform>().sizeDelta = new Vector2(100, 13);
-            ___m_huds[c].m_healthFast.m_bar.sizeDelta = new Vector2(100, 13);
-            ___m_huds[c].m_healthSlow.m_bar.sizeDelta = new Vector2(100, 13);
-            
-            GameObject levelName = Object.Instantiate(component, bar);
-            levelName.name = "level";
-            levelName.GetComponent<RectTransform>().anchoredPosition = new Vector2(62, 0);
+            GameObject component = ___m_huds[c].m_gui.transform.Find("Name").gameObject;
+            GameObject levelName = Object.Instantiate(component, component.transform);
+            levelName.GetComponent<RectTransform>().anchoredPosition = new Vector2(37, -30);
             levelName.GetComponent<Text>().text = $"[{monsterLevel}]";
-            levelName.GetComponent<Text>().fontSize = 13;
             Color color = monsterLevel > maxLevelExp ? Color.red : Color.white;
             if (monsterLevel < minLevelExp) color = Color.cyan;
             component.GetComponent<Text>().color = color;
@@ -229,31 +217,27 @@ public static class DataMonsters
                 {
                     Character key = keyValuePair.Key;
                     if (key.IsTamed()) return;
-                    if (key.IsBoss()) return;
                     if (key != null && keyValuePair.Value.m_gui)
                     {
                         if (!contains(key.gameObject.name)) return;
                         int maxLevelExp = LevelSystem.Instance.getLevel() + EpicMMOSystem.maxLevelExp.Value;
                         int minLevelExp = LevelSystem.Instance.getLevel() - EpicMMOSystem.minLevelExp.Value;
                         int monsterLevel = getLevel(key.gameObject.name) + key.m_level - 1;
-                        Transform transform = keyValuePair.Value.m_gui.transform.Find("Health/level");
+                        Transform transform = keyValuePair.Value.m_gui.transform.Find("Name/Name(Clone)");
                         if (transform != null)
                         {
                             transform.gameObject.SetActive(true);
                         }
                         else
                         {
-                            // GameObject component = keyValuePair.Value.m_name.gameObject;
-                            // transform = Object.Instantiate(component, component.transform).transform;
-                            // transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -10);
-                            
-                            
+                            GameObject component = keyValuePair.Value.m_gui.transform.Find("Name").gameObject;
+                            transform = Object.Instantiate(component, component.transform).transform;
+                            transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(37, -30);
+                            transform.GetComponent<Text>().text = $"[{monsterLevel}]";
                         }
                         Color color = monsterLevel > maxLevelExp ? Color.red : Color.white;
                         if (monsterLevel < minLevelExp) color = Color.cyan;
                         transform.GetComponent<Text>().color = color;
-                        keyValuePair.Value.m_healthText.text = $"{(int)key.GetHealth()} / {(int)key.GetMaxHealth()}";
-                        transform.GetComponent<Text>().text = $"[{monsterLevel}]";
                         keyValuePair.Value.m_gui.transform.Find("Name").GetComponent<Text>().color = color;
                         if (keyValuePair.Value.m_gui.transform.Find("extraeffecttext"))
                         {

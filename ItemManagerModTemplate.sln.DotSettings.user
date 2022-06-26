@@ -24,7 +24,6 @@
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSteamLibrary_005Csteamapps_005Ccommon_005CValheim_005Cunstripped_005Fcorlib_005CUnityEngine_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSteamLibrary_005Csteamapps_005Ccommon_005CValheim_005Cunstripped_005Fcorlib_005CUnityEngine_002EDSPGraphModule_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSteamLibrary_005Csteamapps_005Ccommon_005CValheim_005Cunstripped_005Fcorlib_005CUnityEngine_002EGameCenterModule_002Edll/@EntryIndexedValue">True</s:Boolean>
-	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSteamLibrary_005Csteamapps_005Ccommon_005CValheim_005Cunstripped_005Fcorlib_005CUnityEngine_002EGIModule_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSteamLibrary_005Csteamapps_005Ccommon_005CValheim_005Cunstripped_005Fcorlib_005CUnityEngine_002EGridModule_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSteamLibrary_005Csteamapps_005Ccommon_005CValheim_005Cunstripped_005Fcorlib_005CUnityEngine_002EHotReloadModule_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSteamLibrary_005Csteamapps_005Ccommon_005CValheim_005Cunstripped_005Fcorlib_005CUnityEngine_002EImageConversionModule_002Edll/@EntryIndexedValue">True</s:Boolean>
@@ -38,7 +37,6 @@
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSteamLibrary_005Csteamapps_005Ccommon_005CValheim_005Cunstripped_005Fcorlib_005CUnityEngine_002EPhysics2DModule_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSteamLibrary_005Csteamapps_005Ccommon_005CValheim_005Cunstripped_005Fcorlib_005CUnityEngine_002EPhysicsModule_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSteamLibrary_005Csteamapps_005Ccommon_005CValheim_005Cunstripped_005Fcorlib_005CUnityEngine_002EProfilerModule_002Edll/@EntryIndexedValue">True</s:Boolean>
-	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSteamLibrary_005Csteamapps_005Ccommon_005CValheim_005Cunstripped_005Fcorlib_005CUnityEngine_002ERuntimeInitializeOnLoadManagerInitializerModule_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSteamLibrary_005Csteamapps_005Ccommon_005CValheim_005Cunstripped_005Fcorlib_005CUnityEngine_002EScreenCaptureModule_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSteamLibrary_005Csteamapps_005Ccommon_005CValheim_005Cunstripped_005Fcorlib_005CUnityEngine_002ESharedInternalsModule_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSteamLibrary_005Csteamapps_005Ccommon_005CValheim_005Cunstripped_005Fcorlib_005CUnityEngine_002ESpriteMaskModule_002Edll/@EntryIndexedValue">True</s:Boolean>
@@ -52,7 +50,6 @@
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSteamLibrary_005Csteamapps_005Ccommon_005CValheim_005Cunstripped_005Fcorlib_005CUnityEngine_002ETextRenderingModule_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSteamLibrary_005Csteamapps_005Ccommon_005CValheim_005Cunstripped_005Fcorlib_005CUnityEngine_002ETilemapModule_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSteamLibrary_005Csteamapps_005Ccommon_005CValheim_005Cunstripped_005Fcorlib_005CUnityEngine_002ETLSModule_002Edll/@EntryIndexedValue">True</s:Boolean>
-	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSteamLibrary_005Csteamapps_005Ccommon_005CValheim_005Cunstripped_005Fcorlib_005CUnityEngine_002EUIElementsNativeModule_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSteamLibrary_005Csteamapps_005Ccommon_005CValheim_005Cunstripped_005Fcorlib_005CUnityEngine_002EUI_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSteamLibrary_005Csteamapps_005Ccommon_005CValheim_005Cunstripped_005Fcorlib_005CUnityEngine_002EUIElementsModule_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSteamLibrary_005Csteamapps_005Ccommon_005CValheim_005Cunstripped_005Fcorlib_005CUnityEngine_002EUIModule_002Edll/@EntryIndexedValue">True</s:Boolean>
@@ -60,7 +57,6 @@
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSteamLibrary_005Csteamapps_005Ccommon_005CValheim_005Cunstripped_005Fcorlib_005CUnityEngine_002EUNETModule_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSteamLibrary_005Csteamapps_005Ccommon_005CValheim_005Cunstripped_005Fcorlib_005CUnityEngine_002EUnityAnalyticsModule_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSteamLibrary_005Csteamapps_005Ccommon_005CValheim_005Cunstripped_005Fcorlib_005CUnityEngine_002EUnityConnectModule_002Edll/@EntryIndexedValue">True</s:Boolean>
-	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSteamLibrary_005Csteamapps_005Ccommon_005CValheim_005Cunstripped_005Fcorlib_005CUnityEngine_002EUnityCurlModule_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSteamLibrary_005Csteamapps_005Ccommon_005CValheim_005Cunstripped_005Fcorlib_005CUnityEngine_002EUnityTestProtocolModule_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSteamLibrary_005Csteamapps_005Ccommon_005CValheim_005Cunstripped_005Fcorlib_005CUnityEngine_002EUnityWebRequestAssetBundleModule_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSteamLibrary_005Csteamapps_005Ccommon_005CValheim_005Cunstripped_005Fcorlib_005CUnityEngine_002EUnityWebRequestAudioModule_002Edll/@EntryIndexedValue">True</s:Boolean>
@@ -70,7 +66,6 @@
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSteamLibrary_005Csteamapps_005Ccommon_005CValheim_005Cunstripped_005Fcorlib_005CUnityEngine_002EVehiclesModule_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSteamLibrary_005Csteamapps_005Ccommon_005CValheim_005Cunstripped_005Fcorlib_005CUnityEngine_002EVFXModule_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSteamLibrary_005Csteamapps_005Ccommon_005CValheim_005Cunstripped_005Fcorlib_005CUnityEngine_002EVideoModule_002Edll/@EntryIndexedValue">True</s:Boolean>
-	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSteamLibrary_005Csteamapps_005Ccommon_005CValheim_005Cunstripped_005Fcorlib_005CUnityEngine_002EVirtualTexturingModule_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSteamLibrary_005Csteamapps_005Ccommon_005CValheim_005Cunstripped_005Fcorlib_005CUnityEngine_002EVRModule_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSteamLibrary_005Csteamapps_005Ccommon_005CValheim_005Cunstripped_005Fcorlib_005CUnityEngine_002EWindModule_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=A_003A_005CSteamLibrary_005Csteamapps_005Ccommon_005CValheim_005Cunstripped_005Fcorlib_005CUnityEngine_002EXRModule_002Edll/@EntryIndexedValue">True</s:Boolean>
