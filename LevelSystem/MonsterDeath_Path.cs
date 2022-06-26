@@ -58,9 +58,8 @@ public static class MonsterDeath_Path
         int expMonster = DataMonsters.getExp(monsterName);
         int maxExp = DataMonsters.getMaxExp(monsterName);
         float lvlExp = EpicMMOSystem.expForLvlMonster.Value;
-        float rate = EpicMMOSystem.rateExp.Value;
         var resultExp = expMonster + (maxExp * lvlExp * (level - 1));
-        var exp = Convert.ToInt32(resultExp * rate);
+        var exp = Convert.ToInt32(resultExp);
         if (EpicMMOSystem.enabledLevelControl.Value && EpicMMOSystem.disableExp.Value)
         {
             int maxRangeLevel = LevelSystem.Instance.getLevel() + EpicMMOSystem.maxLevelExp.Value;

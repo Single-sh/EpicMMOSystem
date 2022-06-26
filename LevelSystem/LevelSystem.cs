@@ -33,6 +33,7 @@ public partial class LevelSystem
     private string pluginKey = EpicMMOSystem.ModName;
     private const string midleKey = "LevelSystem";
     private int[] depositPoint = { 0, 0, 0, 0 };
+    private float singleRate = 0;
 
     public LevelSystem()
     {
@@ -142,12 +143,19 @@ public partial class LevelSystem
         ResetAllParameter();
     }
 
+    public void SetSingleRate(float rate)
+    {
+        singleRate = rate;
+    }
+
     public void AddExp(int exp)
     {
         if(exp < 1) return;
+        float rate = EpicMMOSystem.rateExp.Value;
+        var giveExp = exp * (rate + singleRate);
         var current = getCurrentExp();
         var need = getNeedExp();
-        current += exp;
+        current += (int)giveExp;
         int addLvl = 0;
         while (current > need)
         {
@@ -160,7 +168,7 @@ public partial class LevelSystem
         MyUI.updateExpBar();
         Player.m_localPlayer.Message(
             MessageHud.MessageType.TopLeft, 
-            $"{(EpicMMOSystem.localization["$get_exp"])}: {exp}"
+            $"{(EpicMMOSystem.localization["$get_exp"])}: {(int)giveExp}"
         );
     }
 

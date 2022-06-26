@@ -11,6 +11,7 @@ public static class EpicMMOSystem_API
     private static MethodInfo eGetLevel;
     private static MethodInfo eAddExp;
     private static MethodInfo eGetAttribute;
+    private static MethodInfo eSetSingleRate;
 
 
     private enum API_State
@@ -60,9 +61,11 @@ public static class EpicMMOSystem_API
         eGetLevel = actionsMO.GetMethod("GetLevel", BindingFlags.Public | BindingFlags.Static);
         eAddExp = actionsMO.GetMethod("AddExp", BindingFlags.Public | BindingFlags.Static);
         eAddExp = actionsMO.GetMethod("GetAttribute", BindingFlags.Public | BindingFlags.Static);
+        eSetSingleRate = actionsMO.GetMethod("SetSingleRate", BindingFlags.Public | BindingFlags.Static);
     }
 }
 
+//Don't Use
 public static class EMMOS_API
 {
     public static int GetLevel()
@@ -73,6 +76,11 @@ public static class EMMOS_API
     public static void AddExp(int exp)
     {
         LevelSystem.Instance.AddExp(exp);
+    }
+    
+    public static void SetSingleRate(float rate)
+    {
+        LevelSystem.Instance.SetSingleRate(rate);
     }
 
     public static int GetAttribute(EpicMMOSystem_API.Attribut attribute)
