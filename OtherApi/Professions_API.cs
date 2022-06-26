@@ -30,6 +30,10 @@ public static class Professions_API
     {
         Init();
         if (state != API_State.Ready) return;
+        if (!mShowProfessions)
+        {
+            forceInit();
+        }
         mShowProfessions.SetActive(!mShowProfessions.activeSelf);
         if (mShowProfessions.activeSelf)
         {
@@ -45,6 +49,22 @@ public static class Professions_API
         {
             if (state is API_State.Ready or API_State.NotInstalled) return;
         }
+        if (Type.GetType("Professions.Professions, Professions") == null)
+        {
+            state = API_State.NotInstalled;
+            return;
+        }
+
+        state = API_State.Ready;
+
+        Type actionsMO = Type.GetType("Professions.Professions, Professions");
+        mShowProfessions = AccessTools.Field(actionsMO, "professionPanelInstance").GetValue(null) as GameObject;
+        mUpdateSelected = actionsMO.GetMethod("UpdateSelectPanelSelections",BindingFlags.NonPublic | BindingFlags.Static);
+        mRequestServerTime = actionsMO.GetMethod("requestServerTime",BindingFlags.NonPublic | BindingFlags.Static);
+    }
+
+    private static void forceInit()
+    {
         if (Type.GetType("Professions.Professions, Professions") == null)
         {
             state = API_State.NotInstalled;
