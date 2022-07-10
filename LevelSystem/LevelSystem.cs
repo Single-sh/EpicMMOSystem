@@ -288,17 +288,17 @@ public static class SetZDOLevel
     }
 }
 
-[HarmonyPatch(typeof(ZNet), nameof(ZNet.RPC_CharacterID))]
-public static class SetZDOPeer
-{
-    public static void Postfix()
-    {
-        foreach (var peer in ZNet.instance.m_peers)
-        {
-            ZDOMan.instance.ForceSendZDO(peer.m_characterID);
-        }
-    }
-}
+// [HarmonyPatch(typeof(ZNet), nameof(ZNet.RPC_CharacterID))]
+// public static class SetZDOPeer
+// {
+//     public static void Postfix()
+//     {
+//         foreach (var peer in ZNet.instance.m_peers)
+//         {
+//             ZDOMan.instance.ForceSendZDO(peer.m_characterID);
+//         }
+//     }
+// }
 
 [HarmonyPatch(typeof(Player), nameof(Player.OnDeath))]
 public static class Death

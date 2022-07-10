@@ -103,7 +103,7 @@ public static class DataMonsters
                 }
 
                 var obj = dictionary.Values.ToArray();
-                string text = JSON.ToJSON(obj, new JSONParameters(){UseExtensions = false});
+                string text = JSON.ToNiceJSON(obj, new JSONParameters(){UseExtensions = false});
                 File.WriteAllText(path,text);
                 return;
             }

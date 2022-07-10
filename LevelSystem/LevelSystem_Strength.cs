@@ -42,7 +42,8 @@ public partial class LevelSystem
     {
         static void Postfix(ref float __result)
         {
-            __result += (float)Math.Round(Instance.getAddWeight());
+            var addWeight = Instance.getAddWeight() + EpicMMOSystem.addDefaultWeight.Value;
+            __result += (float)Math.Round(addWeight);
         }
     }
 }

@@ -11,6 +11,7 @@ public partial class MyUI
     private static Transform buttonFriendsList;
     private static Transform buttonQuestPanel;
     private static Transform buttonProfessionsPanel;
+    private static Transform buttonShopPanel;
     private static void InitNavigationPanel()
     {
         navigationPanel = UI.transform.Find("Canvas/NavigatePanel").gameObject;
@@ -33,6 +34,13 @@ public partial class MyUI
             buttonProfessionsPanel.GetComponent<Button>().onClick.AddListener(ClickProfessionsPanel);
             buttonProfessionsPanel.gameObject.SetActive(true);
         }
+
+        if (DonatShop_API.IsInstalled())
+        {
+            buttonShopPanel = navigationPanel.transform.Find("Buttons/ButtonShop");
+            buttonShopPanel.GetComponent<Button>().onClick.AddListener(ClickButtonDonatShop);
+            buttonShopPanel.gameObject.SetActive(true);
+        }
     }
 
     private static void ClickButtonLevelSystem()
@@ -45,6 +53,11 @@ public partial class MyUI
     {
         if (!friendsListPanel.activeSelf) updateList();
         friendsListPanel.SetActive(!friendsListPanel.activeSelf);
+    }
+    
+    private static void ClickButtonDonatShop()
+    {
+        DonatShop_API.OpenShop();
     }
     
     private static void ClickQuestPanel()

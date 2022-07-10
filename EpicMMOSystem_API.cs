@@ -45,6 +45,12 @@ public static class EpicMMOSystem_API
         Init();
         eAddExp?.Invoke(null, new object[] { value });
     }
+
+    public static void SetSingleRate(float rate)
+    {
+        Init();
+        eSetSingleRate?.Invoke(null, new object[] { rate });
+    }  
  
     private static void Init()
     { 

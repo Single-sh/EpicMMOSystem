@@ -39,7 +39,8 @@ public partial class LevelSystem
     {
         public static void Postfix(ref float hp)
         {
-            hp += Instance.getAddHp();
+            var addHp = Instance.getAddHp() + EpicMMOSystem.addDefaultHealth.Value;
+            hp += addHp;
         }
     }
     

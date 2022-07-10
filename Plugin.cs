@@ -18,7 +18,7 @@ namespace EpicMMOSystem;
 public partial class EpicMMOSystem : BaseUnityPlugin
 {
     internal const string ModName = "EpicMMOSystem";
-    internal const string ModVersion = "1.2.8";
+    internal const string ModVersion = "1.2.9";
     internal const string Author = "LambaSun";
     private const string ModGUID = Author + "." + ModName;
     private static string ConfigFileName = ModGUID + ".cfg";
@@ -79,6 +79,7 @@ public partial class EpicMMOSystem : BaseUnityPlugin
     //Creature level control
     public static ConfigEntry<bool> enabledLevelControl;
     public static ConfigEntry<bool> removeDrop;
+    public static ConfigEntry<bool> mentor;
     public static ConfigEntry<bool> disableExp;
     public static ConfigEntry<bool> lowDamageLevel;
     public static ConfigEntry<int> maxLevelExp;
@@ -91,7 +92,10 @@ public partial class EpicMMOSystem : BaseUnityPlugin
     //Hud
     public static ConfigEntry<bool> oldExpBar;
     public static ConfigEntry<bool> showMaxHp;
-
+    
+    //Optional
+    public static ConfigEntry<float> addDefaultHealth;
+    public static ConfigEntry<float> addDefaultWeight;
     public void Awake()
     {
         string general = "0.General";
@@ -134,6 +138,7 @@ public partial class EpicMMOSystem : BaseUnityPlugin
         #endregion
         
         string creatureLevelControl = "2.Creature level control";
+        mentor = config(creatureLevelControl, "Mentor", false, "Add exp for groups if low level");
         enabledLevelControl = config(creatureLevelControl, "Enabled_creature_level", true, "Enable creature Level control");
         removeDrop = config(creatureLevelControl, "Remove_drop", true, "Monsters after death do not give items if their level is less than the character by player level + MaxLevelRange");
         disableExp = config(creatureLevelControl, "Disable_exp", true, "Monsters after death do not give exp if their level is less than the character by player level + MaxLevelRange");
@@ -148,6 +153,10 @@ public partial class EpicMMOSystem : BaseUnityPlugin
         string hud = "4.Hud";
         oldExpBar = config(hud, "UseOldExpBar", false, "Use old xp bar without health and stamina bars (need restart, don't use server sunc)", false);
         showMaxHp = config(hud, "ShowMaxHp", true, "Show max hp (100 / 100)", false);
+        
+        string optionalEffect = "5.Optional perk";
+        addDefaultHealth = config(optionalEffect, "AddDefaultHealth", 0f, "Add health by default");
+        addDefaultWeight = config(optionalEffect, "AddDefaultWeight", 0f, "Add weight by default");
         
         _ = ConfigSync.AddLockingConfigEntry(_serverConfigLocked);
 
@@ -254,7 +263,7 @@ public partial class EpicMMOSystem : BaseUnityPlugin
                  versionString += $"-{ModName}{ModVersion}";
              else
                  versionString = versionString.Replace($"-{ModName}{ModVersion}", "");
-    
+         
              ZPackage newPkg = new ZPackage();
              newPkg.Write(uid);
              newPkg.Write(versionString);

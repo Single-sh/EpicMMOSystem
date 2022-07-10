@@ -25,7 +25,7 @@ public static class MonsterDeath_Path
     {
         if ((double)Vector3.Distance(position, Player.m_localPlayer.transform.position) >= 50f) return;
         int maxRangeLevel = LevelSystem.Instance.getLevel() + EpicMMOSystem.maxLevelExp.Value;
-        if (monsterLevel > maxRangeLevel) return;
+        if (monsterLevel > maxRangeLevel && !EpicMMOSystem.mentor.Value) return;
         int minRangeLevel = LevelSystem.Instance.getLevel() - EpicMMOSystem.minLevelExp.Value;
         if (monsterLevel < minRangeLevel)
         {
@@ -60,6 +60,7 @@ public static class MonsterDeath_Path
         float lvlExp = EpicMMOSystem.expForLvlMonster.Value;
         var resultExp = expMonster + (maxExp * lvlExp * (level - 1));
         var exp = Convert.ToInt32(resultExp);
+        var playerExp = exp;
         if (EpicMMOSystem.enabledLevelControl.Value && EpicMMOSystem.disableExp.Value)
         {
             int maxRangeLevel = LevelSystem.Instance.getLevel() + EpicMMOSystem.maxLevelExp.Value;
@@ -67,11 +68,11 @@ public static class MonsterDeath_Path
             int minRangeLevel = LevelSystem.Instance.getLevel() - EpicMMOSystem.minLevelExp.Value;
             if (monsterLevel < minRangeLevel)
             {
-                exp = Convert.ToInt32( exp / (minRangeLevel - monsterLevel));
+                playerExp = Convert.ToInt32( exp / (minRangeLevel - monsterLevel));
             }
         }
         
-        LevelSystem.Instance.AddExp(exp);
+        LevelSystem.Instance.AddExp(playerExp);
         if (!Groups.API.IsLoaded()) return;
         var groupFactor = EpicMMOSystem.groupExp.Value;
         foreach (var playerReference in Groups.API.GroupPlayers())

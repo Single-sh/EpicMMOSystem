@@ -1,3 +1,4 @@
+using EpicMMOSystem.OtherApi;
 using HarmonyLib;
 using UnityEngine;
 using UnityEngine.UI;
@@ -36,6 +37,7 @@ public static partial class MyUI
         addFriendAlert.SetActive(false);
         UI.SetActive(false);
         LevelSystem.Instance.cancelDepositPoints();
+        DonatShop_API.HidePanel();
     }
 
     public static void Show()
