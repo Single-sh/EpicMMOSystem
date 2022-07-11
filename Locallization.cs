@@ -145,11 +145,11 @@ public class Localization
         _dictionary.Add("$add_weight", "Carry weight");
         _dictionary.Add("$speed_attack", "Attack stamina consumption");
         _dictionary.Add("$reduced_stamina", "Stamina consumption (running, jumping)");
-        _dictionary.Add("$magic_damage", "Magic damage");
-        _dictionary.Add("$magic_armor", "Magic armor");
+        _dictionary.Add("$magic_damage", "Elemental damage");
+        _dictionary.Add("$magic_armor", "Elemental reduced");
         _dictionary.Add("$add_hp", "Health increase");
         _dictionary.Add("$add_stamina", "Stamina increase");
-        _dictionary.Add("$physic_armor", "Physical armor");
+        _dictionary.Add("$physic_armor", "Physical reduced");
         _dictionary.Add("$reduced_stamina_block", "Block stamina consumption");
         _dictionary.Add("$regen_hp", "Health regeneration");
         _dictionary.Add("$damage", "Damage");

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using BepInEx;
 using HarmonyLib;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -102,6 +103,32 @@ public partial class LevelSystem
         for (int i = 0; i < 4; i++)
         {
             usedUp += getParameter((Parameter)i);
+        }
+
+        try
+        {
+            int addPoints = 0;
+            string str = EpicMMOSystem.levelsForBinusFreePoint.Value;
+            if (str.IsNullOrWhiteSpace()) return total - usedUp;
+            var map = str.Split(',');
+            foreach (var value in map)
+            {
+                var keyValue = value.Split(':');
+                if (Int32.Parse(keyValue[0]) <= level)
+                {
+                    addPoints += Int32.Parse(keyValue[1]);
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            total += addPoints;
+        }
+        catch (Exception e)
+        {
+            EpicMMOSystem.print($"Free point, bonus error: {e.Message}");
         }
         return total - usedUp;
     }

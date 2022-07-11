@@ -53,6 +53,7 @@ public partial class EpicMMOSystem : BaseUnityPlugin
     public static ConfigEntry<float> minLossExp;
     public static ConfigEntry<float> maxLossExp;
     public static ConfigEntry<int> maxValueAttribute;
+    public static ConfigEntry<string> levelsForBinusFreePoint;
 
     #region Parameters
     //LevelSystem arg property <Strength>
@@ -115,6 +116,7 @@ public partial class EpicMMOSystem : BaseUnityPlugin
         maxLossExp = config(levelSystem, "MaxLossExp", 0.25f, "Maximum Loss Exp if player death, default 25% loss");
         lossExp = config(levelSystem, "LossExp", true, "Enabled exp loss");
         maxValueAttribute = config(levelSystem, "MaxValueAttribute", 200, "Maximum number of points you can put into one attribute");
+        levelsForBinusFreePoint = config(levelSystem, "BonusLevelPoints", "5:5,10:5", "Added bonus point for level. Example(level:points): 5:10,15:20 add all 30 points ");
         
         #region ParameterCofig
         string levelSystemStrngth = "1.LevelSystem Strength";
