@@ -263,7 +263,7 @@ public static class DataMonsters
                 if (!contains(__instance.m_character.gameObject.name)) return;
                 int maxLevelExp = playerLevel + EpicMMOSystem.maxLevelExp.Value;
                 int monsterLevel = getLevel(__instance.m_character.gameObject.name) + __instance.m_character.m_level - 1;
-                if (monsterLevel > maxLevelExp)
+                if (monsterLevel < maxLevelExp)
                 {
                     __result = new();
                 }
