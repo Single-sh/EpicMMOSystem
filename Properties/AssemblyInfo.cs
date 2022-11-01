@@ -8,7 +8,7 @@ using EpicMMOSystem;
 [assembly: AssemblyTitle(EpicMMOSystem.EpicMMOSystem.ModName)]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany(EpicMMOSystem.EpicMMOSystem.Author)]
+[assembly: AssemblyCompany(EpicMMOSystem.EpicMMOSystem.Author + "Azumatt")]
 [assembly: AssemblyProduct(EpicMMOSystem.EpicMMOSystem.ModName)]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
