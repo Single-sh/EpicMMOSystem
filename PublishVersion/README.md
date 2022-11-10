@@ -1,5 +1,5 @@
 # Description:
-This mod adds an RPG-like system of levels and attribute increases: - Wacky Branch 1.3.0
+This mod adds an RPG-like system of levels and attribute increases: - Wacky Branch 1.3.1
 WackyEpicMMOSystem release until author comes back. - Main git - https://github.com/Single-sh/EpicMMOSystem
 ![https://i.imgur.com/5Tzgs0R.png](https://i.imgur.com/5Tzgs0R.png)
 
@@ -59,7 +59,8 @@ or WackyMole on Odins
 </details> 
 
 <details><summary>Changelog</summary>
- 
+
+ - 1.3.1: Dual wield and EpicMMO Thanks to KG, sponsored by Aldhari/Skaldhari
  - 1.3.0: WackyEpicMMOSystem release, until author comes back. Code from Azumatt - Updated Chat, Group and ServerSync
  - 1.2.8: Added a limiter for the maximum attribute value. New view health and stamina bar (in the configuration you can return the old display where only the experience is displayed).
  - 1.2.7: Fix version check

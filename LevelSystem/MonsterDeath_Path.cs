@@ -120,7 +120,7 @@ public static class MonsterDeath_Path
     {
         static void Prefix(Character __instance, long sender, HitData hit)
         {
-            
+            if (__instance.GetHealth() <= 0) return;
             var attacker = hit.GetAttacker();
             if (attacker)
             {
