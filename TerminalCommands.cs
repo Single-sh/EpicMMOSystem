@@ -31,14 +31,14 @@ public static class TerminalCommands
     private static void RPC_SetLevel(long sender, int level)
     {
         LevelSystem.Instance.terminalSetLevel(level);
-        Chat.instance.RPC_ChatMessage(200, Vector3.zero, 0, local["$notify"], String.Format(local["$terminal_set_level"], level));
+        Chat.instance.RPC_ChatMessage(200, Vector3.zero, 0, local["$notify"], String.Format(local["$terminal_set_level"], level), PrivilegeManager.GetNetworkUserId());
     }
     
     //Сброс поинтов
     private static void RPC_ResetPoints(long sender)
     {
         LevelSystem.Instance.ResetAllParameter();
-        Chat.instance.RPC_ChatMessage(200, Vector3.zero, 0, local["$notify"], local["$terminal_reset_points"]);
+        Chat.instance.RPC_ChatMessage(200, Vector3.zero, 0, local["$notify"], local["$terminal_reset_points"],PrivilegeManager.GetNetworkUserId());
     }
     
     [HarmonyPatch(typeof(Terminal), nameof(Terminal.InitTerminal))]
