@@ -9,7 +9,7 @@ Features:
  - MMO-like friends list.
  - On screen XP bar.
  - Compatible with [ItemRequiresSkillLevel](https://valheim.thunderstore.io/package/Detalhes/ItemRequiresSkillLevel/) mod. Equipment can be limited by level or attribute.
- - Compatible with KGMarketplace mod. Experience rewards can be added: (EpicMMO_Exp: text, 250) Quests can be limited by level (EpicMMO_Level: text, 20).
+ - Compatible with KGMarketplace mod. Experience rewards can be added: (EpicMMO_Exp: 250) Quests can be limited by level (EpicMMO_Level: text, 20)
  
  ![https://i.imgur.com/lkCcVOo.png](https://i.imgur.com/lkCcVOo.png)
 
