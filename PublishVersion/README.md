@@ -1,4 +1,4 @@
-﻿﻿# Description:
+# Description:
 This mod adds an RPG-like system of levels and attribute increases: - Wacky Branch 1.3.0
 WackyEpicMMOSystem release until author comes back. - Main git - https://github.com/Single-sh/EpicMMOSystem
 ![https://i.imgur.com/5Tzgs0R.png](https://i.imgur.com/5Tzgs0R.png)
