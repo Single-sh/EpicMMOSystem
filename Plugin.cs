@@ -18,7 +18,7 @@ namespace EpicMMOSystem;
 public partial class EpicMMOSystem : BaseUnityPlugin
 {
     internal const string ModName = "EpicMMOSystem";
-    internal const string ModVersion = "1.3.1";
+    internal const string ModVersion = "1.4.0";
     internal const string Author = "LambaSun";
     private const string ModGUID = Author + "." + ModName;
     private static string ConfigFileName = ModGUID + ".cfg";
@@ -79,9 +79,13 @@ public partial class EpicMMOSystem : BaseUnityPlugin
     
     //Creature level control
     public static ConfigEntry<bool> enabledLevelControl;
-    public static ConfigEntry<bool> removeDrop;
+    public static ConfigEntry<bool> removeDropMax;
+    public static ConfigEntry<bool> removeDropMin;
+    public static ConfigEntry<bool> removeBossDropMax;
+    public static ConfigEntry<bool> removeBossDropMin;
     public static ConfigEntry<bool> mentor;
-    public static ConfigEntry<bool> disableExp;
+    public static ConfigEntry<bool> curveExp;
+    public static ConfigEntry<bool> curveBossExp;
     public static ConfigEntry<bool> lowDamageLevel;
     public static ConfigEntry<int> maxLevelExp;
     public static ConfigEntry<int> minLevelExp;
@@ -99,10 +103,10 @@ public partial class EpicMMOSystem : BaseUnityPlugin
     public static ConfigEntry<float> addDefaultWeight;
     public void Awake()
     {
-        string general = "0.General";
+        string general = "0.General---------------";
         _serverConfigLocked = config(general, "Force Server Config", true, "Force Server Config");
         language = config(general, "Language", "eng", "Language prefix", false);
-        string levelSystem = "1.LevelSystem";
+        string levelSystem = "1.LevelSystem-----------";
         maxLevel = config(levelSystem, "MaxLevel", 100, "Maximum level. Максимальный уровень");
         priceResetPoints = config(levelSystem, "PriceResetPoints", 3, "Reset price per point. Цена сброса за один поинт");
         freePointForLevel = config(levelSystem, "FreePointForLevel", 5, "Free points per level. Свободных поинтов за один уровень");
@@ -119,20 +123,20 @@ public partial class EpicMMOSystem : BaseUnityPlugin
         levelsForBinusFreePoint = config(levelSystem, "BonusLevelPoints", "5:5,10:5", "Added bonus point for level. Example(level:points): 5:10,15:20 add all 30 points ");
         
         #region ParameterCofig
-        string levelSystemStrngth = "1.LevelSystem Strength";
+        string levelSystemStrngth = "1.LevelSystem Strength--";
         physicDamage = config(levelSystemStrngth, "PhysicDamage", 0.20f, "Damage multiplier per point. Умножитель урона за один поинт");
         addWeight = config(levelSystemStrngth, "AddWeight", 2f, "Adds carry weight per point. Добавляет переносимый вес за один поинт");
         
-        string levelSystemAgility = "1.LevelSystem Agility";
+        string levelSystemAgility = "1.LevelSystem Agility---";
         speedAttack = config(levelSystemAgility, "StaminaAttack", 0.1f, "Reduces attack stamina consumption. Уменьшает потребление стамины на атаку");
         staminaReduction = config(levelSystemAgility, "StaminaReduction", 0.15f, "Decrease stamina consumption for running, jumping for one point. Уменьшение расхода выносливости на бег, прыжок за один поинт");
         addStamina = config(levelSystemAgility, "AddStamina", 1f, "One Point Stamina Increase. Увеличение  выносливости за один поинт");
         
-        string levelSystemIntellect = "1.LevelSystem Intellect";
+        string levelSystemIntellect = "1.LevelSystem Intellect-";
         magicDamage = config(levelSystemIntellect, "MagicAttack", 0.20f, "Increase magic attack per point. Увеличение магической атаки за один поинт");
         magicArmor = config(levelSystemIntellect, "MagicArmor", 0.1f, "Increase magical protection per point. Увеличение магической защиты за один поинт");
         
-        string levelSystemBody = "1.LevelSystem Body";
+        string levelSystemBody = "1.LevelSystem Body------";
         addHp = config(levelSystemBody, "AddHp", 2f, "One Point Health Increase. Увеличение здоровья за один поинт");
         staminaBlock = config(levelSystemBody, "StaminaBlock", 0.2f, "Decrease stamina consumption per unit per point. Уменьшение расхода выносливости на блок за один поинт");
         physicArmor = config(levelSystemBody, "PhysicArmor", 0.15f, "Increase in physical protection per point. Увеличение физической защиты за один поинт");
@@ -142,8 +146,12 @@ public partial class EpicMMOSystem : BaseUnityPlugin
         string creatureLevelControl = "2.Creature level control";
         mentor = config(creatureLevelControl, "Mentor", false, "Add exp for groups if low level");
         enabledLevelControl = config(creatureLevelControl, "Enabled_creature_level", true, "Enable creature Level control");
-        removeDrop = config(creatureLevelControl, "Remove_drop", true, "Monsters after death do not give items if their level is less than the character by player level + MaxLevelRange");
-        disableExp = config(creatureLevelControl, "Disable_exp", true, "Monsters after death do not give exp if their level is less than the character by player level + MaxLevelRange");
+        removeDropMax = config(creatureLevelControl, "Remove_creature_drop_max", true, "Monsters after death do not give items if their level is higher than player level + MaxLevel");
+        removeDropMin = config(creatureLevelControl, "Remove_creature_drop_min", false, "Monsters after death do not give items if their level is lower than player level - MinLevel");
+        removeBossDropMax = config(creatureLevelControl, "Remove_boss_drop_max", false, "Bosses after death do not give items if their level is higher than player level + MaxLevel");
+        removeBossDropMin = config(creatureLevelControl, "Remove_boss_drop_min", false, "Bosses after death do not give items if their level is lower than player level - Minlevel");
+        curveExp = config(creatureLevelControl, "Curve_creature_exp", true, "Monsters after death will give less exp if player is outside Max or Min Level Range");
+        curveBossExp = config(creatureLevelControl, "Curve_Boss_exp", true, "Bosses after death will give less exp if player is outside Max or Min Level Range");
         lowDamageLevel = config(creatureLevelControl, "Low_damage_level", true, "Decreased damage to the monster if the level is insufficient");
         minLevelExp = config(creatureLevelControl, "MinLevelRange", 10, "Character level - MinLevelRange is less than the level of the monster, then you will receive reduced experience. Уровень персонажа - MinLevelRange меньше уровня монстра, то вы будете получать урезанный опыт");
         maxLevelExp = config(creatureLevelControl, "MaxLevelRange", 10, "Character level + MaxLevelRange is less than the level of the monster, then you will not receive experience. Уровень персонажа + MaxLevelRange меньше уровня монстра, то вы не будете получать опыт");
@@ -152,11 +160,11 @@ public partial class EpicMMOSystem : BaseUnityPlugin
         prefabNameCoins = config(resetAttributesItems, "prefabName", "Coins", "Name prefab item");
         viewTextCoins = config(resetAttributesItems, "viewText", "coins", "Name item");
         
-        string hud = "4.Hud";
+        string hud = "4.Hud--------------------";
         oldExpBar = config(hud, "UseOldExpBar", false, "Use old xp bar without health and stamina bars (need restart, don't use server sunc)", false);
         showMaxHp = config(hud, "ShowMaxHp", true, "Show max hp (100 / 100)", false);
         
-        string optionalEffect = "5.Optional perk";
+        string optionalEffect = "5.Optional perk---------";
         addDefaultHealth = config(optionalEffect, "AddDefaultHealth", 0f, "Add health by default");
         addDefaultWeight = config(optionalEffect, "AddDefaultWeight", 0f, "Add weight by default");
         

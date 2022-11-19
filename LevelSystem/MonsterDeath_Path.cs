@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Groups;
 using HarmonyLib;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace EpicMMOSystem;
 
@@ -50,7 +51,20 @@ public static class MonsterDeath_Path
             return;
         }
         int monsterLevel = DataMonsters.getLevel(monsterName) + level - 1;
-        
+
+        var DontSkip = true;
+        if (!EpicMMOSystem.curveBossExp.Value)
+        {
+            switch (monsterName) // if a boss then skip lvl check if disableBossExp if false
+            {
+                case "Eikthyr": DontSkip = false; break;
+                case "gd_king": DontSkip = false; break;
+                case "Bonemass":DontSkip = false; break;
+                case "Dragon":  DontSkip= false; break;
+                case "GoblinKing":DontSkip= false; break;
+                default: DontSkip = true; break;
+            }
+        }
         
         
         if ((double)Vector3.Distance(position, Player.m_localPlayer.transform.position) >= 50f) return;
@@ -61,10 +75,16 @@ public static class MonsterDeath_Path
         var resultExp = expMonster + (maxExp * lvlExp * (level - 1));
         var exp = Convert.ToInt32(resultExp);
         var playerExp = exp;
-        if (EpicMMOSystem.enabledLevelControl.Value && EpicMMOSystem.disableExp.Value)
+
+
+        if (EpicMMOSystem.enabledLevelControl.Value && (EpicMMOSystem.curveExp.Value) && DontSkip)
         {
+            EpicMMOSystem.MLLogger.LogDebug("Checking player lvl");
             int maxRangeLevel = LevelSystem.Instance.getLevel() + EpicMMOSystem.maxLevelExp.Value;
-            if (monsterLevel > maxRangeLevel) return;
+            if (monsterLevel > maxRangeLevel)
+            {
+                playerExp = Convert.ToInt32(exp / (monsterLevel - maxRangeLevel ));
+            }
             int minRangeLevel = LevelSystem.Instance.getLevel() - EpicMMOSystem.minLevelExp.Value;
             if (monsterLevel < minRangeLevel)
             {
@@ -95,7 +115,8 @@ public static class MonsterDeath_Path
         public static void Prefix(Character __instance, HitData hit)
         {
             if (!EpicMMOSystem.enabledLevelControl.Value) return;
-            if (EpicMMOSystem.removeDrop.Value) hit.m_toolTier = LevelSystem.Instance.getLevel();
+            //if (EpicMMOSystem.removeDrop.Value) hit.m_toolTier = LevelSystem.Instance.getLevel(); // using toolTier to pass the Lvl of player
+            hit.m_toolTier = LevelSystem.Instance.getLevel();
             if (EpicMMOSystem.lowDamageLevel.Value)
             {
                 if (__instance.IsPlayer()) return;
@@ -121,24 +142,45 @@ public static class MonsterDeath_Path
         static void Prefix(Character __instance, long sender, HitData hit)
         {
             if (__instance.GetHealth() <= 0) return;
+            var BossDropFlag = false;
+            if (__instance.GetFaction() == Character.Faction.Boss )
+            {
+                BossDropFlag = true; 
+            }
             var attacker = hit.GetAttacker();
             if (attacker)
             {
                 if (attacker.IsPlayer())
                 {
                     CharacterLastDamageList[__instance] = sender;
-                    if (EpicMMOSystem.enabledLevelControl.Value && EpicMMOSystem.removeDrop.Value)
+                    if (EpicMMOSystem.enabledLevelControl.Value && (EpicMMOSystem.removeBossDropMax.Value || EpicMMOSystem.removeBossDropMin.Value) && BossDropFlag)// removeboss drop and is a boss
                     {
-                        __instance.m_nview.GetZDO().Set("epic playerLevel", hit.m_toolTier);
+                        __instance.m_nview.GetZDO().Set("epic playerLevel", hit.m_toolTier); // Check level because is boss
+
                     }
+                    else if (EpicMMOSystem.enabledLevelControl.Value && (EpicMMOSystem.removeDropMax.Value || EpicMMOSystem.removeDropMin.Value) && !BossDropFlag) //remove mobdrop and is not a boss
+                    {
+                        __instance.m_nview.GetZDO().Set("epic playerLevel", -hit.m_toolTier); // reg mob check for lvl 
+                    }
+                    else /// No lvl check
+                    {
+                        EpicMMOSystem.MLLogger.LogInfo("else ZDO epic playerLevel to 0");
+                        if (0 != __instance.m_nview.GetZDO().GetInt("epic playerLevel"))
+                        {
+                            __instance.m_nview.GetZDO().Set("epic playerLevel", 0); // if not set to 0 then set to 0 - minimize zdo traffic
+                            EpicMMOSystem.MLLogger.LogInfo("Set ZDO epic playerLevel to 0");
+                        }  
+                    }
+                   
                 }
                 else
                 {
                     if (!attacker.IsTamed())
                     {
                         CharacterLastDamageList[__instance] = 100;
-                        if (EpicMMOSystem.enabledLevelControl.Value && EpicMMOSystem.removeDrop.Value)
+                        if (EpicMMOSystem.enabledLevelControl.Value && (EpicMMOSystem.removeBossDropMax.Value || EpicMMOSystem.removeBossDropMin.Value || EpicMMOSystem.removeDropMax.Value || EpicMMOSystem.removeDropMin.Value))
                         {
+                            EpicMMOSystem.MLLogger.LogInfo("Not A player that dmg mob");
                             __instance.m_nview.GetZDO().Set("epic playerLevel", 0);
                         }
                     }

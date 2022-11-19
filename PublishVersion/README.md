@@ -1,5 +1,5 @@
 # Description:
-This mod adds an RPG-like system of levels and attribute increases: - Wacky Branch 1.3.1
+This mod adds an RPG-like system of levels and attribute increases: - Wacky Branch 1.4.0
 WackyEpicMMOSystem release until author comes back. - Main git - https://github.com/Single-sh/EpicMMOSystem
 ![https://i.imgur.com/5Tzgs0R.png](https://i.imgur.com/5Tzgs0R.png)
 
@@ -40,6 +40,7 @@ A file listing all monsters and their levels is located in plugin/EpicMMOSystem/
 Please note:
 When upgrading the mod to a newer version, new fields in the settings file will be created automatically. You will have to manually re-edit these values if you have changed them.
 If you have no custom settings in the configuration file, you should delete the file so that a fresh one can be created by the new version.
+Note for other Mods: This mod uses hit.toolTier to pass the Lvl of player
 
 </details>
 
@@ -59,7 +60,10 @@ or WackyMole on Odins
 </details> 
 
 <details><summary>Changelog</summary>
-
+ 
+ - 1.4.0. Fix for inventory to bag JC (hopefully), Changed Configs,PLEASE DELETE OLD CONFIGS!, added removeDropMax, removeDropMax,removeBossDropMax, removeBossDropMix, curveExp, curveBossExp. 
+		  Allow for multiple Jsons to be searched. Added admin rights to singleplayer hosting. Boss drop is determined by mob.faction(), curveBossExp Exp is just the 5 main bosses.  
+		  Updated Monster.json moved to configs instead of plugin. 	  
  - 1.3.1: Dual wield and EpicMMO Thanks to KG, sponsored by Aldhari/Skaldhari
  - 1.3.0: WackyEpicMMOSystem release, until author comes back. Code from Azumatt - Updated Chat, Group and ServerSync
  - 1.2.8: Added a limiter for the maximum attribute value. New view health and stamina bar (in the configuration you can return the old display where only the experience is displayed).
