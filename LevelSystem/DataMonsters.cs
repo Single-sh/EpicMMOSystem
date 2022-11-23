@@ -6,6 +6,7 @@ using System.Net.Mime;
 using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Runtime.Remoting.Messaging;
+using System.Threading;
 using BepInEx;
 using fastJSON;
 using HarmonyLib;
@@ -20,7 +21,7 @@ namespace EpicMMOSystem;
 public static class DataMonsters
 {
     private static Dictionary<string, Monster> dictionary = new();
-    private static string MonsterDB = "[]";
+    private static string MonsterDB = "";
 
     public static bool contains(string name)
     {
@@ -48,68 +49,61 @@ public static class DataMonsters
     {
         dictionary.Clear();
         var monsters = fastJSON.JSON.ToObject<Monster[]>(json);
+
         foreach (var monster in monsters)
         {
+            EpicMMOSystem.MLLogger.LogDebug($"{monster.name}(Clone)");
             dictionary.Add($"{monster.name}(Clone)", monster);
         }
     }
 
+    private static void createNewDataMonsters(List<string> json)
+    {
+        dictionary.Clear();
+        foreach (var monster2 in json)
+        {
+            var temp = ( fastJSON.JSON.ToObject<Monster[]>(monster2));    
+            foreach (var monster in temp)
+            {
+                EpicMMOSystem.MLLogger.LogDebug($"{monster.name}(Clone)");
+                dictionary.Add($"{monster.name}(Clone)", monster);
+            }
+        }
+
+    }
+
     public static void Init()
     {
-        var path = Path.Combine(Paths.PluginPath, EpicMMOSystem.ModName, $"MonsterDB_{2}.json");
+
+        var folderpath = Path.Combine(Paths.ConfigPath, EpicMMOSystem.ModName);
+        var path = Path.Combine(Paths.ConfigPath, EpicMMOSystem.ModName, $"MonsterDB_Default.json");
+
+        if (!Directory.Exists(folderpath)){
+            Directory.CreateDirectory(folderpath);
+        }
+        List<string> list = new List<string>();
+        foreach (string file in Directory.GetFiles(folderpath, "*.json", SearchOption.AllDirectories))
+        {
+            var temp = File.ReadAllText(file);
+            list.Add(temp);
+            MonsterDB += temp;
+        }
+
         if (File.Exists(path))
         {
-            MonsterDB = File.ReadAllText(path);
+            //MonsterDB = File.ReadAllText(path);
             
         }
         else
         {
-            var pathOld = Path.Combine(Paths.PluginPath, EpicMMOSystem.ModName, $"MonsterDB.json");
-            if (!File.Exists(pathOld))
-            {
-                var json = getDefaultJsonMonster();
-                DirectoryInfo dir = new DirectoryInfo(Paths.PluginPath);
-                dir.CreateSubdirectory(Path.Combine(Paths.PluginPath, EpicMMOSystem.ModName));
-                File.WriteAllText(path,json);
-                MonsterDB = json;
-            }
-            else
-            {
-                string newJson = getDefaultJsonMonster();
-                createNewDataMonsters(newJson);
-                string jsonOld = File.ReadAllText(pathOld);
-                var monsters = fastJSON.JSON.ToObject<MonsterOld[]>(jsonOld);
-                foreach (var monster in monsters)
-                {
-                    if (dictionary.ContainsKey($"{monster.name}(Clone)"))
-                    {
-                        var m = dictionary[$"{monster.name}(Clone)"];
-                        m.minExp = monster.minExp;
-                        m.maxExp = monster.maxExp;
-                        dictionary[$"{monster.name}(Clone)"] = m;
-                    }
-                    else
-                    {
-                        dictionary.Add(
-                            $"{monster.name}(Clone)", 
-                            new Monster(
-                                monster.name, 
-                                monster.minExp, 
-                                monster.maxExp, 
-                                1)
-                            );
-                    }
-                    
-                }
-
-                var obj = dictionary.Values.ToArray();
-                string text = JSON.ToNiceJSON(obj, new JSONParameters(){UseExtensions = false});
-                File.WriteAllText(path,text);
-                return;
-            }
-            
+            var json = getDefaultJsonMonster();
+            File.WriteAllText(path,json);
+            MonsterDB = json;
+            list.Clear();
+            list.Add(json);
         }
-        createNewDataMonsters(MonsterDB);
+            
+        createNewDataMonsters(list);
     }
 
     private static string getDefaultJsonMonster()
@@ -249,21 +243,36 @@ public static class DataMonsters
             }
         }
     }
-    
+
     [HarmonyPatch(typeof(CharacterDrop), nameof(CharacterDrop.GenerateDropList))]
     public static class MonsterDropGenerate
     {
         public static void Postfix(CharacterDrop __instance, ref List<KeyValuePair<GameObject, int>> __result)
         {
             if (__instance.m_character.IsTamed()) return;
-            if (EpicMMOSystem.enabledLevelControl.Value && EpicMMOSystem.removeDrop.Value)
+            if (EpicMMOSystem.enabledLevelControl.Value && (EpicMMOSystem.removeDropMax.Value || EpicMMOSystem.removeDropMin.Value || EpicMMOSystem.removeBossDropMax.Value || EpicMMOSystem.removeBossDropMin.Value))
             {
                 var playerLevel = __instance.m_character.m_nview.GetZDO().GetInt("epic playerLevel");
                 if (playerLevel == 0) return;
                 if (!contains(__instance.m_character.gameObject.name)) return;
+                var Regmob = true;
+                EpicMMOSystem.MLLogger.LogDebug("Player level " +playerLevel);
+                if (playerLevel > 0) // postive so boss
+                {
+                    Regmob = false;
+                }else // reg mobs
+                {
+                    Regmob = true;
+                    playerLevel = -playerLevel;
+                }
                 int maxLevelExp = playerLevel + EpicMMOSystem.maxLevelExp.Value;
-                int monsterLevel = getLevel(__instance.m_character.gameObject.name) + __instance.m_character.m_level - 1;
-                if (monsterLevel > maxLevelExp)
+                int minLevelExp = playerLevel - EpicMMOSystem.minLevelExp.Value;
+                int monsterLevel = getLevel(__instance.m_character.gameObject.name) + __instance.m_character.m_level - 1; // interesting that it's using m_char as well
+                if ((monsterLevel > maxLevelExp) && (EpicMMOSystem.removeBossDropMax.Value && !Regmob || EpicMMOSystem.removeDropMax.Value && Regmob))
+                {
+                    __result = new();
+                }
+                if ((monsterLevel < minLevelExp) && (EpicMMOSystem.removeBossDropMin.Value && !Regmob || EpicMMOSystem.removeDropMin.Value && Regmob))
                 {
                     __result = new();
                 }

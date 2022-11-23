@@ -63,10 +63,16 @@ public static class TerminalCommands
                 (Terminal.ConsoleEvent)(
                     args =>
                     {
-                        if (!EpicMMOSystem.ConfigSync.IsAdmin)
+                        if (!EpicMMOSystem.ConfigSync.IsAdmin  )
                         {
-                            args.Context.AddString("You are not an admin on this server.");
-                            return;
+                            if (ZNet.instance.IsServer())
+                            {
+
+                            } else
+                            {
+                                args.Context.AddString("You are not an admin on this server.");
+                                return;
+                            }
                         }
 
                         if (args.Length == 4 && args[1] == "level")

@@ -74,9 +74,8 @@
     "name": "Troll",
     "minExp": 300,
     "maxExp": 500,
-    "level": 25
+    "level": 22
   },
-
 
 
 
@@ -141,6 +140,13 @@
 
 
   {
+    "name": "Bat",
+    "minExp": 140,
+    "maxExp": 180,
+    "level": 35
+  },
+
+  {
     "name": "Wolf",
     "minExp": 250,
     "maxExp": 350,
@@ -148,6 +154,18 @@
   },
   {
     "name": "Fenring",
+    "minExp": 300,
+    "maxExp": 400,
+    "level": 45
+  },
+  {
+    "name": "Cultist",
+    "minExp": 300,
+    "maxExp": 400,
+    "level": 45
+  },
+  {
+    "name": "Ulv",
     "minExp": 300,
     "maxExp": 400,
     "level": 45
@@ -167,7 +185,12 @@
 
 
 
-
+  {
+    "name": "BlobTar",
+    "minExp": 260,
+    "maxExp": 300,
+    "level": 50
+  },
 
   {
     "name": "Goblin",
@@ -207,6 +230,12 @@
   },
 
 
+  {
+    "name": "Serpent",
+    "minExp": 400,
+    "maxExp": 500,
+    "level": 35
+  },
 
 
 
@@ -222,12 +251,7 @@
     "maxExp": 500,
     "level": 30
   },
-  {
-    "name": "Serpent",
-    "minExp": 400,
-    "maxExp": 500,
-    "level": 35
-  },
+
   {
     "name": "Bonemass",
     "minExp": 700,
