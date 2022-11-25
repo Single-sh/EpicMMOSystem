@@ -24,6 +24,10 @@ public class Localization
         {
             EngLocalization();
         }
+        else if (currentLanguage == "Spanish")
+        {
+            SpanLocalization();
+        }
         else
         {
             var fileName = $"{EpicMMOSystem.language.Value}_emmosLocalization.txt";
@@ -172,7 +176,58 @@ public class Localization
         _dictionary.Add("$terminal_set_level", "You got {0} level");
         _dictionary.Add("$terminal_reset_points", "Your attributes points have been reset");
     }
-    
+
+    private void SpanLocalization()
+    {
+        _dictionary.Add("$attributes", "Atributos");
+        _dictionary.Add("$parameter_strength", "Fuerza");
+        _dictionary.Add("$parameter_agility", "Agilidad");
+        _dictionary.Add("$parameter_intellect", "Intelecto");
+        _dictionary.Add("$parameter_body", "Resistencia");
+        _dictionary.Add("$free_points", "Puntos disponibles");
+        _dictionary.Add("$level", "Nivel");
+        _dictionary.Add("$lvl", "Nivel.");
+        _dictionary.Add("$exp", "Experiencia");
+        _dictionary.Add("$cancel", "Cancelar");
+        _dictionary.Add("$apply", "Aceptar");
+        _dictionary.Add("$reset_parameters", "Restablecer puntos");
+        _dictionary.Add("$no", "No");
+        _dictionary.Add("$yes", "Si");
+        _dictionary.Add("$get_exp", "Experiencia recibida");
+        _dictionary.Add("$reset_point_text", "¿De verdad quieres eliminar todos los puntos por {0} {1}?");
+        //Parameter
+        _dictionary.Add("$physic_damage", "Daño Físico");
+        _dictionary.Add("$add_weight", "Cargar Peso");
+        _dictionary.Add("$speed_attack", "Consumo de resistencia de ataque");
+        _dictionary.Add("$reduced_stamina", "Consumo de energía (correr, saltar)");
+        _dictionary.Add("$magic_damage", "Daño mágico");
+        _dictionary.Add("$magic_armor", "Armadura mágica");
+        _dictionary.Add("$add_hp", "Aumento de la salud");
+        _dictionary.Add("$add_stamina", "Aumento de resistencia");
+        _dictionary.Add("$physic_armor", "Armadura física");
+        _dictionary.Add("$reduced_stamina_block", "Consumo de energia de bloqueo");
+        _dictionary.Add("$regen_hp", "Regeneración de salud");
+        _dictionary.Add("$damage", "Daño");
+        _dictionary.Add("$armor", "Armadura");
+        _dictionary.Add("$survival", "Surpervivencia");
+        //Friends list
+        _dictionary.Add("$notify", "<color=#00E6FF>Alerta</color>");
+        _dictionary.Add("$friends_list", "Lista de amigos");
+        _dictionary.Add("$send", "Enviar");
+        _dictionary.Add("$invited", "Invitaciones");
+        _dictionary.Add("$friends", "Amigos");
+        _dictionary.Add("$online", "Conectado");
+        _dictionary.Add("$offline", "Desconectado");
+        _dictionary.Add("$not_found", "Player {0} inexistente.");
+        _dictionary.Add("$send_invite", "Se ha enviado una solicitud de amistad a {0}.");
+        _dictionary.Add("$get_invite", "Has recivido una solicitud de amistad de {0}.");
+        _dictionary.Add("$accept_invite", "{0} aceptó la solicitud de amistad.");
+        _dictionary.Add("$cancel_invite", "{0} denegó la solicitud de amistad.");
+        //Terminal
+        _dictionary.Add("$terminal_set_level", "Eres nivel {0}");
+        _dictionary.Add("$terminal_reset_points", "Tus puntos de atributos han sido reiniciados");
+    }
+
     public string this[string key]
     {
         get

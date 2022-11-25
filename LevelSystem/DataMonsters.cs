@@ -62,18 +62,24 @@ public static class DataMonsters
     private static void createNewDataMonsters(List<string> json)
     {
         dictionary.Clear();
-        foreach (var monster2 in json)
-        {
-            var temp = ( fastJSON.JSON.ToObject<Monster[]>(monster2));    
-            foreach (var monster in temp)
+
+            foreach (var monster2 in json)
             {
-                if (EpicMMOSystem.extraDebug.Value) 
-                    EpicMMOSystem.MLLogger.LogInfo($"{monster.name}(Clone)");
+            if (EpicMMOSystem.extraDebug.Value)
+                EpicMMOSystem.MLLogger.LogInfo($"/n Json loading /n");
 
-                dictionary.Add($"{monster.name}(Clone)", monster);
-            }
+                //var temp = JsonUtility.FromJson<Monster[]>(monster2);
+                var temp = (fastJSON.JSON.ToObject<Monster[]>(monster2));
+                foreach (var monster in temp)
+                {
+                    if (EpicMMOSystem.extraDebug.Value)
+                        EpicMMOSystem.MLLogger.LogInfo($"{monster.name}(Clone)");
+
+                    dictionary.Add($"{monster.name}(Clone)", monster);
+                }
+            
         }
-
+     
     }
 
     public static void Init()
@@ -86,18 +92,11 @@ public static class DataMonsters
         var json3 = "MonsterDB-Fantasy-Creatures.json";
         var json4 = "MonsterDB_SeaAnimals.json";
         var json5 = "MonsterDB_MonsterLabZ.json";
+        var json6 = "MonsterDB_Outsiders.json";
 
         if (!Directory.Exists(folderpath)){
             Directory.CreateDirectory(folderpath);
         }
-        List<string> list = new List<string>();
-        foreach (string file in Directory.GetFiles(folderpath, "*.json", SearchOption.AllDirectories))
-        {
-            var temp = File.ReadAllText(file);
-            list.Add(temp);
-            MonsterDB += temp;
-        }
-
         if (File.Exists(versionpath))
         {
             //MonsterDB = File.ReadAllText(path);
@@ -114,30 +113,46 @@ public static class DataMonsters
         }
         else
         {
-            list.Clear();
+            //list.Clear();
             File.WriteAllText(versionpath, EpicMMOSystem.ModVersion); // Write Version file
 
             File.WriteAllText(Path.Combine(folderpath, json), getDefaultJsonMonster(json));
-            list.Add(json);
+           // list.Add(json);
 
             File.WriteAllText(Path.Combine(folderpath, json1), getDefaultJsonMonster(json1));
-            list.Add(json1);
+            //list.Add(json1);
 
             File.WriteAllText(Path.Combine(folderpath, json2), getDefaultJsonMonster(json2));
-            list.Add(json2);
+           // list.Add(json2);
 
             File.WriteAllText(Path.Combine(folderpath, json3), getDefaultJsonMonster(json3));
-            list.Add(json3);
+            //list.Add(json3);
 
             File.WriteAllText(Path.Combine(folderpath, json4), getDefaultJsonMonster(json4));
-            list.Add(json4);
+           // list.Add(json4);
 
             File.WriteAllText(Path.Combine(folderpath, json5), getDefaultJsonMonster(json5));
-            list.Add(json5);
+            //list.Add(json5);
 
-            MonsterDB = json + json1 + json2+ json3 + json4 + json5;// + json1 + json2
+            File.WriteAllText(Path.Combine(folderpath, json6), getDefaultJsonMonster(json6));
+
+            // MonsterDB = json + json1 + json2+ json3 + json4 + json5;// + json1 + json2
+
+            if (EpicMMOSystem.extraDebug.Value)
+                EpicMMOSystem.MLLogger.LogInfo($"Mobs Written");
         }
-            
+        List<string> list = new List<string>();
+        foreach (string file in Directory.GetFiles(folderpath, "*.json", SearchOption.AllDirectories))
+        {
+            var temp = File.ReadAllText(file);
+            list.Add(temp);
+            MonsterDB += temp;
+        }
+        if (EpicMMOSystem.extraDebug.Value)
+            EpicMMOSystem.MLLogger.LogInfo($"Mobs Read");
+
+
+
         createNewDataMonsters(list);
     }
 

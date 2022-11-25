@@ -185,8 +185,8 @@ public static class MonsterDeath_Path
                         CharacterLastDamageList[__instance] = 100;
                         if (EpicMMOSystem.enabledLevelControl.Value && (EpicMMOSystem.removeBossDropMax.Value || EpicMMOSystem.removeBossDropMin.Value || EpicMMOSystem.removeDropMax.Value || EpicMMOSystem.removeDropMin.Value))
                         {
-                            if (EpicMMOSystem.extraDebug.Value) 
-                                EpicMMOSystem.MLLogger.LogInfo("Player Hit");
+                            //if (EpicMMOSystem.extraDebug.Value) 
+                               // EpicMMOSystem.MLLogger.LogInfo("Player Hit");
 
                             __instance.m_nview.GetZDO().Set("epic playerLevel", 0);
                         }

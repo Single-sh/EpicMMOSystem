@@ -103,9 +103,15 @@ public partial class EpicMMOSystem : BaseUnityPlugin
     //Optional
     public static ConfigEntry<float> addDefaultHealth;
     public static ConfigEntry<float> addDefaultWeight;
+
+    internal static Localization english = null!;
+    internal static Localization russian = null!;
+    internal static Localization spanish = null!;
     public void Awake()
     {
-        Localizer.Load();
+        // Localizer.Load(); - Doesn't seem to be working with yml
+       // Localizer.AddText("$attributes", "Attributes WM");
+
         string general = "0.General---------------";
         _serverConfigLocked = config(general, "Force Server Config", true, "Force Server Config");
         language = config(general, "Language", "eng", "Language prefix", false);
