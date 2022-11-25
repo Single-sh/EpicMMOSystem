@@ -10,6 +10,7 @@ using HarmonyLib;
 using ServerSync;
 using UnityEngine;
 using UnityEngine.Rendering;
+using LocalizationManager;
 
 namespace EpicMMOSystem;
 
@@ -39,6 +40,7 @@ public partial class EpicMMOSystem : BaseUnityPlugin
     public static Localization localization;
     //Config
     public static ConfigEntry<string> language;
+    public static ConfigEntry<bool> extraDebug;
     //LevelSystem
     public static ConfigEntry<int> maxLevel;
     public static ConfigEntry<int> priceResetPoints;
@@ -103,9 +105,11 @@ public partial class EpicMMOSystem : BaseUnityPlugin
     public static ConfigEntry<float> addDefaultWeight;
     public void Awake()
     {
+        Localizer.Load();
         string general = "0.General---------------";
         _serverConfigLocked = config(general, "Force Server Config", true, "Force Server Config");
         language = config(general, "Language", "eng", "Language prefix", false);
+        extraDebug = config(general, "EnableExtraDebug", false, "Enable Extra Debug mode for Debugging", false);
         string levelSystem = "1.LevelSystem-----------";
         maxLevel = config(levelSystem, "MaxLevel", 100, "Maximum level. Максимальный уровень");
         priceResetPoints = config(levelSystem, "PriceResetPoints", 3, "Reset price per point. Цена сброса за один поинт");

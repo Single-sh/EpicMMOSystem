@@ -62,8 +62,8 @@ or WackyMole on Odins
 <details><summary>Changelog</summary>
  
  - 1.4.0. Fix for inventory to bag JC (hopefully), Changed Configs,PLEASE DELETE OLD CONFIGS!, added removeDropMax, removeDropMax,removeBossDropMax, removeBossDropMix, curveExp, curveBossExp. 
-		  Allow for multiple Jsons to be searched. Added admin rights to singleplayer hosting. Boss drop is determined by mob.faction(), curveBossExp Exp is just the 5 main bosses.  
-		  Updated Monster.json moved to configs instead of plugin. 	  
+		  Allow for multiple Jsons to be searched. Added admin rights to singleplayer hosting. Boss drop is determined by mob.faction(), curveBossExp Exp is just the 6 main bosses.  
+		  Updated Monster.json moved to configs instead of plugin. Added ExtraDebugmode for future issues 
  - 1.3.1: Dual wield and EpicMMO Thanks to KG, sponsored by Aldhari/Skaldhari
  - 1.3.0: WackyEpicMMOSystem release, until author comes back. Code from Azumatt - Updated Chat, Group and ServerSync
  - 1.2.8: Added a limiter for the maximum attribute value. New view health and stamina bar (in the configuration you can return the old display where only the experience is displayed).

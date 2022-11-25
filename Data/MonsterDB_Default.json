@@ -23,10 +23,6 @@
     "maxExp": 40,
     "level": 10
   },
-
-
-
-
   {
     "name": "Greydwarf",
     "minExp": 50,
@@ -69,24 +65,18 @@
     "maxExp": 120,
     "level": 20
   },
-
   {
     "name": "Troll",
     "minExp": 300,
     "maxExp": 500,
-    "level": 22
+    "level": 25
   },
-
-
-
-
   {
     "name": "Blob",
     "minExp": 120,
     "maxExp": 180,
     "level": 28
   },
-
   {
     "name": "Leech",
     "minExp": 120,
@@ -135,17 +125,12 @@
     "maxExp": 600,
     "level": 40
   },
-
-
-
-
   {
     "name": "Bat",
     "minExp": 140,
     "maxExp": 180,
     "level": 35
   },
-
   {
     "name": "Wolf",
     "minExp": 250,
@@ -182,16 +167,18 @@
     "maxExp": 600,
     "level": 50
   },
-
-
-
+  {
+    "name": "Serpent",
+    "minExp": 400,
+    "maxExp": 500,
+    "level": 35
+  },
   {
     "name": "BlobTar",
     "minExp": 260,
     "maxExp": 300,
     "level": 50
   },
-
   {
     "name": "Goblin",
     "minExp": 350,
@@ -228,17 +215,60 @@
     "maxExp": 500,
     "level": 60
   },
-
-
   {
-    "name": "Serpent",
-    "minExp": 400,
-    "maxExp": 500,
-    "level": 35
+    "name": "Seeker",
+    "minExp": 700,
+    "maxExp": 900,
+    "level": 61
   },
-
-
-
+  {
+    "name": "Seeker Brood",
+    "minExp": 400,
+    "maxExp": 600,
+    "level": 60
+  },
+  {
+    "name": "Seeker Brute",
+    "minExp": 950,
+    "maxExp": 1250,
+    "level": 62
+  },
+  {
+    "name": "Gjall",
+    "minExp": 1400,
+    "maxExp": 1800,
+    "level": 66
+  },
+  {
+    "name": "Tick",
+    "minExp": 180,
+    "maxExp": 240,
+    "level": 64
+  },
+  {
+    "name": "Hare",
+    "minExp": 10,
+    "maxExp": 20,
+    "level": 6
+  },
+  {
+    "name": "Hen",
+    "minExp": 10,
+    "maxExp": 20,
+    "level": 6
+  },
+  {
+    "name": "Chick",
+    "minExp": 5,
+    "maxExp": 10,
+    "level": 3
+  },
+  {
+    "name": "The Queen",
+    "minExp": 2200,
+    "maxExp": 2700,
+    "level": 68
+  },
   {
     "name": "Eikthyr",
     "minExp": 150,
@@ -251,7 +281,6 @@
     "maxExp": 500,
     "level": 30
   },
-
   {
     "name": "Bonemass",
     "minExp": 700,

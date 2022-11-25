@@ -75,7 +75,7 @@ public partial class MyUI
         freePointsPanel.transform.Find("Apply/Text").GetComponent<Text>().text = localization["$apply"];
         
         levelSystemPanel.transform.Find("Points/ResetButton/Button").GetComponent<Button>().onClick.AddListener(ResetParameters);
-        levelSystemPanel.transform.Find("Points/ResetButton/Button/Text").GetComponent<Text>().text = localization["$reset_parameters"];
+        levelSystemPanel.transform.Find("Points/ResetButton/Button/Text").GetComponent<Text>().text = localization["$reset_parameters"]; 
         
         //CurrentLevel
         currentLevelText = levelSystemPanel.transform.Find("CurrentLevel/Content/Lvl").GetComponent<Text>();

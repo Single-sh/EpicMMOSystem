@@ -45,14 +45,16 @@ public static class DataMonsters
         return dictionary[name].level;
     }
 
-    private static void createNewDataMonsters(string json)
+    private static void createNewDataMonsters(string json) // multiplayer sync
     {
         dictionary.Clear();
         var monsters = fastJSON.JSON.ToObject<Monster[]>(json);
 
         foreach (var monster in monsters)
         {
-            EpicMMOSystem.MLLogger.LogDebug($"{monster.name}(Clone)");
+            if (EpicMMOSystem.extraDebug.Value) 
+                EpicMMOSystem.MLLogger.LogInfo($"{monster.name}(Clone)");
+
             dictionary.Add($"{monster.name}(Clone)", monster);
         }
     }
@@ -65,7 +67,9 @@ public static class DataMonsters
             var temp = ( fastJSON.JSON.ToObject<Monster[]>(monster2));    
             foreach (var monster in temp)
             {
-                EpicMMOSystem.MLLogger.LogDebug($"{monster.name}(Clone)");
+                if (EpicMMOSystem.extraDebug.Value) 
+                    EpicMMOSystem.MLLogger.LogInfo($"{monster.name}(Clone)");
+
                 dictionary.Add($"{monster.name}(Clone)", monster);
             }
         }
@@ -74,9 +78,14 @@ public static class DataMonsters
 
     public static void Init()
     {
-
+        var versionpath = Path.Combine(Paths.ConfigPath, EpicMMOSystem.ModName, $"Version.txt");
         var folderpath = Path.Combine(Paths.ConfigPath, EpicMMOSystem.ModName);
-        var path = Path.Combine(Paths.ConfigPath, EpicMMOSystem.ModName, $"MonsterDB_Default.json");
+        var json = "MonsterDB_Default.json";
+        var json1 = "MonsterDB_AirAnimals.json";
+        var json2 = "MonsterDB_LandAnimals.json";
+        var json3 = "MonsterDB-Fantasy-Creatures.json";
+        var json4 = "MonsterDB_SeaAnimals.json";
+        var json5 = "MonsterDB_MonsterLabZ.json";
 
         if (!Directory.Exists(folderpath)){
             Directory.CreateDirectory(folderpath);
@@ -89,28 +98,54 @@ public static class DataMonsters
             MonsterDB += temp;
         }
 
-        if (File.Exists(path))
+        if (File.Exists(versionpath))
         {
             //MonsterDB = File.ReadAllText(path);
-            
+            var filev = File.ReadAllText(versionpath);
+            if (filev == "1.4.0")
+            {
+
+            }
+            if (filev == "NO")
+            {// don't update
+
+            }
+
         }
         else
         {
-            var json = getDefaultJsonMonster();
-            File.WriteAllText(path,json);
-            MonsterDB = json;
             list.Clear();
+            File.WriteAllText(versionpath, EpicMMOSystem.ModVersion); // Write Version file
+
+            File.WriteAllText(Path.Combine(folderpath, json), getDefaultJsonMonster(json));
             list.Add(json);
+
+            File.WriteAllText(Path.Combine(folderpath, json1), getDefaultJsonMonster(json1));
+            list.Add(json1);
+
+            File.WriteAllText(Path.Combine(folderpath, json2), getDefaultJsonMonster(json2));
+            list.Add(json2);
+
+            File.WriteAllText(Path.Combine(folderpath, json3), getDefaultJsonMonster(json3));
+            list.Add(json3);
+
+            File.WriteAllText(Path.Combine(folderpath, json4), getDefaultJsonMonster(json4));
+            list.Add(json4);
+
+            File.WriteAllText(Path.Combine(folderpath, json5), getDefaultJsonMonster(json5));
+            list.Add(json5);
+
+            MonsterDB = json + json1 + json2+ json3 + json4 + json5;// + json1 + json2
         }
             
         createNewDataMonsters(list);
     }
 
-    private static string getDefaultJsonMonster()
+    private static string getDefaultJsonMonster(string jsonname)
     {
         var assembly = Assembly.GetExecutingAssembly();
         string resourceName = assembly.GetManifestResourceNames()
-            .Single(str => str.EndsWith("MonstersDB.json"));
+            .Single(str => str.EndsWith(jsonname));
 
         using (Stream stream = assembly.GetManifestResourceStream(resourceName))
         using (StreamReader reader = new StreamReader(stream))
@@ -256,7 +291,8 @@ public static class DataMonsters
                 if (playerLevel == 0) return;
                 if (!contains(__instance.m_character.gameObject.name)) return;
                 var Regmob = true;
-                EpicMMOSystem.MLLogger.LogDebug("Player level " +playerLevel);
+                if (EpicMMOSystem.extraDebug.Value) 
+                    EpicMMOSystem.MLLogger.LogInfo("Player level " +playerLevel);
                 if (playerLevel > 0) // postive so boss
                 {
                     Regmob = false;

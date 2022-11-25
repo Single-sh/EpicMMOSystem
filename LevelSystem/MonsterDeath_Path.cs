@@ -79,7 +79,9 @@ public static class MonsterDeath_Path
 
         if (EpicMMOSystem.enabledLevelControl.Value && (EpicMMOSystem.curveExp.Value) && DontSkip)
         {
-            EpicMMOSystem.MLLogger.LogDebug("Checking player lvl");
+            if (EpicMMOSystem.extraDebug.Value) 
+                EpicMMOSystem.MLLogger.LogInfo("Checking player lvl");
+
             int maxRangeLevel = LevelSystem.Instance.getLevel() + EpicMMOSystem.maxLevelExp.Value;
             if (monsterLevel > maxRangeLevel)
             {
@@ -164,11 +166,14 @@ public static class MonsterDeath_Path
                     }
                     else /// No lvl check
                     {
-                        EpicMMOSystem.MLLogger.LogInfo("else ZDO epic playerLevel to 0");
+                        if (EpicMMOSystem.extraDebug.Value) 
+                            EpicMMOSystem.MLLogger.LogInfo("else ZDO epic playerLevel to 0");
+
                         if (0 != __instance.m_nview.GetZDO().GetInt("epic playerLevel"))
                         {
                             __instance.m_nview.GetZDO().Set("epic playerLevel", 0); // if not set to 0 then set to 0 - minimize zdo traffic
-                            EpicMMOSystem.MLLogger.LogInfo("Set ZDO epic playerLevel to 0");
+                            if (EpicMMOSystem.extraDebug.Value) 
+                                EpicMMOSystem.MLLogger.LogInfo("Set ZDO epic playerLevel to 0");
                         }  
                     }
                    
@@ -180,7 +185,9 @@ public static class MonsterDeath_Path
                         CharacterLastDamageList[__instance] = 100;
                         if (EpicMMOSystem.enabledLevelControl.Value && (EpicMMOSystem.removeBossDropMax.Value || EpicMMOSystem.removeBossDropMin.Value || EpicMMOSystem.removeDropMax.Value || EpicMMOSystem.removeDropMin.Value))
                         {
-                            EpicMMOSystem.MLLogger.LogInfo("Not A player that dmg mob");
+                            if (EpicMMOSystem.extraDebug.Value) 
+                                EpicMMOSystem.MLLogger.LogInfo("Player Hit");
+
                             __instance.m_nview.GetZDO().Set("epic playerLevel", 0);
                         }
                     }
