@@ -143,7 +143,11 @@ public static class DataMonsters
         }
         List<string> list = new List<string>();
         foreach (string file in Directory.GetFiles(folderpath, "*.json", SearchOption.AllDirectories))
-        {
+        { 
+            var nam = Path.GetFileName(file);
+            if (EpicMMOSystem.extraDebug.Value)
+                EpicMMOSystem.MLLogger.LogInfo(nam + " read");
+
             var temp = File.ReadAllText(file);
             list.Add(temp);
             MonsterDB += temp;
@@ -228,7 +232,7 @@ public static class DataMonsters
     {
         public static void Postfix(EnemyHud __instance, Character c, Dictionary<Character, EnemyHud.HudData> ___m_huds, bool __state)
         {
-            if (c.IsTamed()) return;
+            if (c.IsTamed()) return; // might remove this in future
             if (!EpicMMOSystem.enabledLevelControl.Value) return;
             if (!contains(c.gameObject.name)) return;
             Transform go = ___m_huds[c].m_gui.transform.Find("Name/Name(Clone)");
