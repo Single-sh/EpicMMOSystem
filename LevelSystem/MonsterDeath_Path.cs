@@ -62,6 +62,7 @@ public static class MonsterDeath_Path
                 case "Bonemass":DontSkip = false; break;
                 case "Dragon":  DontSkip= false; break;
                 case "GoblinKing":DontSkip= false; break;
+                case "The Queen": DontSkip= false; break;
                 default: DontSkip = true; break;
             }
         }

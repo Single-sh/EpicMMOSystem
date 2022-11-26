@@ -1,12 +1,13 @@
 # Description:
 This mod adds an RPG-like system of levels and attribute increases: - Wacky Branch 1.4.0
-WackyEpicMMOSystem release until author comes back. - Main git - https://github.com/Single-sh/EpicMMOSystem
+WackyEpicMMOSystem release until author comes back. Wacky Git https://github.com/Wacky-Mole/WackyEpicMMOSystem
+Original git - https://github.com/Single-sh/EpicMMOSystem
 ![https://i.imgur.com/5Tzgs0R.png](https://i.imgur.com/5Tzgs0R.png)
 
 Features:
  - Shared group XP. Outside of groups all XP awards go to the character who struck the last blow.
  - Custom mobs can be added for XP gain.
- - MMO-like friends list.
+ - MMO-like friends list. -Groups MOD
  - On screen XP bar.
  - Compatible with [ItemRequiresSkillLevel](https://valheim.thunderstore.io/package/Detalhes/ItemRequiresSkillLevel/) mod. Equipment can be limited by level or attribute.
  - Compatible with KGMarketplace mod. Experience rewards can be added: (EpicMMO_Exp: 250) Quests can be limited by level (EpicMMO_Level: text, 20)
@@ -15,6 +16,7 @@ Features:
 
 <details><summary>Friends list</summary>
 
+If you want people to be a part of your Group to earn XP, download the Group mod for each client https://valheim.thunderstore.io/package/Smoothbrain/Groups/
 Click the plus button at the bottom of the friends bar. Enter the name of the character you wish to add, starting with a capital letter.
    ![https://i.imgur.com/rC8RDYe.png](https://i.imgur.com/rC8RDYe.png)
 The player will receive a friend request. Once accepted, the character will appear in your friends list. Group invites can be sent from the friends list. 
@@ -42,28 +44,32 @@ When upgrading the mod to a newer version, new fields in the settings file will 
 If you have no custom settings in the configuration file, you should delete the file so that a fresh one can be created by the new version.
 Note for other Mods: This mod uses hit.toolTier to pass the Lvl of player
 
+
+
 </details>
 
 
 <details><summary>Console commands</summary>
 
-Admin only commands:
+Admin only commands: - Should work in singleplayer now
  - To set a character's level: `epicmmosystem level [value] [name]` - (If the name contains a space, replace the space with the ampersand (&) symbol)
  - To reset attribute points: `epicmmosystem reset_points [name]` - (If the name contains a space, replace the space with the ampersand (&) symbol)
 </details> 
 
 <details><summary>Feedback</summary>
 
-For questions or suggestions please join my discord channel: [Odin Plus Team](https://discord.gg/uf44CtCm)
-Discord nickname: LambaSun or my [mod branch](https://discord.com/channels/826573164371902465/977656428670111794)
-or WackyMole on Odins
+For questions or suggestions please join my discord channel: [Odin Plus Team](https://discord.gg/odinplus) -WackyMole on Odins
+Original Creator: LambaSun or my [mod branch](https://discord.com/channels/826573164371902465/977656428670111794)
+
 </details> 
 
 <details><summary>Changelog</summary>
  
  - 1.4.0. Fix for inventory to bag JC (hopefully), Changed Configs,PLEASE DELETE OLD CONFIGS!, added removeDropMax, removeDropMax,removeBossDropMax, removeBossDropMix, curveExp, curveBossExp. 
 		  Allow for multiple Jsons to be searched. Added admin rights to singleplayer hosting. Boss drop is determined by mob.faction(), curveBossExp Exp is just the 6 main bosses.  
-		  Updated Monster.json moved to configs instead of plugin. Added ExtraDebugmode for future issues 
+		  Updated Monster.json moved to configs instead of plugin. Added ExtraDebugmode for future issues. Updated MonserDB_Default for mistlands,
+		  LandAnimals mod, MonsterLabZ, Outsiders, SeaAnimals, Fantasy Creatures, Air Animals, and Outsiders. Json file in MMO folder is searched.
+		  Added Version text to easily update in future. Write "NO" in Ver.txt to skip future updates. 
  - 1.3.1: Dual wield and EpicMMO Thanks to KG, sponsored by Aldhari/Skaldhari
  - 1.3.0: WackyEpicMMOSystem release, until author comes back. Code from Azumatt - Updated Chat, Group and ServerSync
  - 1.2.8: Added a limiter for the maximum attribute value. New view health and stamina bar (in the configuration you can return the old display where only the experience is displayed).
