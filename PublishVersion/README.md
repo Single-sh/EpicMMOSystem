@@ -17,6 +17,16 @@ Features:
  
  ![https://i.imgur.com/lkCcVOo.png](https://i.imgur.com/lkCcVOo.png)
 
+<details><summary>Attributes</summary>
+
+	Strength: Physical Damage increase, Carry Weight Increase, 
+
+	Agility: Attack Stamina Consumption decrease, Stamina increase, Stamina consumption (running, jumping) decreased
+
+	Intellect: Elemental Damage increase, Elemental Armor increase, (In future updates Eitrl regen)
+
+	Endurance: Physical Armor increase, HP increase, Health Regeneration
+
 <details><summary>Friends list</summary>
 
 If you want people to be a part of your Group to earn XP, download the Group mod for each client https://valheim.thunderstore.io/package/Smoothbrain/Groups/
@@ -74,7 +84,7 @@ Original Creator: LambaSun or my [mod branch](https://discord.com/channels/82657
 		  Allow for multiple Jsons to be searched. Added admin rights to singleplayer hosting. Boss drop is determined by mob.faction(), curveBossExp Exp is just the 6 main bosses.  
 		  Updated Monster.json moved to configs instead of plugin. Added ExtraDebugmode for future issues. Updated MonserDB_Default for mistlands,
 		  LandAnimals mod, MonsterLabZ, Outsiders, SeaAnimals, Fantasy Creatures, Air Animals, and Outsiders. Json file in MMO folder is searched.
-		  Added Version text to easily update in future. Write "NO" in Ver.txt to skip future updates. 
+		  Added Version text to easily update in future. Write "NO" in Ver.txt to skip future updates. Moved Monster lvl bar [] for boss and non boss
  - 1.3.1: Dual wield and EpicMMO Thanks to KG, sponsored by Aldhari/Skaldhari
  - 1.3.0: WackyEpicMMOSystem release, until author comes back. Code from Azumatt - Updated Chat, Group and ServerSync
  - 1.2.8: Added a limiter for the maximum attribute value. New view health and stamina bar (in the configuration you can return the old display where only the experience is displayed).

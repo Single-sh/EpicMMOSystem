@@ -48,6 +48,7 @@ public partial class MyUI
             Transform expPanel = EpicMMOSystem.Instantiate(panel, __instance.m_rootObject.transform).transform;
             eLevelText = expPanel.Find("Conteiner/Exp/Lvl").GetComponent<Text>();
             eExpText = expPanel.Find("Conteiner/Exp/Exp").GetComponent<Text>();
+            //expPanel.Find("Conteiner/Exp/Lvl").localPosition += new Vector3(0, 30, 0);This is bottom right xp bar not monster
             eBarImage = expPanel.Find("Conteiner/Exp/Bar/Fil").GetComponent<Image>();
             
             hpText = expPanel.Find("Conteiner/Hp/Text").GetComponent<Text>();
