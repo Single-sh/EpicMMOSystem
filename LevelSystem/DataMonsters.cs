@@ -22,6 +22,7 @@ public static class DataMonsters
 {
     private static Dictionary<string, Monster> dictionary = new();
     private static string MonsterDB = "";
+    private static List<string> MonsterDBL;
 
     public static bool contains(string name)
     {
@@ -153,12 +154,13 @@ public static class DataMonsters
             var temp = File.ReadAllText(file);
             list.Add(temp);
             MonsterDB += temp;
+           
         }
         if (EpicMMOSystem.extraDebug.Value)
             EpicMMOSystem.MLLogger.LogInfo($"Mobs Read");
 
 
-
+        MonsterDBL = list;
         createNewDataMonsters(list);
     }
 
@@ -182,11 +184,11 @@ public static class DataMonsters
         {
             if (EpicMMOSystem._isServer) return;
             ZRoutedRpc.instance.Register($"{EpicMMOSystem.ModName} SetMonsterDB",
-                new Action<long, string>(SetMonsterDB));
+                new Action<long, List<string>>(SetMonsterDB));
         }
     }
 
-    private static void SetMonsterDB(long peer, string json)
+    private static void SetMonsterDB(long peer, List<string> json)
     {
         createNewDataMonsters(json);
     }
@@ -200,7 +202,7 @@ public static class DataMonsters
             if (!(ZNet.instance.IsServer() && ZNet.instance.IsDedicated())) return;
             ZNetPeer peer = ZNet.instance.GetPeer(rpc);
             if(peer == null) return;
-            ZRoutedRpc.instance.InvokeRoutedRPC(peer.m_uid, $"{EpicMMOSystem.ModName} SetMonsterDB", MonsterDB);
+            ZRoutedRpc.instance.InvokeRoutedRPC(peer.m_uid, $"{EpicMMOSystem.ModName} SetMonsterDB", MonsterDBL); //sync list
         }
     }
     
@@ -244,7 +246,7 @@ public static class DataMonsters
             int monsterLevel = getLevel(c.gameObject.name) + c.m_level - 1;
             GameObject component = ___m_huds[c].m_gui.transform.Find("Name").gameObject;
             GameObject levelName = Object.Instantiate(component, component.transform);
-            levelName.GetComponent<RectTransform>().anchoredPosition = new Vector2(80, 0);
+            levelName.GetComponent<RectTransform>().anchoredPosition = new Vector2(40,-30);
             if (c.m_boss)
             {
                 levelName.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 30);

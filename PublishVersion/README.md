@@ -1,5 +1,5 @@
 # Description:
-This mod adds an RPG-like system of levels and attribute increases: - Wacky Branch 1.4.0
+This mod adds an RPG-like system of levels and attribute increases: - Wacky Branch 1.4.1
 WackyEpicMMOSystem release until author comes back. 
 
 Wacky Git https://github.com/Wacky-Mole/WackyEpicMMOSystem
@@ -31,7 +31,7 @@ Features:
 
 <details><summary>Friends list</summary>
 
-If you want people to be a part of your Group to earn XP, download the Group mod for each client https://valheim.thunderstore.io/package/Smoothbrain/Groups/
+MMO-like friends list. -Groups MOD Group to earn XP, download requires Group mod for each client https://valheim.thunderstore.io/package/Smoothbrain/Groups/
 
 Click the plus button at the bottom of the friends bar. Enter the name of the character you wish to add, starting with a capital letter.
    ![https://i.imgur.com/rC8RDYe.png](https://i.imgur.com/rC8RDYe.png)
@@ -82,7 +82,8 @@ Original Creator: LambaSun or my [mod branch](https://discord.com/channels/82657
 
 <details><summary>Changelog</summary>
  
- - 1.4.0. Fix for inventory to bag JC (hopefully), Changed Configs,PLEASE DELETE OLD CONFIGS!, added removeDropMax, removeDropMax,removeBossDropMax, removeBossDropMix, curveExp, curveBossExp. 
+ - 1.4.1: Fix Version Check and Multiplayer Sync, moved Monster Bar again. 
+ - 1.4.0: Fix for inventory to bag JC (hopefully), Changed Configs,PLEASE DELETE OLD CONFIGS!, added removeDropMax, removeDropMax,removeBossDropMax, removeBossDropMix, curveExp, curveBossExp. 
 		  Allow for multiple Jsons to be searched. Added admin rights to singleplayer hosting. Boss drop is determined by mob.faction(), curveBossExp Exp is just the 6 main bosses.  
 		  Updated Monster.json moved to configs instead of plugin. Added ExtraDebugmode for future issues. Updated MonserDB_Default for mistlands,
 		  LandAnimals mod, MonsterLabZ, Outsiders, SeaAnimals, Fantasy Creatures, Air Animals, and Outsiders. Json file in MMO folder is searched.
