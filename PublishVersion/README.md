@@ -27,6 +27,8 @@ Features:
 
 	Endurance: Physical Armor increase, HP increase, Health Regeneration
 
+</details> 
+
 <details><summary>Friends list</summary>
 
 If you want people to be a part of your Group to earn XP, download the Group mod for each client https://valheim.thunderstore.io/package/Smoothbrain/Groups/

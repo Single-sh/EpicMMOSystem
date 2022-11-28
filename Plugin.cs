@@ -19,7 +19,7 @@ namespace EpicMMOSystem;
 public partial class EpicMMOSystem : BaseUnityPlugin
 {
     internal const string ModName = "EpicMMOSystem";
-    internal const string ModVersion = "1.4.0";
+    internal const string ModVersion = "1.4.1";
     internal const string Author = "LambaSun";
     private const string ModGUID = Author + "." + ModName;
     private static string ConfigFileName = ModGUID + ".cfg";
@@ -269,43 +269,5 @@ public partial class EpicMMOSystem : BaseUnityPlugin
     
     
     
-     //VersionControl
-     [HarmonyPatch(typeof(ZNet), nameof(ZNet.RPC_PeerInfo))]
-     private static class PatchZNetRPC_PeerInfo
-     {
-         [HarmonyPriority(70)]
-         private static bool Prefix(ZRpc rpc, ref ZPackage pkg)
-         {
-          
-             long uid = pkg.ReadLong();
-             string versionString = pkg.ReadString();
-             if (ZNet.instance.IsServer())
-                 versionString += $"-{ModName}{ModVersion}";
-             else
-                 versionString = versionString.Replace($"-{ModName}{ModVersion}", "");
-         
-             ZPackage newPkg = new ZPackage();
-             newPkg.Write(uid);
-             newPkg.Write(versionString);
-             newPkg.m_writer.Write(pkg.m_reader.ReadBytes((int)(pkg.m_stream.Length - pkg.m_stream.Position)));
-             pkg = newPkg;
-             pkg.SetPos(0);
-             return true;
-         }
 
-         private static void Postfix()
-         {
-             LevelSystem.Instance.FillLevelsExp();
-         }
-     }
-
-    [HarmonyPatch(typeof(Version), nameof(Version.GetVersionString))]
-    private static class PatchVersionGetVersionString
-    {
-        [HarmonyPriority(70)]
-        private static void Postfix(ref string __result)
-        {
-            if (ZNet.instance?.IsServer() == true) __result += $"-{ModName}{ModVersion}";
-        }
-    }
 }

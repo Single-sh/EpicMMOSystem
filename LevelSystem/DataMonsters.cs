@@ -47,6 +47,7 @@ public static class DataMonsters
 
     private static void createNewDataMonsters(string json) // multiplayer sync
     {
+        /*
         dictionary.Clear();
         var monsters = fastJSON.JSON.ToObject<Monster[]>(json);
 
@@ -57,6 +58,7 @@ public static class DataMonsters
 
             dictionary.Add($"{monster.name}(Clone)", monster);
         }
+        */ // No need already loaded from list json
     }
 
     private static void createNewDataMonsters(List<string> json)
