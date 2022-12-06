@@ -80,8 +80,9 @@ public partial class MyUI
         //CurrentLevel
         currentLevelText = levelSystemPanel.transform.Find("CurrentLevel/Content/Lvl").GetComponent<Text>();
         expText = levelSystemPanel.transform.Find("CurrentLevel/Content/Exp").GetComponent<Text>();
-        
+
         //Description
+       // var paul = LevelHudPanelRefs.CanvasRoot;
         Transform contentStats = levelSystemPanel.transform.Find("DescriptionStats/Scroll View/Viewport/Content");
         contentStats.transform.Find("HeaderDamage/Text").GetComponent<Text>().text = localization["$damage"];
         contentStats.transform.Find("HeaderDefence/Text").GetComponent<Text>().text = localization["$armor"];

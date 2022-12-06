@@ -5,112 +5,112 @@ namespace EpicMMOSystem;
 
 public class ExpPanelRefs : MonoBehaviour
 {
-    [SerializeField] private RectTransform ExpPanelRoot;
-    [SerializeField] private RectTransform ExpPanelBkg;
-    [SerializeField] private Image ExpPanelBarFil;
-    [SerializeField] private Text ExpPanelLvlTxt;
-    [SerializeField] private Text ExpPanelExpTxt;
+    [SerializeField] public RectTransform ExpPanelRoot;
+    [SerializeField] public RectTransform ExpPanelBkg;
+    [SerializeField] public Image ExpPanelBarFil;
+    [SerializeField] public Text ExpPanelLvlTxt;
+    [SerializeField] public Text ExpPanelExpTxt;
 }
 
 public class EpicHudPanelRefs : MonoBehaviour
 {
-    [SerializeField] private RectTransform ExpPanelRoot;
-    [SerializeField] private RectTransform ExpPanelBkg;
-    [SerializeField] private Image HealthBarFil;
-    [SerializeField] private Image StaminaBarFil;
-    [SerializeField] private Image EitrBarFil;
-    [SerializeField] private Text EpicHudPanelLvlTxt;
-    [SerializeField] private Text EpicHudPanelExpTxt;
+    [SerializeField] public RectTransform ExpPanelRoot;
+    [SerializeField] public RectTransform ExpPanelBkg;
+    [SerializeField] public Image HealthBarFil;
+    [SerializeField] public Image StaminaBarFil;
+    [SerializeField] public Image EitrBarFil;
+    [SerializeField] public Text EpicHudPanelLvlTxt;
+    [SerializeField] public Text EpicHudPanelExpTxt;
 }
 
 public class FriendCellPanelRefs : MonoBehaviour
 {
-    [SerializeField] private RectTransform PanelRoot;
-    [SerializeField] private RectTransform PanelBkg;
-    [SerializeField] private Image IconClass;
-    [SerializeField] private Text PlayerName;
-    [SerializeField] private Text Level;
-    [SerializeField] private Text Status;
-    [SerializeField] private RectTransform ButtonGroup;
-    [SerializeField] private Button AddGroup;
-    [SerializeField] private Button AcceptButton;
-    [SerializeField] private Button DeclineButton;
+    [SerializeField] public RectTransform PanelRoot;
+    [SerializeField] public RectTransform PanelBkg;
+    [SerializeField] public Image IconClass;
+    [SerializeField] public Text PlayerName;
+    [SerializeField] public Text Level;
+    [SerializeField] public Text Status;
+    [SerializeField] public RectTransform ButtonGroup;
+    [SerializeField] public Button AddGroup;
+    [SerializeField] public Button AcceptButton;
+    [SerializeField] public Button DeclineButton;
 }
 
 public class LevelHudPanelRefs : MonoBehaviour
 {
     // MenuPanel Stuff
     [Header("MenuPanel")]
-    [SerializeField] private RectTransform CanvasRoot;
-    [SerializeField] private RectTransform MenuPanelRoot;
-    [SerializeField] private RectTransform MenuPanelBkg;
-    [SerializeField] private RectTransform ButtonGroup;
-    [SerializeField] private RectTransform ButtonLevelSystem;
-    [SerializeField] private RectTransform ButtonFriends;
-    [SerializeField] private RectTransform ButtonQuests;
-    [SerializeField] private RectTransform ButtonProfessions;
-    [SerializeField] private RectTransform ButtonShop;
+    [SerializeField] public RectTransform CanvasRoot;
+    [SerializeField] public RectTransform MenuPanelRoot;
+    [SerializeField] public RectTransform MenuPanelBkg;
+    [SerializeField] public RectTransform ButtonGroup;
+    [SerializeField] public RectTransform ButtonLevelSystem;
+    [SerializeField] public RectTransform ButtonFriends;
+    [SerializeField] public RectTransform ButtonQuests;
+    [SerializeField] public RectTransform ButtonProfessions;
+    [SerializeField] public RectTransform ButtonShop;
 
     // PointPanel Stuff
     [Header("PointPanel")]
-    [SerializeField] private RectTransform PointPanelRoot;
-    [SerializeField] private RectTransform PointPanelBkg;
-    [SerializeField] private Text HeaderText;
-    [SerializeField] private RectTransform PointSectionRoot;
-    [SerializeField] private RectTransform StrengthRoot;
-    [SerializeField] private Text StrengthText;
-    [SerializeField] private Button StrengthP1Button;
-    [SerializeField] private Button StrengthP5Button;
-    [SerializeField] private Text AgilityText;
-    [SerializeField] private Button AgilityP1Button;
-    [SerializeField] private Button AgilityP5Button;
-    [SerializeField] private Text IntellectText;
-    [SerializeField] private Button IntellectP1Button;
-    [SerializeField] private Button IntellectP5Button;
-    [SerializeField] private Text BodyText;
-    [SerializeField] private Button BodyP1Button;
-    [SerializeField] private Button BodyP5Button;
-    [SerializeField] private GameObject DummyListStat;
-    [SerializeField] private Text FreePointText;
-    [SerializeField] private Button FreePointApply;
-    [SerializeField] private Button FreePointCancel;
-    [SerializeField] private Button PointResetButton;
-    [SerializeField] private Text CurrentLvlText;
-    [SerializeField] private Text CurrentExpText;
-    [SerializeField] private RectTransform DescStatsContentParent;
-    [SerializeField] private RectTransform DescStatsDummyHeader;
+    [SerializeField] public RectTransform PointPanelRoot;
+    [SerializeField] public RectTransform PointPanelBkg;
+    [SerializeField] public Text HeaderText;
+    [SerializeField] public RectTransform PointSectionRoot;
+    [SerializeField] public RectTransform StrengthRoot;
+    [SerializeField] public Text StrengthText;
+    [SerializeField] public Button StrengthP1Button;
+    [SerializeField] public Button StrengthP5Button;
+    [SerializeField] public Text AgilityText;
+    [SerializeField] public Button AgilityP1Button;
+    [SerializeField] public Button AgilityP5Button;
+    [SerializeField] public Text IntellectText;
+    [SerializeField] public Button IntellectP1Button;
+    [SerializeField] public Button IntellectP5Button;
+    [SerializeField] public Text BodyText;
+    [SerializeField] public Button BodyP1Button;
+    [SerializeField] public Button BodyP5Button;
+    [SerializeField] public GameObject DummyListStat;
+    [SerializeField] public Text FreePointText;
+    [SerializeField] public Button FreePointApply;
+    [SerializeField] public Button FreePointCancel;
+    [SerializeField] public Button PointResetButton;
+    [SerializeField] public Text CurrentLvlText;
+    [SerializeField] public Text CurrentExpText;
+    [SerializeField] public RectTransform DescStatsContentParent;
+    [SerializeField] public RectTransform DescStatsDummyHeader;
 
-    [SerializeField] private Text DescStatsDummyText;
+    [SerializeField] public Text DescStatsDummyText;
 
     // ApplyResetPanel Stuff
     [Header("ApplyResetPanel")]
-    [SerializeField] private RectTransform ApplyResetPanelRoot;
-    [SerializeField] private RectTransform ApplyResetPanelBkg;
-    [SerializeField] private RectTransform ApplyResetButtonGroup;
-    [SerializeField] private Button ButtonYes;
-    [SerializeField] private Button ButtonNo;
-    [SerializeField] private Text Text;
+    [SerializeField] public RectTransform ApplyResetPanelRoot;
+    [SerializeField] public RectTransform ApplyResetPanelBkg;
+    [SerializeField] public RectTransform ApplyResetButtonGroup;
+    [SerializeField] public Button ButtonYes;
+    [SerializeField] public Button ButtonNo;
+    [SerializeField] public Text Text;
 
     // FriendsListPanel Stuff
     [Header("FriendsListPanel")]
-    [SerializeField] private RectTransform FriendsListPanelRoot;
-    [SerializeField] private RectTransform FriendsListPanelBkg;
-    [SerializeField] private RectTransform FriendsListPanelHeader;
-    [SerializeField] private Image BorderImage;
-    [SerializeField] private GameObject HeaderInvited;
-    [SerializeField] private GameObject Invited;
-    [SerializeField] private GameObject HeaderFriends;
-    [SerializeField] private GameObject Friends;
-    [SerializeField] private Text FriendsListPanelText;
-    [SerializeField] private Button AddFriendButton;
+    [SerializeField] public RectTransform FriendsListPanelRoot;
+    [SerializeField] public RectTransform FriendsListPanelBkg;
+    [SerializeField] public RectTransform FriendsListPanelHeader;
+    [SerializeField] public Image BorderImage;
+    [SerializeField] public GameObject HeaderInvited;
+    [SerializeField] public GameObject Invited;
+    [SerializeField] public GameObject HeaderFriends;
+    [SerializeField] public GameObject Friends;
+    [SerializeField] public Text FriendsListPanelText;
+    [SerializeField] public Button AddFriendButton;
 
     // SendInvitePanel Stuff
     [Header("SendInvitePanel")]
-    [SerializeField] private RectTransform SendInvitePanelRoot;
-    [SerializeField] private RectTransform SendInvitePanelBkg;
-    [SerializeField] private InputField SendInviteInputField;
-    [SerializeField] private Button SendButton;
-    [SerializeField] private Text SendText;
-    [SerializeField] private Button CancelButton;
-    [SerializeField] private Text CancelText;
+    [SerializeField] public RectTransform SendInvitePanelRoot;
+    [SerializeField] public RectTransform SendInvitePanelBkg;
+    [SerializeField] public InputField SendInviteInputField;
+    [SerializeField] public Button SendButton;
+    [SerializeField] public Text SendText;
+    [SerializeField] public Button CancelButton;
+    [SerializeField] public Text CancelText;
 }
