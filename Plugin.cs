@@ -37,6 +37,7 @@ public partial class EpicMMOSystem : BaseUnityPlugin
 
     public static AssetBundle _asset;
 
+
     public static Localization localization;
     //Config
     public static ConfigEntry<string> language;
@@ -100,7 +101,9 @@ public partial class EpicMMOSystem : BaseUnityPlugin
     //Hud
     public static ConfigEntry<bool> oldExpBar;
     public static ConfigEntry<bool> showMaxHp;
-    
+    public static ConfigEntry<float> HudBarScale;
+    public static ConfigEntry<string> HudExpBackgroundCol;
+
     //Optional
     public static ConfigEntry<float> addDefaultHealth;
     public static ConfigEntry<float> addDefaultWeight;
@@ -173,8 +176,10 @@ public partial class EpicMMOSystem : BaseUnityPlugin
         viewTextCoins = config(resetAttributesItems, "viewText", "coins", "Name item");
         
         string hud = "4.Hud--------------------";
-        oldExpBar = config(hud, "UseOldExpBar", false, "Use old xp bar without health and stamina bars (need restart, don't use server sunc)", false);
+        oldExpBar = config(hud, "UseOldExpBar", false, "Use old xp bar without health and stamina bars (need restart, not server sync)", false);
         showMaxHp = config(hud, "ShowMaxHp", true, "Show max hp (100 / 100)", false);
+        HudBarScale = config(hud, "ScaleforMoveableBar", .75f, "Scale for ExpBar whichis moveable", false);
+        HudExpBackgroundCol = config(hud,"HudBackgroundCol", "#2F1600", "Background color in Hex, set to 'none' to make transparent", false);
         
         string optionalEffect = "5.Optional perk---------";
         addDefaultHealth = config(optionalEffect, "AddDefaultHealth", 0f, "Add health by default");

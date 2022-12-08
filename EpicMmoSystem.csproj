@@ -296,6 +296,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="color.cs" />
     <Compile Include="Data\Monster.cs" />
     <Compile Include="Data\MonsterOld.cs" />
     <Compile Include="Drag.cs" />

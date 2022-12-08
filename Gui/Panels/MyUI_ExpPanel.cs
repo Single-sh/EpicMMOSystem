@@ -23,6 +23,10 @@ public partial class MyUI
     private static GameObject EitrBar;
 
     private static Transform expPanel;
+    private static Transform expPanelRoot;
+    private static Color expPanelBackgroundColor;
+    private static GameObject expPanelBackground;
+
 
 
     public static void updateExpBar()
@@ -50,10 +54,25 @@ public partial class MyUI
                 eBarImage = oldExpPanel.Find("Bar/Fill").GetComponent<Image>();
                 return;
             }
-            GameObject panel = EpicMMOSystem._asset.LoadAsset<GameObject>("EpicHudPanel");
-            DragWindowCntrl.ApplyDragWindowCntrl(panel);
+            GameObject panel = EpicMMOSystem._asset.LoadAsset<GameObject>("EpicHudPanelCanvas");
+            //DragWindowCntrl.ApplyDragWindowCntrl(panel); ended up working for some reason, but already switched
 
-            expPanel = EpicMMOSystem.Instantiate(panel, __instance.m_rootObject.transform).transform;
+            LevelHudPanelRefs levelHudPanelRefs = new LevelHudPanelRefs();
+            //levelHudPanelRefs.PointPanelBkg.GetComponent<Text>().text =     
+
+            expPanelRoot = EpicMMOSystem.Instantiate(panel, __instance.m_rootObject.transform).transform;
+            
+            expPanel = expPanelRoot.Find("EpicHudPanel");
+            expPanelBackground = expPanel.Find("Background").gameObject;
+            expPanelBackgroundColor = expPanelBackground.GetComponent<Image>().color;
+
+            expPanelRoot.GetComponent<CanvasScaler>().scaleFactor = EpicMMOSystem.HudBarScale.Value;// scale factor Need to move so dynamic
+            if (EpicMMOSystem.HudExpBackgroundCol.Value == "none")
+                expPanelBackground.SetActive(false);
+            else
+                expPanelBackgroundColor = ColorUtil.GetColorFromHex(EpicMMOSystem.HudExpBackgroundCol.Value);
+
+            
 
             eLevelText = expPanel.Find("Container/Exp/Lvl").GetComponent<Text>();
             eExpText = expPanel.Find("Container/Exp/Exp").GetComponent<Text>();
@@ -94,7 +113,13 @@ public partial class MyUI
             {
                 return true;
             }
-            
+
+            expPanelRoot.GetComponent<CanvasScaler>().scaleFactor = EpicMMOSystem.HudBarScale.Value;// scale factor Need to move so dynamic
+            if (EpicMMOSystem.HudExpBackgroundCol.Value == "none")
+                expPanelBackground.SetActive(false);
+            else
+                expPanelBackgroundColor = ColorUtil.GetColorFromHex(EpicMMOSystem.HudExpBackgroundCol.Value);
+
             var current = player.GetHealth();
             var max = player.GetMaxHealth();
             
