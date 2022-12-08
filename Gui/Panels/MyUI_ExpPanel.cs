@@ -51,7 +51,7 @@ public partial class MyUI
                 return;
             }
             GameObject panel = EpicMMOSystem._asset.LoadAsset<GameObject>("EpicHudPanel");
-            panel.AddComponent<DragWindowCntrl>();
+            DragWindowCntrl.ApplyDragWindowCntrl(panel);
 
             expPanel = EpicMMOSystem.Instantiate(panel, __instance.m_rootObject.transform).transform;
 
