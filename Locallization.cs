@@ -109,6 +109,7 @@ public class Localization
         _dictionary.Add("$damage", "Урон");
         _dictionary.Add("$armor", "Защита");
         _dictionary.Add("$survival", "Выживание");
+        _dictionary.Add("$regen_eitr", "регенерация Eitr");
         //Friends list
         _dictionary.Add("$notify", "<color=#00E6FF>Оповещение</color>");
         _dictionary.Add("$friends_list", "Список друзей");
@@ -159,6 +160,7 @@ public class Localization
         _dictionary.Add("$damage", "Damage");
         _dictionary.Add("$armor", "Armor");
         _dictionary.Add("$survival", "Survival");
+        _dictionary.Add("$regen_eitr", "Eitr regeneration");
         //Friends list
         _dictionary.Add("$notify", "<color=#00E6FF>Alert</color>");
         _dictionary.Add("$friends_list", "Friends list");
@@ -210,6 +212,7 @@ public class Localization
         _dictionary.Add("$damage", "Daño");
         _dictionary.Add("$armor", "Armadura");
         _dictionary.Add("$survival", "Surpervivencia");
+        _dictionary.Add("$regen_eitr", "regeneración de eitr");
         //Friends list
         _dictionary.Add("$notify", "<color=#00E6FF>Alerta</color>");
         _dictionary.Add("$friends_list", "Lista de amigos");

@@ -70,7 +70,8 @@ public partial class EpicMMOSystem : BaseUnityPlugin
     //LevelSystem arg property <Intellect>
     public static ConfigEntry<float> magicDamage;
     public static ConfigEntry<float> magicArmor;
-    
+    public static ConfigEntry<float> MagicEitrRegen;
+
     //LevelSystem arg property <Body>
     public static ConfigEntry<float> addHp;
     public static ConfigEntry<float> staminaBlock;
@@ -145,7 +146,8 @@ public partial class EpicMMOSystem : BaseUnityPlugin
         string levelSystemIntellect = "1.LevelSystem Intellect-";
         magicDamage = config(levelSystemIntellect, "MagicAttack", 0.20f, "Increase magic attack per point. Увеличение магической атаки за один поинт");
         magicArmor = config(levelSystemIntellect, "MagicArmor", 0.1f, "Increase magical protection per point. Увеличение магической защиты за один поинт");
-        
+        MagicEitrRegen = config(levelSystemIntellect, "MagicEitrReg", 0.3f, "Increase magical Eitr Regeneration per point. Увеличивает регенерацию магического Эйтра на единицу.");
+
         string levelSystemBody = "1.LevelSystem Body------";
         addHp = config(levelSystemBody, "AddHp", 2f, "One Point Health Increase. Увеличение здоровья за один поинт");
         staminaBlock = config(levelSystemBody, "StaminaBlock", 0.2f, "Decrease stamina consumption per unit per point. Уменьшение расхода выносливости на блок за один поинт");

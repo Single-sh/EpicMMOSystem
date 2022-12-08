@@ -31,7 +31,8 @@ public partial class MyUI
     //Description intellect
     private static Text magicDamageText;
     private static Text magicArmorText;
-    
+    private static Text magicEitrRegText;
+
     //Description body
     private static Text addHpText;
     private static Text addStaminaText;
@@ -81,12 +82,11 @@ public partial class MyUI
         currentLevelText = levelSystemPanel.transform.Find("CurrentLevel/Content/Lvl").GetComponent<Text>();
         expText = levelSystemPanel.transform.Find("CurrentLevel/Content/Exp").GetComponent<Text>();
 
-        //Description
-       // var paul = LevelHudPanelRefs.CanvasRoot;
+        //Description Content 
         Transform contentStats = levelSystemPanel.transform.Find("DescriptionStats/Scroll View/Viewport/Content");
         contentStats.transform.Find("HeaderDamage/Text").GetComponent<Text>().text = localization["$damage"];
         contentStats.transform.Find("HeaderDefence/Text").GetComponent<Text>().text = localization["$armor"];
-        contentStats.transform.Find("HeaderSurvarior/Text").GetComponent<Text>().text = localization["$survival"];
+        contentStats.transform.Find("HeaderSurv/Text").GetComponent<Text>().text = localization["$survival"];
         //Description strength
         physicDamageText = contentStats.transform.Find("PhysicDamage").GetComponent<Text>();
         addWeightText = contentStats.transform.Find("Weight").GetComponent<Text>();
@@ -97,6 +97,7 @@ public partial class MyUI
         //Description intellect
         magicDamageText = contentStats.transform.Find("MagicDamage").GetComponent<Text>();
         magicArmorText = contentStats.transform.Find("MagicDamageReduction").GetComponent<Text>();
+        magicEitrRegText = contentStats.transform.Find("EitrReg").GetComponent<Text>();
         //Description body
         addHpText = contentStats.transform.Find("Hp").GetComponent<Text>();
         physicArmorText = contentStats.transform.Find("DamageReduction").GetComponent<Text>();
@@ -171,6 +172,7 @@ public partial class MyUI
         physicArmorText.text = $"{localization["$physic_armor"]}: +{LevelSystem.Instance.getAddPhysicArmor()}%";
         reducedStaminaBlockText.text = $"{localization["$reduced_stamina_block"]}: -{LevelSystem.Instance.getReducedStaminaBlock()}%";
         regenHpText.text = $"{localization["$regen_hp"]}: +{LevelSystem.Instance.getAddRegenHp()}%";
+        magicEitrRegText.text = $"{localization["$regen_eitr"]}: +{LevelSystem.Instance.getEitrRegen()}%";
         #endregion
     }
 

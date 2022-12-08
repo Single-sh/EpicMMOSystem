@@ -1,4 +1,5 @@
 using System;
+using EpicMMOSystem.MonoScripts;
 using HarmonyLib;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,6 +17,12 @@ public partial class MyUI
     
     private static Text staminaText;
     private static Image staminaImage;
+
+    private static Text Eitr;
+    private static Image EitrImage;
+    private static GameObject EitrBar;
+
+    private static Transform expPanel;
 
 
     public static void updateExpBar()
@@ -40,30 +47,39 @@ public partial class MyUI
                 Transform oldExpPanel = EpicMMOSystem.Instantiate(oldPanel, __instance.m_rootObject.transform).transform;
                 eLevelText = oldExpPanel.Find("Lvl").GetComponent<Text>();
                 eExpText = oldExpPanel.Find("Exp").GetComponent<Text>();
-                eBarImage = oldExpPanel.Find("Bar/Fil").GetComponent<Image>();
+                eBarImage = oldExpPanel.Find("Bar/Fill").GetComponent<Image>();
                 return;
             }
-            
             GameObject panel = EpicMMOSystem._asset.LoadAsset<GameObject>("EpicHudPanel");
-            Transform expPanel = EpicMMOSystem.Instantiate(panel, __instance.m_rootObject.transform).transform;
-            eLevelText = expPanel.Find("Conteiner/Exp/Lvl").GetComponent<Text>();
-            eExpText = expPanel.Find("Conteiner/Exp/Exp").GetComponent<Text>();
+            panel.AddComponent<DragWindowCntrl>();
+
+            expPanel = EpicMMOSystem.Instantiate(panel, __instance.m_rootObject.transform).transform;
+
+            eLevelText = expPanel.Find("Container/Exp/Lvl").GetComponent<Text>();
+            eExpText = expPanel.Find("Container/Exp/Exp").GetComponent<Text>();
+
             //expPanel.Find("Conteiner/Exp/Lvl").localPosition += new Vector3(0, 30, 0);This is bottom right xp bar not monster
-            eBarImage = expPanel.Find("Conteiner/Exp/Bar/Fil").GetComponent<Image>();
+            eBarImage = expPanel.Find("Container/Exp/Bar/Fill").GetComponent<Image>();
+
+            hpText = expPanel.Find("Container/Hp/Text").GetComponent<Text>();
+            hpImage = expPanel.Find("Container/Hp/Bar/Fill").GetComponent<Image>();
             
-            hpText = expPanel.Find("Conteiner/Hp/Text").GetComponent<Text>();
-            hpImage = expPanel.Find("Conteiner/Hp/Bar/Fill").GetComponent<Image>();
-            
-            staminaText = expPanel.Find("Conteiner/Stamina/Text").GetComponent<Text>();
-            staminaImage = expPanel.Find("Conteiner/Stamina/Bar/Fill").GetComponent<Image>();
-            
+            staminaText = expPanel.Find("Container/Stamina/Text").GetComponent<Text>();
+            staminaImage = expPanel.Find("Container/Stamina/Bar/Fill").GetComponent<Image>();
+
+            EitrBar = expPanel.Find("Container/Eitr").gameObject;
+            Eitr = expPanel.Find("Container/Eitr/Text").GetComponent<Text>();
+            EitrImage = expPanel.Find("Container/Eitr/Bar/Fill").GetComponent<Image>();
+
+
             __instance.m_healthPanel.Find("Health").gameObject.SetActive(false);
             __instance.m_healthPanel.Find("healthicon").gameObject.SetActive(false);
+           
 
-            var buildInfo = __instance.m_buildHud.transform.Find("SelectedInfo");
+            var buildInfo = __instance.m_buildHud.transform.Find("SelectedInfo"); // move build menu up
             if (buildInfo)
             {
-                buildInfo.localPosition += new Vector3(0, 30, 0);
+                buildInfo.localPosition += new Vector3(0, 45, 0); // from 30
             }
         }
     }
@@ -124,7 +140,47 @@ public partial class MyUI
             return false;
         }
     }
-    
+
+    [HarmonyPatch(typeof(Hud), nameof(Hud.UpdateEitr))]
+    public static class UpdateEitr
+    {
+        static bool Prefix(Player player)
+        {
+            if (EpicMMOSystem.oldExpBar.Value)
+            {
+                return true;
+            }
+
+            var current = player.GetEitr();
+            var max = player.GetMaxEitr();
+
+            if (max < 1 && EitrBar.activeSelf)
+            {
+                EitrBar.SetActive(false);
+                expPanel.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 1050);
+            }
+            if (max > 0 && !EitrBar.activeSelf)
+            {
+                EitrBar.SetActive(true);
+                expPanel.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 1475);
+            }
+                
+
+            EitrImage.fillAmount = current / max;
+            string text = "";
+            if (EpicMMOSystem.showMaxHp.Value)
+            {
+                text = $"{Mathf.CeilToInt(current).ToString()} / {Mathf.CeilToInt(max).ToString()}";
+            }
+            else
+            {
+                text = Mathf.CeilToInt(current).ToString();
+            }
+            Eitr.text = text;
+            return false; // doesn't update the UI information then, this can't really live update from switch oldExpBars
+        }
+    }
+
     [HarmonyPatch(typeof(Game), nameof(Game.SpawnPlayer))]
     public static class UpdateExpPanelForStart
     {
