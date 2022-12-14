@@ -22,7 +22,7 @@ public static class DataMonsters
 {
     private static Dictionary<string, Monster> dictionary = new();
     private static string MonsterDB = "";
-    private static List<string> MonsterDBL;
+    public static List<string> MonsterDBL;
 
     public static bool contains(string name)
     {
@@ -162,6 +162,7 @@ public static class DataMonsters
 
         MonsterDBL = list;
         createNewDataMonsters(list);
+        
     }
 
     private static string getDefaultJsonMonster(string jsonname)
@@ -188,7 +189,7 @@ public static class DataMonsters
         }
     }
 
-    private static void SetMonsterDB(long peer, List<string> json)
+    public static void SetMonsterDB(long peer, List<string> json)
     {
         createNewDataMonsters(json);
     }

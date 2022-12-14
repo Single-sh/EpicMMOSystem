@@ -11,6 +11,8 @@ using ServerSync;
 using UnityEngine;
 using UnityEngine.Rendering;
 using LocalizationManager;
+using System.Collections.Generic;
+using fastJSON;
 
 namespace EpicMMOSystem;
 
@@ -26,6 +28,7 @@ public partial class EpicMMOSystem : BaseUnityPlugin
     private static string ConfigFileFullPath = Paths.ConfigPath + Path.DirectorySeparatorChar + ConfigFileName;
     public static bool _isServer => SystemInfo.graphicsDeviceType == GraphicsDeviceType.Null;
     internal static string ConnectionError = "";
+    internal static bool NetisActive = false;
 
     private readonly Harmony _harmony = new(ModGUID);
 
@@ -33,9 +36,10 @@ public partial class EpicMMOSystem : BaseUnityPlugin
         BepInEx.Logging.Logger.CreateLogSource(ModName);
 
     public static readonly ConfigSync ConfigSync = new(ModGUID)
-        { DisplayName = ModName, CurrentVersion = ModVersion, MinimumRequiredVersion = ModVersion };
+    { DisplayName = ModName, CurrentVersion = ModVersion, MinimumRequiredVersion = ModVersion };
 
     public static AssetBundle _asset;
+    private string folderpath = Path.Combine(Paths.ConfigPath, EpicMMOSystem.ModName);
 
 
     public static Localization localization;
@@ -62,12 +66,12 @@ public partial class EpicMMOSystem : BaseUnityPlugin
     //LevelSystem arg property <Strength>
     public static ConfigEntry<float> physicDamage;
     public static ConfigEntry<float> addWeight;
-    
+
     //LevelSystem arg property <Agility>
     public static ConfigEntry<float> speedAttack;
     public static ConfigEntry<float> staminaReduction;
     public static ConfigEntry<float> addStamina;
-    
+
     //LevelSystem arg property <Intellect>
     public static ConfigEntry<float> magicDamage;
     public static ConfigEntry<float> magicArmor;
@@ -79,8 +83,8 @@ public partial class EpicMMOSystem : BaseUnityPlugin
     public static ConfigEntry<float> physicArmor;
     public static ConfigEntry<float> regenHp;
     #endregion
-    
-    
+
+
     //Creature level control
     public static ConfigEntry<bool> enabledLevelControl;
     public static ConfigEntry<bool> removeDropMax;
@@ -93,16 +97,19 @@ public partial class EpicMMOSystem : BaseUnityPlugin
     public static ConfigEntry<bool> lowDamageLevel;
     public static ConfigEntry<int> maxLevelExp;
     public static ConfigEntry<int> minLevelExp;
-    
+
     //Reset attributes items
     public static ConfigEntry<String> prefabNameCoins;
     public static ConfigEntry<String> viewTextCoins;
-    
+
     //Hud
     public static ConfigEntry<bool> oldExpBar;
     public static ConfigEntry<bool> showMaxHp;
     public static ConfigEntry<float> HudBarScale;
     public static ConfigEntry<string> HudExpBackgroundCol;
+    public static ConfigEntry<string> HudPostionCords;
+    public static string[] HudCords = { "", "", "", "", "" }; // EpicHudPanel 0 Exp 1 Hp 2 Stamina 3 Eitr 4
+    public static Vector2[] Vectors;
 
     //Optional
     public static ConfigEntry<float> addDefaultHealth;
@@ -176,11 +183,12 @@ public partial class EpicMMOSystem : BaseUnityPlugin
         viewTextCoins = config(resetAttributesItems, "viewText", "coins", "Name item");
         
         string hud = "4.Hud--------------------";
-        oldExpBar = config(hud, "UseOldExpBar", false, "Use old xp bar without health and stamina bars (need restart, not server sync)", false);
+        oldExpBar = config(hud, "UseOldExpBar", false, "Use old xp bar without health and stamina bars (need restart, not server sync) Does not move or scale", false);
         showMaxHp = config(hud, "ShowMaxHp", true, "Show max hp (100 / 100)", false);
         HudBarScale = config(hud, "ScaleforMoveableBar", .75f, "Scale for ExpBar whichis moveable", false);
         HudExpBackgroundCol = config(hud,"HudBackgroundCol", "#2F1600", "Background color in Hex, set to 'none' to make transparent", false);
-        
+        HudPostionCords = config(hud, "HudPostionCords", "", "Coordinates for last saved position - delete to set to default", false);
+
         string optionalEffect = "5.Optional perk---------";
         addDefaultHealth = config(optionalEffect, "AddDefaultHealth", 0f, "Add health by default");
         addDefaultWeight = config(optionalEffect, "AddDefaultWeight", 0f, "Add weight by default");
@@ -200,9 +208,66 @@ public partial class EpicMMOSystem : BaseUnityPlugin
     {
         DataMonsters.Init();
         FriendsSystem.Init();
+        SetupWatcher();
+        
     }
 
-    private void ReadConfigValues(object sender, FileSystemEventArgs e)
+    [HarmonyPatch(typeof(ZNetScene), nameof(ZNetScene.Awake))]
+    private static class ZRouteAwake
+    {
+        private static void Postfix()
+        {
+            NetisActive = true;
+        }
+    }
+
+    private void SetupWatcher()
+    {
+        
+            if (!Directory.Exists(folderpath))
+            {
+                Directory.CreateDirectory(folderpath);
+            }
+
+            FileSystemWatcher watcher = new(folderpath); // jsons in config
+            watcher.Changed += ReadJsonValues;
+            watcher.Created += ReadJsonValues;
+            watcher.Renamed += ReadJsonValues;
+            watcher.IncludeSubdirectories = true;
+            watcher.SynchronizingObject = ThreadingHelper.SynchronizingObject;
+            watcher.EnableRaisingEvents = true;
+        
+    }
+
+    private void ReadJsonValues(object sender, FileSystemEventArgs e)
+    {
+        if (NetisActive)
+        {
+            if (ZNet.instance.IsServer() && ZNet.instance.IsDedicated()) // only dedicated
+            {
+                List<string> list = new List<string>();
+                foreach (string file in Directory.GetFiles(folderpath, "*.json", SearchOption.AllDirectories))
+                {
+                    var nam = Path.GetFileName(file);
+                    if (EpicMMOSystem.extraDebug.Value)
+                        EpicMMOSystem.MLLogger.LogInfo(nam + " read");
+
+                    var temp = File.ReadAllText(file);
+                    list.Add(temp);
+
+                }
+                if (EpicMMOSystem.extraDebug.Value)
+                    EpicMMOSystem.MLLogger.LogInfo($"Mobs Updated on Server");
+
+                DataMonsters.MonsterDBL = list;
+                ZRoutedRpc.instance.Register($"{EpicMMOSystem.ModName} SetMonsterDB",
+                        new Action<long, List<string>>(DataMonsters.SetMonsterDB)); // iffy on how list makes it too this.  Might switch to customSync
+            }
+        }
+    }
+
+
+        private void ReadConfigValues(object sender, FileSystemEventArgs e)
     {
         if (!File.Exists(ConfigFileFullPath)) return;
         try
@@ -273,8 +338,139 @@ public partial class EpicMMOSystem : BaseUnityPlugin
             return AssetBundle.LoadFromStream(stream);
         }
     }
+
+     public static void SaveWindowPositions (GameObject saveobject, bool inital)
+    {
+        //Vector3 objsaving = saveobject.transform.position;
+        //EpicMMOSystem.MLLogger.LogInfo("Vector3 " + saveobject.name + " " + objsaving);
+
+        if (inital)
+        {
+            switch (saveobject.name)
+            {
+                case "EpicHudPanel":
+                    Vectors[0] = saveobject.GetComponent<RectTransform>().anchoredPosition;
+                    break;
+                case "Exp":
+                    Vectors[1] = saveobject.GetComponent<RectTransform>().anchoredPosition;
+                    break;
+                case "Hp":
+                     Vectors[2] = saveobject.GetComponent<RectTransform>().anchoredPosition;
+                    break;
+                case "Stamina":
+                    Vectors[3] = saveobject.GetComponent<RectTransform>().anchoredPosition;
+                    break;
+                case "Eitr":
+                    Vectors[4] = saveobject.GetComponent<RectTransform>().anchoredPosition;
+                    break;
+                default:
+                    Vectors[0] = saveobject.GetComponent<RectTransform>().anchoredPosition;
+                    break; 
+ 
+            }
+        }
+
+       // saveobject.GetComponent<RectTransform>().anchoredPosition;
+        //HudCords  // EpicHudPanel 0 Exp 1 Hp 2 Stamina 3 Eitr 4
+        switch (saveobject.name)
+        {
+            case "EpicHudPanel": HudCords[0] = objsaving.ToString();
+                break;
+            case "Exp": HudCords[1] = objsaving.ToString();
+                break;
+            case "Hp": HudCords[2] = objsaving.ToString();
+                break;
+            case "Stamina":HudCords[3] = objsaving.ToString();
+                break;
+            case "Eitr":HudCords[4] = objsaving.ToString();
+                break;
+            default: HudCords[0] = objsaving.ToString();
+                break;
+        }
+        HudPostionCords.Value = string.Join("$", HudCords);
     
-    
-    
+    }
+
+    public static RectTransform RestorePosition(RectTransform hudobject)
+    {
+        if (HudPostionCords.Value == "")
+        {
+            return hudobject;
+        } else
+        {
+            var string2 = HudPostionCords.Value;
+            HudCords = string2.Split('$');
+            EpicMMOSystem.MLLogger.LogInfo("cords" + HudCords + " 4th " + HudCords[4] );
+            /*var name = hudobject.gameObject.name;
+            
+            switch (name)
+            {
+                case "EpicHudPanel":
+                    return StringToVector3withPosition(HudCords[0], hudobject);     
+                case "Exp":
+                    return StringToVector3withPosition(HudCords[1], hudobject);
+                case "Hp":
+                    return StringToVector3withPosition(HudCords[2], hudobject);
+                case "Stamina":
+                    return StringToVector3withPosition(HudCords[3], hudobject);
+                case "Eitr":
+                    return StringToVector3withPosition(HudCords[4], hudobject);
+                default:
+                    return StringToVector3withPosition(HudCords[0], hudobject);
+            }
+            */
+            return hudobject;
+            //Vector2 vect2 = tempcords;
+           // hudobject.position = tempcords;
+        }
+    }
+
+    public static RectTransform StringToVector3withPosition(string sVector, RectTransform Game)
+    {
+        // Remove the parentheses
+        if (sVector == null || sVector == "") // if empty
+        {
+            return Game;
+        }
+        if (sVector.StartsWith("(") && sVector.EndsWith(")"))
+        {
+            sVector = sVector.Substring(1, sVector.Length - 2);
+        }
+
+        // split the items
+        string[] sArray = sVector.Split(',');
+
+        // store as a Vector3
+        Vector3 result = new Vector3(
+            float.Parse(sArray[0]),
+            float.Parse(sArray[1]),
+            float.Parse(sArray[2]));
+
+         Game.position = result;
+        return Game;
+    }
+    public static Vector2 StringToVector2(string sVector)
+    {
+        // Remove the parentheses
+
+        if (sVector.StartsWith("(") && sVector.EndsWith(")"))
+        {
+            sVector = sVector.Substring(1, sVector.Length - 2);
+        }
+
+        // split the items
+        string[] sArray = sVector.Split(',');
+
+        // store as a Vector3
+        Vector2 result = new Vector2(
+            float.Parse(sArray[0]),
+            float.Parse(sArray[1])
+           );
+
+        return result;
+    }
+
+
+
 
 }
