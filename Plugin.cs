@@ -341,8 +341,8 @@ public partial class EpicMMOSystem : BaseUnityPlugin
 
      public static void SaveWindowPositions (GameObject saveobject, bool inital)
     {
-        //Vector3 objsaving = saveobject.transform.position;
-        //EpicMMOSystem.MLLogger.LogInfo("Vector3 " + saveobject.name + " " + objsaving);
+        Vector3 objsaving = saveobject.GetComponent<RectTransform>().anchoredPosition;
+        EpicMMOSystem.MLLogger.LogInfo("Vector3 " + saveobject.name + " " + objsaving);
 
         if (inital)
         {
@@ -401,12 +401,12 @@ public partial class EpicMMOSystem : BaseUnityPlugin
             var string2 = HudPostionCords.Value;
             HudCords = string2.Split('$');
             EpicMMOSystem.MLLogger.LogInfo("cords" + HudCords + " 4th " + HudCords[4] );
-            /*var name = hudobject.gameObject.name;
+            var name = hudobject.gameObject.name;
             
             switch (name)
             {
                 case "EpicHudPanel":
-                    return StringToVector3withPosition(HudCords[0], hudobject);     
+                    return  hudobject;     
                 case "Exp":
                     return StringToVector3withPosition(HudCords[1], hudobject);
                 case "Hp":
@@ -418,7 +418,7 @@ public partial class EpicMMOSystem : BaseUnityPlugin
                 default:
                     return StringToVector3withPosition(HudCords[0], hudobject);
             }
-            */
+            
             return hudobject;
             //Vector2 vect2 = tempcords;
            // hudobject.position = tempcords;
@@ -446,7 +446,11 @@ public partial class EpicMMOSystem : BaseUnityPlugin
             float.Parse(sArray[1]),
             float.Parse(sArray[2]));
 
-         Game.position = result;
+         Game.anchoredPosition = result;
+        Game.position = result + new Vector3(50,50);
+        Game.ForceUpdateRectTransforms();
+
+
         return Game;
     }
     public static Vector2 StringToVector2(string sVector)

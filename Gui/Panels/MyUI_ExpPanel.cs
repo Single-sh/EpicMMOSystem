@@ -89,7 +89,7 @@ public partial class MyUI
             eLevelText = expPanel.Find("Container/Exp/Lvl").GetComponent<Text>();
             eExpText = expPanel.Find("Container/Exp/Exp").GetComponent<Text>();
             Exp = expPanel.Find("Container/Exp");
-            EpicMMOSystem.SaveWindowPositions(Exp.gameObject, true);
+            //EpicMMOSystem.SaveWindowPositions(Exp.gameObject, true);
 
             //expPanel.Find("Conteiner/Exp/Lvl").localPosition += new Vector3(0, 30, 0);This is bottom right xp bar not monster
             eBarImage = expPanel.Find("Container/Exp/Bar/Fill").GetComponent<Image>();
@@ -97,19 +97,19 @@ public partial class MyUI
             hpText = expPanel.Find("Container/Hp/Text").GetComponent<Text>();
             hpImage = expPanel.Find("Container/Hp/Bar/Fill").GetComponent<Image>();
             hp = expPanel.Find("Container/Hp");
-            EpicMMOSystem.SaveWindowPositions(hp.gameObject, true);
+            //EpicMMOSystem.SaveWindowPositions(hp.gameObject, true);
 
 
             staminaText = expPanel.Find("Container/Stamina/Text").GetComponent<Text>();
             staminaImage = expPanel.Find("Container/Stamina/Bar/Fill").GetComponent<Image>();
             stamina = expPanel.Find("Container/Stamina");
-            EpicMMOSystem.SaveWindowPositions(stamina.gameObject, true);
+            //EpicMMOSystem.SaveWindowPositions(stamina.gameObject, true);
 
             EitrTran = expPanel.Find("Container/Eitr");
             EitrGameObj = expPanel.Find("Container/Eitr").gameObject;
             Eitr = expPanel.Find("Container/Eitr/Text").GetComponent<Text>();
             EitrImage = expPanel.Find("Container/Eitr/Bar/Fill").GetComponent<Image>();
-            EpicMMOSystem.SaveWindowPositions(EitrGameObj, true);
+            //EpicMMOSystem.SaveWindowPositions(EitrGameObj, true);
 
 
             __instance.m_healthPanel.Find("Health").gameObject.SetActive(false);
@@ -214,31 +214,7 @@ public partial class MyUI
                 EitrGameObj.SetActive(true);
                 expPanel.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 1475);
 
-                for (int i = 1; i < 5; i++)
-                {
-                    EpicMMOSystem.MLLogger.LogInfo("cords spawn " + i + " " + EpicMMOSystem.HudCords[i]);
 
-                    if (EpicMMOSystem.HudCords[i] == null || EpicMMOSystem.HudCords[i] == "")
-                        continue;
-
-
-                    switch (i)
-                    {
-                        case 1:
-                            Exp.gameObject.GetComponent<RectTransform>().position = StringToVector2Special(EpicMMOSystem.HudCords[i]);
-                            break;
-                        case 2:
-                            hp.position = StringToVector2Special(EpicMMOSystem.HudCords[i]);
-                            break;
-                        case 3:
-                            stamina.gameObject.GetComponent<RectTransform>().position = StringToVector2Special(EpicMMOSystem.HudCords[i]);
-                            break;
-                        case 4:
-                            EitrGameObj.GetComponent<RectTransform>().position = StringToVector3Special(EpicMMOSystem.HudCords[i]);
-                            break;
-
-                    }
-                }
             }
                 
 
@@ -267,7 +243,32 @@ public partial class MyUI
                 updateExpBar();
                 expPanelRoot.gameObject.SetActive(true);
                 expPanel.transform.position = StringToVector3Special(EpicMMOSystem.HudCords[0]);
-               
+
+                for (int i = 1; i < 5; i++)
+                {
+                    EpicMMOSystem.MLLogger.LogInfo("cords spawn " + i + " " + EpicMMOSystem.HudCords[i]);
+
+                    if (EpicMMOSystem.HudCords[i] == null || EpicMMOSystem.HudCords[i] == "")
+                        continue;
+
+
+                    switch (i)
+                    {
+                        case 1:
+                            Exp.gameObject.GetComponent<RectTransform>().anchoredPosition = StringToVector2Special(EpicMMOSystem.HudCords[i]);
+                            break;
+                        case 2:
+                            hp.gameObject.GetComponent<RectTransform>().anchoredPosition = StringToVector2Special(EpicMMOSystem.HudCords[i]);
+                            break;
+                        case 3:
+                            stamina.gameObject.GetComponent<RectTransform>().anchoredPosition = StringToVector2Special(EpicMMOSystem.HudCords[i]);
+                            break;
+                        case 4:
+                            EitrGameObj.GetComponent<RectTransform>().anchoredPosition = StringToVector3Special(EpicMMOSystem.HudCords[i]);
+                            break;
+
+                    }
+                }
             }
             catch (Exception e)
             {
