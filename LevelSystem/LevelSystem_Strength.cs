@@ -19,7 +19,14 @@ public partial class LevelSystem
         var multiplayer = EpicMMOSystem.addWeight.Value;
         return parameter * multiplayer;
     }
-    
+
+    public float getStaminaRegen()
+    {
+        var parameter = getParameter(Parameter.Strength);
+        var multiplayer = EpicMMOSystem.staminaRegen.Value;
+        return parameter * multiplayer;
+    }
+
     [HarmonyPatch(typeof(ItemDrop.ItemData), nameof(ItemDrop.ItemData.GetDamage), typeof(int))]
     public class AddDamageStrength_Path
     {
@@ -45,6 +52,19 @@ public partial class LevelSystem
         {
             var addWeight = Instance.getAddWeight() + EpicMMOSystem.addDefaultWeight.Value;
             __result += (float)Math.Round(addWeight);
+        }
+    }
+
+    [HarmonyPatch(typeof(SEMan), nameof(SEMan.ModifyStaminaRegen))]
+    public static class RegenStamina_Patch
+    {
+        public static void Postfix(SEMan __instance, ref float staminaMultiplier)
+        {
+            if (__instance.m_character.IsPlayer())
+            {
+                float add = Instance.getStaminaRegen();
+                staminaMultiplier += add / 100;
+            }
         }
     }
 }

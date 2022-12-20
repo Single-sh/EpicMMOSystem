@@ -22,7 +22,7 @@ namespace EpicMMOSystem;
 public partial class EpicMMOSystem : BaseUnityPlugin
 {
     internal const string ModName = "EpicMMOSystem";
-    internal const string ModVersion = "1.5.0";
+    internal const string ModVersion = "1.5.1";
     internal const string Author = "WackyMole";
     private const string ModGUID = Author + "." + ModName;
     private static string ConfigFileName = ModGUID + ".cfg";
@@ -68,6 +68,7 @@ public partial class EpicMMOSystem : BaseUnityPlugin
     //LevelSystem arg property <Strength>
     public static ConfigEntry<float> physicDamage;
     public static ConfigEntry<float> addWeight;
+    public static ConfigEntry<float> staminaRegen;
 
     //LevelSystem arg property <Agility>
     public static ConfigEntry<float> speedAttack;
@@ -143,7 +144,7 @@ public partial class EpicMMOSystem : BaseUnityPlugin
         freePointForLevel = config(levelSystem, "FreePointForLevel", 5, "Free points per level. Свободных поинтов за один уровень");
         startFreePoint = config(levelSystem, "StartFreePoint", 5, "Additional free points start. Дополнительных свободных поинтов");
         levelExp = config(levelSystem, "FirstLevelExperience", 500, "Amount of experience needed per level. Количество опыта необходимого на 1 уровень");
-        multiNextLevel = config(levelSystem, "MultiplyNextLevelExperience", 1.04f, "Experience multiplier for the next level. Умножитель опыта для следующего уровня");
+        multiNextLevel = config(levelSystem, "MultiplyNextLevelExperience", 1.04f, "Experience multiplier for the next level - Should never go below 1.00. Умножитель опыта для следующего уровня");
         expForLvlMonster = config(levelSystem, "ExpForLvlMonster", 0.25f, "Extra experience (from the sum of the basic experience) for the level of the monster. Доп опыт (из суммы основного опыта) за уровень монстра");
         rateExp = config(levelSystem, "RateExp", 1f, "Experience multiplier. Множитель опыта");
         groupExp = config(levelSystem, "GroupExp", 0.70f, "Experience multiplier that the other players in the group get. Множитель опыта который получают остальные игроки в группе");
@@ -157,7 +158,8 @@ public partial class EpicMMOSystem : BaseUnityPlugin
         string levelSystemStrngth = "1.LevelSystem Strength--";
         physicDamage = config(levelSystemStrngth, "PhysicDamage", 0.20f, "Damage multiplier per point. Умножитель урона за один поинт");
         addWeight = config(levelSystemStrngth, "AddWeight", 2f, "Adds carry weight per point. Добавляет переносимый вес за один поинт");
-        
+        staminaRegen = config(levelSystemStrngth, "StaminaReg", 0.4f, "Increase stamina regeneration per point.");
+
         string levelSystemAgility = "1.LevelSystem Agility---";
         speedAttack = config(levelSystemAgility, "StaminaAttack", 0.1f, "Reduces attack stamina consumption. Уменьшает потребление стамины на атаку");
         staminaReduction = config(levelSystemAgility, "StaminaReduction", 0.15f, "Decrease stamina consumption for running, jumping for one point. Уменьшение расхода выносливости на бег, прыжок за один поинт");
@@ -177,7 +179,7 @@ public partial class EpicMMOSystem : BaseUnityPlugin
         
         string creatureLevelControl = "2.Creature level control";
         mentor = config(creatureLevelControl, "Mentor", true, "Give full eXP for low level members in Groups");
-        enabledLevelControl = config(creatureLevelControl, "Enabled_creature_level", true, "Enable creature Level control");
+        enabledLevelControl = config(creatureLevelControl, "Enabled_creature_level", true, "Enable creature Level control - Disable this to remove levels, but still get eXP gain");
         removeDropMax = config(creatureLevelControl, "Remove_creature_drop_max", true, "Monsters after death do not give items if their level is higher than player level + MaxLevel");
         removeDropMin = config(creatureLevelControl, "Remove_creature_drop_min", false, "Monsters after death do not give items if their level is lower than player level - MinLevel");
         removeBossDropMax = config(creatureLevelControl, "Remove_boss_drop_max", true, "Bosses after death do not give items if their level is higher than player level + MaxLevel");

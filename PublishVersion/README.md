@@ -1,5 +1,5 @@
 # Description:
-This mod adds an RPG-like system of levels and attribute increases: - Wacky Branch 1.5.0
+This mod adds an RPG-like system of levels and attribute increases: - Wacky Branch 1.5.1
 WackyEpicMMOSystem release until author comes back. 
 
 Support me at https://www.buymeacoffee.com/WackyMole 
@@ -113,7 +113,7 @@ Original Creator: LambaSun or my [mod branch](https://discord.com/channels/82657
 </details> 
 
 <details><summary>Changelog</summary>
- 
+ - 1.5.1: Added Stamina regeneration
  - 1.5.0: Changed Config to WackyMole.EpicMMOSystem.cfg, Made all the UI elements dragable, Realtime setting of (x,y) position in config, type "none" in BackgroundColor to remove brown bar
 		  Added Filewatcher to Jsons- dedicated Server only- Added filewatcher to configs, Updated Group logic. Revamped Mentor mode. 
  - 1.4.1: Fix Version Check and Multiplayer Sync, moved Monster Bar again. 

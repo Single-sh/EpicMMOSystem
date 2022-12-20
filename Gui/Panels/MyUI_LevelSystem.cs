@@ -24,7 +24,8 @@ public partial class MyUI
     //Description strength
     private static Text physicDamageText;
     private static Text addWeightText;
-    
+    private static Text staminaRegen;
+
     //Description agility
     private static Text speedAttackText;
     private static Text reducedStaminaText;
@@ -91,6 +92,7 @@ public partial class MyUI
         //Description strength
         physicDamageText = contentStats.transform.Find("PhysicDamage").GetComponent<Text>();
         addWeightText = contentStats.transform.Find("Weight").GetComponent<Text>();
+        staminaRegen = contentStats.transform.Find("StaminaRegeneration").GetComponent<Text>();
         //Description agility
         speedAttackText = contentStats.transform.Find("SpeedAttack").GetComponent<Text>();
         reducedStaminaText = contentStats.transform.Find("StaminaReduction").GetComponent<Text>();
@@ -158,6 +160,7 @@ public partial class MyUI
         //Description strength
         physicDamageText.text = $"{localization["$physic_damage"]}: +{LevelSystem.Instance.getAddPhysicDamage()}%";
         addWeightText.text = $"{localization["$add_weight"]}: +{LevelSystem.Instance.getAddWeight()}";
+        staminaRegen.text = $"{localization["$stamina_reg"]}: +{LevelSystem.Instance.getStaminaRegen()}";
 
         //Description agility
         speedAttackText.text = $"{localization["$speed_attack"]}: -{LevelSystem.Instance.getAddStaminaAttack()}%";

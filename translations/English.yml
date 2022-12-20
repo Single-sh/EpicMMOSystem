@@ -30,6 +30,7 @@ regen_hp:  "Health regeneration"
 damage:  "Damage"
 armor:  "Armor"
 survival:  "Survival"
+StaminaRegeneration: "Stamina regeneration"
 
 
 notify:  "<color=#00E6FF>Alert</color>"
