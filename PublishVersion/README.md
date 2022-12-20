@@ -27,7 +27,7 @@ Features:
 
 	Agility: Attack Stamina Consumption decrease, Stamina increase, Stamina consumption (running, jumping) decreased
 
-	Intellect: Elemental Damage increase, Elemental Armor increase, (In future updates Eitrl regen)
+	Intellect: Elemental Damage increase, Elemental Armor increase, Eitrl regen increases
 
 	Endurance: Physical Armor increase, HP increase, Health Regeneration
 

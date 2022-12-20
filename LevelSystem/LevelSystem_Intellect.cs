@@ -61,6 +61,7 @@ public partial class LevelSystem
             hit.m_damage.m_lightning *= value;
             hit.m_damage.m_poison *= value;
             hit.m_damage.m_spirit *= value;
+            //hit.m_damage.m_elemntal?
         }
     }
 
