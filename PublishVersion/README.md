@@ -77,7 +77,7 @@ Note for other Mods: This mod uses hit.toolTier to pass the Lvl of player
 </details>
 
 <details><summary>UI</summary>
-	![https://wackymole.com/hosts/MMO_UI.png](https://wackymole.com/hosts/MMO_UI.png)
+	<img src="https://wackymole.com/hosts/MMO_UI.png" width="400"/>
 
 	1HudPanelPosition: Main UI Panel Draggable, default color set by HudBackgroundCol, Type "none" to make it disappear
 
