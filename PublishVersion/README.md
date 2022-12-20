@@ -2,6 +2,10 @@
 This mod adds an RPG-like system of levels and attribute increases: - Wacky Branch 1.5.0
 WackyEpicMMOSystem release until author comes back. 
 
+Support me at https://www.buymeacoffee.com/WackyMole 
+
+<img src="https://wackymole.com/hosts/bmc_qr.png" width="100"/>
+
 Wacky Git https://github.com/Wacky-Mole/WackyEpicMMOSystem
 
 Original git - https://github.com/Single-sh/EpicMMOSystem
@@ -13,7 +17,7 @@ Features:
  - MMO-like friends list. -[Groups](https://valheim.thunderstore.io/package/Smoothbrain/Groups/)
  - On screen XP bar.
  - Compatible with [ItemRequiresSkillLevel](https://valheim.thunderstore.io/package/Detalhes/ItemRequiresSkillLevel/) mod. Equipment can be limited by level or attribute.
- - Compatible with KGMarketplace mod. Experience rewards can be added: (EpicMMO_Exp:250) Quests can be limited by level (EpicMMO_Level: text, 20)
+ - Compatible with [KGMarketplace mod](https://valheim.thunderstore.io/package/KGvalheim/Marketplace_And_Server_NPCs_Revamped/). Experience rewards can be added: (EpicMMO_Exp:250) Quests can be limited by level (EpicMMO_Level: text, 20)
  
  ![https://i.imgur.com/lkCcVOo.png](https://i.imgur.com/lkCcVOo.png)
 
