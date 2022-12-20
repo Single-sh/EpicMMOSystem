@@ -1,5 +1,5 @@
 # Description:
-This mod adds an RPG-like system of levels and attribute increases: - Wacky Branch 1.4.1
+This mod adds an RPG-like system of levels and attribute increases: - Wacky Branch 1.5.0
 WackyEpicMMOSystem release until author comes back. 
 
 Wacky Git https://github.com/Wacky-Mole/WackyEpicMMOSystem
@@ -10,7 +10,7 @@ Original git - https://github.com/Single-sh/EpicMMOSystem
 Features:
  - Shared group XP. Outside of groups all XP awards go to the character who struck the last blow.
  - Custom mobs can be added for XP gain.
- - MMO-like friends list. -Groups MOD
+ - MMO-like friends list. -[Groups](https://valheim.thunderstore.io/package/Smoothbrain/Groups/)
  - On screen XP bar.
  - Compatible with [ItemRequiresSkillLevel](https://valheim.thunderstore.io/package/Detalhes/ItemRequiresSkillLevel/) mod. Equipment can be limited by level or attribute.
  - Compatible with KGMarketplace mod. Experience rewards can be added: (EpicMMO_Exp:250) Quests can be limited by level (EpicMMO_Level: text, 20)
@@ -48,22 +48,50 @@ The player will receive a friend request. Once accepted, the character will appe
 
 This mod assigns levels to all in-game monsters.
 ![https://i.imgur.com/IySsj3j.png](https://i.imgur.com/IySsj3j.png)
-Monsters that are 1 level higher than the character (+ value from config) do not reward XP. Damage dealt to a higher level monster will be reduced by the difference in levels. E.g. (Character level 20/ Monster level 50 = 0.4. Damage dealt will be 0.4% of normal damage) Higher level monsters will have their names appear in red.
+
+Mobs from other mods are included:
+
+Fantasy-Creatures, AirAnimals, Defaults, DoOrDieMonsters, LandAnimals, MonsterlabZ, Outsiders, SeaAnimals
+
+Monsters that are 1 level higher than the character + MaxLevelRange will curve XP.
+
+With Low_damage_level- Damage dealt to a higher level monster will be reduced by the difference in levels. E.g. (Character level 20/ Monster level 50 = 0.4. Damage dealt will be 0.4% of normal damage) 
+
+Higher level monsters will have their names appear in red. Monsters within your range will be white.
 
 If you are significantly higher level than a monster, your XP award will be reduced. Monsters that are significantly lower level than you will have their names appear in cyan.
 
 All of these formulas functions can be configured in the settings file.
-A file listing all monsters and their levels is located in plugin/EpicMMOSystem/MonsterDB_"Version".
+A file listing all monsters and their levels is located in config/EpicMMOSystem/MonsterDB_"Version".jsons
+
+A file called Version.txt is created in the folder. It contains the mod version that was used to create it. Replace it with "NO" to stop it from overwritting on a future update.
 
 Please note:
 When upgrading the mod to a newer version, new fields in the settings file will be created automatically. You will have to manually re-edit these values if you have changed them.
 If you have no custom settings in the configuration file, you should delete the file so that a fresh one can be created by the new version.
+
 Note for other Mods: This mod uses hit.toolTier to pass the Lvl of player
 
 
 
 </details>
 
+<details><summary>UI</summary>
+	![https://wackymole.com/hosts/MMO_UI.png](https://wackymole.com/hosts/MMO_UI.png)
+
+	1HudPanelPosition: Main UI Panel Draggable, default color set by HudBackgroundCol, Type "none" to make it disappear
+
+	2ExpPanelPosition: Dragable EXP BAR, to ONLY use EXP bar , enable eXP Bar Only and restart - not dragable in this mode
+
+	4HpPanelPosition, 3StaminaPanelPosition: both Dragable
+
+	5EitrPanelPosition: Dragable, will disappear and reappear when you have Eitr.
+
+	DisabledHealthIcons: This disables the red Health Icon that is normall present under vanilla health bar
+
+	HudBarScale: Scale this up or down to resize MMO UI elements. - 1.0 Should cover all of your screen horizontally 
+
+</details> 
 
 <details><summary>Console commands</summary>
 
@@ -82,6 +110,8 @@ Original Creator: LambaSun or my [mod branch](https://discord.com/channels/82657
 
 <details><summary>Changelog</summary>
  
+ - 1.5.0: Changed Config to WackyMole.EpicMMOSystem.cfg, Made all the UI elements dragable, Realtime setting of (x,y) position in config, type "none" in BackgroundColor to remove brown bar
+		  Added Filewatcher to Jsons- dedicated Server only- Added filewatcher to configs, Updated Group logic. Revamped Mentor mode. 
  - 1.4.1: Fix Version Check and Multiplayer Sync, moved Monster Bar again. 
  - 1.4.0: Fix for inventory to bag JC (hopefully), Changed Configs,PLEASE DELETE OLD CONFIGS!, added removeDropMax, removeDropMax,removeBossDropMax, removeBossDropMix, curveExp, curveBossExp. 
 		  Allow for multiple Jsons to be searched. Added admin rights to singleplayer hosting. Boss drop is determined by mob.faction(), curveBossExp Exp is just the 6 main bosses.  

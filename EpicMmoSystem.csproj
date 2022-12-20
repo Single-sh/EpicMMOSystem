@@ -354,6 +354,7 @@
     <EmbeddedResource Include="Data\MonsterDB_SeaAnimals.json" />
     <EmbeddedResource Include="Data\MonsterDB_MonsterLabZ.json" />
     <EmbeddedResource Include="Data\MonsterDB_Outsiders.json" />
+    <EmbeddedResource Include="Data\MonsterDB_DoorDieMonsters.json" />
     <None Include="packages.config" />
     <EmbeddedResource Include="translations\Russian.yml" />
     <EmbeddedResource Include="translations\English.yml" />

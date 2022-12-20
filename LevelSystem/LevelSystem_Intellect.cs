@@ -29,9 +29,10 @@ public partial class LevelSystem
     public class AddDamageIntellect_Path
     {
         public static void Postfix(ref ItemDrop.ItemData __instance, ref HitData.DamageTypes __result)
-        {   
+        {
+            if (Player.m_localPlayer == null) return;
             if (!Player.m_localPlayer.m_inventory.ContainsItem(__instance)) return;
-            if (Player.m_localPlayer == null)  return;
+            
 
             float add = Instance.getAddMagicDamage();
             var value = add / 100 + 1;

@@ -96,28 +96,36 @@ public static class DataMonsters
         var json4 = "MonsterDB_SeaAnimals.json";
         var json5 = "MonsterDB_MonsterLabZ.json";
         var json6 = "MonsterDB_Outsiders.json";
+        var json7 = "MonsterDB_DoorDieMonsters.json";
 
         if (!Directory.Exists(folderpath)){
             Directory.CreateDirectory(folderpath);
         }
+        var cleartowrite = true;
         if (File.Exists(versionpath))
         {
             //MonsterDB = File.ReadAllText(path);
             var filev = File.ReadAllText(versionpath);
+            cleartowrite = false; // default is false because it exists in the first place
+
             if (filev == "1.4.0")
             {
-
+                cleartowrite = true;
             }
-            if (filev == "NO")
+            if (filev == "1.5.0")
+            {
+                cleartowrite = false;
+            }
+            if (filev == "NO" || filev == "no")
             {// don't update
-
+                cleartowrite = false;
             }
 
         }
-        else
+        if (cleartowrite)
         {
             //list.Clear();
-            File.WriteAllText(versionpath, EpicMMOSystem.ModVersion); // Write Version file
+            File.WriteAllText(versionpath, "1.5.0"); // Write Version file
 
             File.WriteAllText(Path.Combine(folderpath, json), getDefaultJsonMonster(json));
            // list.Add(json);
@@ -138,6 +146,8 @@ public static class DataMonsters
             //list.Add(json5);
 
             File.WriteAllText(Path.Combine(folderpath, json6), getDefaultJsonMonster(json6));
+
+            File.WriteAllText(Path.Combine(folderpath, json7), getDefaultJsonMonster(json7));
 
             // MonsterDB = json + json1 + json2+ json3 + json4 + json5;// + json1 + json2
 
@@ -199,8 +209,8 @@ public static class DataMonsters
     {
         private static void Postfix(ZRpc rpc)
         {
-            if (!EpicMMOSystem._isServer) return;
-            if (!(ZNet.instance.IsServer() && ZNet.instance.IsDedicated())) return;
+            if (!EpicMMOSystem._isServer) return; // doesn't work on Coop
+            //if (!(ZNet.instance.IsServer() && ZNet.instance.IsDedicated())) return;
             ZNetPeer peer = ZNet.instance.GetPeer(rpc);
             if(peer == null) return;
             ZRoutedRpc.instance.InvokeRoutedRPC(peer.m_uid, $"{EpicMMOSystem.ModName} SetMonsterDB", MonsterDBL); //sync list

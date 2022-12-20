@@ -25,6 +25,7 @@ public partial class LevelSystem
     {
         public static void Postfix(ref ItemDrop.ItemData __instance, ref HitData.DamageTypes __result)
         {
+            if (Player.m_localPlayer == null) return;
             if (!Player.m_localPlayer.m_inventory.ContainsItem(__instance)) return;
             float add = Instance.getAddPhysicDamage();
             var value = add / 100 + 1;

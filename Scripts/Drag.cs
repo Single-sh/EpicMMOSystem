@@ -79,7 +79,7 @@ public class DragWindowCntrl : MonoBehaviour, IBeginDragHandler, IDragHandler// 
     
     public void OnEndDrag(PointerEventData eventData)
     {
-        EpicMMOSystem.SaveWindowPositions(_window.gameObject, false);
+        //EpicMMOSystem.SaveWindowPositions(_window.gameObject, false);
     }
 /*
     public void OnScroll(PointerEventData eventData)

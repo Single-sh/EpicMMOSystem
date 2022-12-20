@@ -8,28 +8,31 @@ namespace EpicMMOSystem;
 
 public partial class MyUI
 {
-    private static Text eLevelText;
-    private static Text eExpText;
-    private static Image eBarImage;
-    private static Transform Exp;
-    
-    private static Text hpText;
-    private static Image hpImage;
-    private static Transform hp;
+    internal static Text eLevelText;
+    internal static Text eExpText;
+    internal static Image eBarImage;
+    internal static Transform Exp;
 
-    private static Text staminaText;
-    private static Image staminaImage;
-    private static Transform stamina;
+    internal static Text hpText;
+    internal static Image hpImage;
+    internal static Transform hp;
 
-    private static Text Eitr;
-    private static Image EitrImage;
-    private static GameObject EitrGameObj;
-    private static Transform EitrTran;
+    internal static Text staminaText;
+    internal static Image staminaImage;
+    internal static Transform stamina;
 
-    private static Transform expPanel;
-    private static Transform expPanelRoot;
-    private static Color expPanelBackgroundColor;
-    private static GameObject expPanelBackground;
+    internal static Text Eitr;
+    internal static Image EitrImage;
+    internal static GameObject EitrGameObj;
+    internal static Transform EitrTran;
+
+    internal static Transform expPanel;
+    internal static Transform expPanelRoot;
+    internal static Color expPanelBackgroundColor;
+    internal static GameObject expPanelBackground;
+
+    internal static int flagforMove = 0;
+    internal static bool firstload = false;
 
 
 
@@ -46,7 +49,44 @@ public partial class MyUI
         eBarImage.fillAmount = (float)exp / need;
 
     }
-    
+    internal static void InitHudPanel()
+    {
+
+        expPanel = expPanelRoot.Find("EpicHudPanel");
+
+        expPanelBackground = expPanel.Find("Background").gameObject;
+        expPanelBackgroundColor = expPanelBackground.GetComponent<Image>().color;
+
+
+        expPanelRoot.GetComponent<CanvasScaler>().scaleFactor = EpicMMOSystem.HudBarScale.Value;// scale factor Need to move so dynamic
+        if (EpicMMOSystem.HudExpBackgroundCol.Value == "none")
+            expPanelBackground.SetActive(false);
+        else
+            expPanelBackgroundColor = ColorUtil.GetColorFromHex(EpicMMOSystem.HudExpBackgroundCol.Value);
+
+        eLevelText = expPanel.Find("Container/Exp/Lvl").GetComponent<Text>();
+        eExpText = expPanel.Find("Container/Exp/Exp").GetComponent<Text>();
+        Exp = expPanel.Find("Container/Exp");
+
+        //expPanel.Find("Conteiner/Exp/Lvl").localPosition += new Vector3(0, 30, 0);This is bottom right xp bar not monster
+        eBarImage = expPanel.Find("Container/Exp/Bar/Fill").GetComponent<Image>();
+
+        hpText = expPanel.Find("Container/Hp/Text").GetComponent<Text>();
+        hpImage = expPanel.Find("Container/Hp/Bar/Fill").GetComponent<Image>();
+        hp = expPanel.Find("Container/Hp");
+
+
+        staminaText = expPanel.Find("Container/Stamina/Text").GetComponent<Text>();
+        staminaImage = expPanel.Find("Container/Stamina/Bar/Fill").GetComponent<Image>();
+        stamina = expPanel.Find("Container/Stamina");
+
+
+        EitrTran = expPanel.Find("Container/Eitr");
+        EitrGameObj = expPanel.Find("Container/Eitr").gameObject;
+        Eitr = expPanel.Find("Container/Eitr/Text").GetComponent<Text>();
+        EitrImage = expPanel.Find("Container/Eitr/Bar/Fill").GetComponent<Image>();
+
+    }
 
     [HarmonyPatch(typeof(Hud), nameof(Hud.Awake))]
     public static class InstantiateExpPanel
@@ -60,60 +100,23 @@ public partial class MyUI
                 eLevelText = oldExpPanel.Find("Lvl").GetComponent<Text>();
                 eExpText = oldExpPanel.Find("Exp").GetComponent<Text>();
                 eBarImage = oldExpPanel.Find("Bar/Fill").GetComponent<Image>();
+                //DragWindowCntrl.ApplyDragWindowCntrl(oldPanel);
                 return;
             }
-            //GameObject panel = EpicMMOSystem._asset.LoadAsset<GameObject>("EpicHudPanel");
-            GameObject panel = EpicMMOSystem._asset.LoadAsset<GameObject>("EpicHudPanelCanvas"); // I had problems with this one, Canvas wouldn't show up until I disabled and renabled it - Azu question 
-            //DragWindowCntrl.ApplyDragWindowCntrl(panel); //ended up working for some reason, 
 
-           // expPanelRoot = EpicMMOSystem.Instantiate(panel, __instance.m_rootObject.transform).transform;
-            
-            expPanelRoot = EpicMMOSystem.Instantiate(panel).transform;
-            //GameObject.DontDestroyOnLoad(expPanelRoot.gameObject);
-           expPanelRoot.gameObject.SetActive(false);
+            GameObject panel = EpicMMOSystem._asset.LoadAsset<GameObject>("EpicHudPanelCanvas"); //DragWindowCntrl.ApplyDragWindowCntrl(panel); //ended up working for some reason, 
+            // expPanelRoot = EpicMMOSystem.Instantiate(panel, __instance.m_rootObject.transform).transform;
+            expPanelRoot = EpicMMOSystem.Instantiate(panel).transform;//GameObject.DontDestroyOnLoad(expPanelRoot.gameObject);
+            expPanelRoot.gameObject.SetActive(false);
 
-            expPanel = expPanelRoot.Find("EpicHudPanel");
-            
-
-
-            expPanelBackground = expPanel.Find("Background").gameObject;
-            expPanelBackgroundColor = expPanelBackground.GetComponent<Image>().color;
-
-            //expPanelRoot.GetComponent<Canvas>().gameObject.SetActive(false); // idk
-            expPanelRoot.GetComponent<CanvasScaler>().scaleFactor = EpicMMOSystem.HudBarScale.Value;// scale factor Need to move so dynamic
-            if (EpicMMOSystem.HudExpBackgroundCol.Value == "none")
-                expPanelBackground.SetActive(false);
-            else
-                expPanelBackgroundColor = ColorUtil.GetColorFromHex(EpicMMOSystem.HudExpBackgroundCol.Value);
-
-            eLevelText = expPanel.Find("Container/Exp/Lvl").GetComponent<Text>();
-            eExpText = expPanel.Find("Container/Exp/Exp").GetComponent<Text>();
-            Exp = expPanel.Find("Container/Exp");
-            //EpicMMOSystem.SaveWindowPositions(Exp.gameObject, true);
-
-            //expPanel.Find("Conteiner/Exp/Lvl").localPosition += new Vector3(0, 30, 0);This is bottom right xp bar not monster
-            eBarImage = expPanel.Find("Container/Exp/Bar/Fill").GetComponent<Image>();
-
-            hpText = expPanel.Find("Container/Hp/Text").GetComponent<Text>();
-            hpImage = expPanel.Find("Container/Hp/Bar/Fill").GetComponent<Image>();
-            hp = expPanel.Find("Container/Hp");
-            //EpicMMOSystem.SaveWindowPositions(hp.gameObject, true);
-
-
-            staminaText = expPanel.Find("Container/Stamina/Text").GetComponent<Text>();
-            staminaImage = expPanel.Find("Container/Stamina/Bar/Fill").GetComponent<Image>();
-            stamina = expPanel.Find("Container/Stamina");
-            //EpicMMOSystem.SaveWindowPositions(stamina.gameObject, true);
-
-            EitrTran = expPanel.Find("Container/Eitr");
-            EitrGameObj = expPanel.Find("Container/Eitr").gameObject;
-            Eitr = expPanel.Find("Container/Eitr/Text").GetComponent<Text>();
-            EitrImage = expPanel.Find("Container/Eitr/Bar/Fill").GetComponent<Image>();
-            //EpicMMOSystem.SaveWindowPositions(EitrGameObj, true);
-
+            InitHudPanel();
 
             __instance.m_healthPanel.Find("Health").gameObject.SetActive(false);
-            __instance.m_healthPanel.Find("healthicon").gameObject.SetActive(false);
+            if (EpicMMOSystem.HealthIcons.Value)
+            {
+                
+                __instance.m_healthPanel.Find("healthicon").gameObject.SetActive(false);
+            }
            
 
             var buildInfo = __instance.m_buildHud.transform.Find("SelectedInfo"); // move build menu up
@@ -203,16 +206,34 @@ public partial class MyUI
 
             var current = player.GetEitr();
             var max = player.GetMaxEitr();
+            if (firstload)
+                flagforMove = 0;
+
+            if (flagforMove > 0)
+            {
+                DragControl.RestoreWindow(hp.gameObject);
+                DragControl.RestoreWindow(Exp.gameObject);
+                DragControl.RestoreWindow(stamina.gameObject);
+                if(flagforMove == 2)
+                    DragControl.RestoreWindow(EitrGameObj);
+
+                flagforMove = 0;
+            }
 
             if (max < 1 && EitrGameObj.activeSelf)
             {
                 EitrGameObj.SetActive(false);
                 expPanel.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 1050);
+                // InitHudPanel();
+                flagforMove = 1;
+
             }
             if (max > 0 && !EitrGameObj.activeSelf)
             {
                 EitrGameObj.SetActive(true);
                 expPanel.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 1475);
+                // InitHudPanel();
+                flagforMove = 2; 
 
 
             }
@@ -229,6 +250,7 @@ public partial class MyUI
                 text = Mathf.CeilToInt(current).ToString();
             }
             Eitr.text = text;
+            firstload = true;
             return false; // doesn't update the UI information then, this can't really live update from switch oldExpBars
         }
     }
@@ -238,95 +260,21 @@ public partial class MyUI
     {
         static void Postfix()
         {
+      
             try
             {
                 updateExpBar();
-                expPanelRoot.gameObject.SetActive(true);
-                expPanel.transform.position = StringToVector3Special(EpicMMOSystem.HudCords[0]);
+                if (!EpicMMOSystem.oldExpBar.Value)
+                    expPanelRoot.gameObject.SetActive(true);
 
-                for (int i = 1; i < 5; i++)
-                {
-                    EpicMMOSystem.MLLogger.LogInfo("cords spawn " + i + " " + EpicMMOSystem.HudCords[i]);
-
-                    if (EpicMMOSystem.HudCords[i] == null || EpicMMOSystem.HudCords[i] == "")
-                        continue;
-
-
-                    switch (i)
-                    {
-                        case 1:
-                            Exp.gameObject.GetComponent<RectTransform>().anchoredPosition = StringToVector2Special(EpicMMOSystem.HudCords[i]);
-                            break;
-                        case 2:
-                            hp.gameObject.GetComponent<RectTransform>().anchoredPosition = StringToVector2Special(EpicMMOSystem.HudCords[i]);
-                            break;
-                        case 3:
-                            stamina.gameObject.GetComponent<RectTransform>().anchoredPosition = StringToVector2Special(EpicMMOSystem.HudCords[i]);
-                            break;
-                        case 4:
-                            EitrGameObj.GetComponent<RectTransform>().anchoredPosition = StringToVector3Special(EpicMMOSystem.HudCords[i]);
-                            break;
-
-                    }
-                }
             }
             catch (Exception e)
             {
                 EpicMMOSystem.print($"Error set expbar: {e.Message}");
                 throw;
             }
+            
         }
-    }
-
-    public static Vector3 StringToVector3Special(string sVector)
-    {
-
-        if (sVector == null || sVector == "") // if empty
-        {
-            Vector3 paul= new (0, 0, 0); // somehow get default
-            return paul;
-        }
-        if (sVector.StartsWith("(") && sVector.EndsWith(")"))
-        {
-            sVector = sVector.Substring(1, sVector.Length - 2);
-        }
-
-        // split the items
-        string[] sArray = sVector.Split(',');
-
-        // store as a Vector3
-        Vector3 result = new Vector3(
-            float.Parse(sArray[0]),
-            float.Parse(sArray[1]),
-            float.Parse(sArray[2]));
-
-        return result;
-
-    }
-
-    public static Vector2 StringToVector2Special(string sVector)
-    {
-
-        if (sVector == null || sVector == "") // if empty
-        {
-            Vector2 paul = new(0, 0); // somehow get default
-            return paul;
-        }
-        if (sVector.StartsWith("(") && sVector.EndsWith(")"))
-        {
-            sVector = sVector.Substring(1, sVector.Length - 2);
-        }
-
-        // split the items
-        string[] sArray = sVector.Split(',');
-
-        // store as a Vector3
-        Vector2 result = new Vector2(
-            float.Parse(sArray[0]),
-            float.Parse(sArray[1]));
-
-        return result;
-
     }
 }
 

@@ -24,15 +24,30 @@ public static class MonsterDeath_Path
 
     public static void RPC_AddGroupExp(long sender, int exp, Vector3 position, int monsterLevel)
     {
+        if (EpicMMOSystem.extraDebug.Value)
+            EpicMMOSystem.MLLogger.LogInfo("Player was in group so applying exp from group kill");
+
         if ((double)Vector3.Distance(position, Player.m_localPlayer.transform.position) >= 50f) return;
+
+        var playerExp = exp;
+
         int maxRangeLevel = LevelSystem.Instance.getLevel() + EpicMMOSystem.maxLevelExp.Value;
-        if (monsterLevel > maxRangeLevel && !EpicMMOSystem.mentor.Value) return;
+        if (monsterLevel > maxRangeLevel)
+        {
+            playerExp = Convert.ToInt32(exp / (monsterLevel - maxRangeLevel));
+        }
         int minRangeLevel = LevelSystem.Instance.getLevel() - EpicMMOSystem.minLevelExp.Value;
         if (monsterLevel < minRangeLevel)
         {
-            exp = Convert.ToInt32( exp / ( minRangeLevel - monsterLevel));
+            playerExp = Convert.ToInt32(exp / (minRangeLevel - monsterLevel));
         }
-        LevelSystem.Instance.AddExp(exp);
+
+        if (monsterLevel > maxRangeLevel && EpicMMOSystem.mentor.Value)
+            playerExp = exp; // give full *group exp with mentor mode
+
+
+
+        LevelSystem.Instance.AddExp(playerExp);
     }
     
 
@@ -97,6 +112,10 @@ public static class MonsterDeath_Path
         
         LevelSystem.Instance.AddExp(playerExp);
         if (!Groups.API.IsLoaded()) return;
+
+        if (EpicMMOSystem.extraDebug.Value)
+            EpicMMOSystem.MLLogger.LogInfo("Player in Group");
+
         var groupFactor = EpicMMOSystem.groupExp.Value;
         foreach (var playerReference in Groups.API.GroupPlayers())
         {
