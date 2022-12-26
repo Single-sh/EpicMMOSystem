@@ -69,9 +69,9 @@ If you are significantly higher level than a monster, your XP award will be redu
 All of these formulas functions can be configured in the settings file.
 A file listing all monsters and their levels is located in config/EpicMMOSystem/MonsterDB_"Version".jsons
 
-A file called Version.txt is created in the folder. It contains the mod version that was used to create it. Replace it with "NO" to stop it from overwritting on a future update.
+A file called Version.txt is created in the folder. It contains the mod version that was used to create it. Replace it with "NO","no" or "stop", to stop it from overwritting on a future update.
 
-Latest Update for Jsons config is 1.5.0 (Number will be updated when Jsons recieve an update)
+Latest Update for Jsons files is 1.5.0 (Number will be updated when Jsons recieve an update)
 
 Please note:
 When upgrading the mod to a newer version, new fields in the settings file will be created automatically. You will have to manually re-edit these values if you have changed them.
@@ -132,7 +132,7 @@ Original Creator: LambaSun or my [mod branch](https://discord.com/channels/82657
 
 | Version | Changes                                                                                                                                                                                                                                                                                                                                |
 |----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 1.5.2: | - Added Colors and Scale to Individual UI elements.<br/> Fixed EpicLoot drop bug, made Nav Panel moveable, Eitr UI adjustments<br/> Low_damage_config for extra configurability on low damage mode
+| 1.5.2: | - Added Colors and Scale to individual UI elements.<br/> Made NavPanel moveable, Eitr UI adjustments<br/> Low_damage_config for extra configurability on low damage mode
 | 1.5.1: | - Added Stamina regeneration<br/>
 | 1.5.0: | - Changed Config to WackyMole.EpicMMOSystem.cfg<br/> - Made all the UI elements dragable<br/> - Realtime setting of (x,y) position in config, type "none" in BackgroundColor to remove brown bar.<br/> - Added Filewatcher to Jsons<br/> - dedicated Server only<br/> - Added filewatcher to configs, Updated Group logic<br/> - Revamped Mentor mode.<br/>
 | 1.4.1: | - Fix Version Check and Multiplayer Sync, moved Monster Bar again.<br/>

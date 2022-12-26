@@ -117,7 +117,7 @@ public static class DataMonsters
             {
                 cleartowrite = false;
             }
-            if (filev == "NO" || filev == "no")
+            if (filev == "NO" || filev == "no" || filev == "stop" || filev == "STOP")
             {// don't update
                 cleartowrite = false;
             }
@@ -153,7 +153,7 @@ public static class DataMonsters
             // MonsterDB = json + json1 + json2+ json3 + json4 + json5;// + json1 + json2
 
             if (EpicMMOSystem.extraDebug.Value)
-                EpicMMOSystem.MLLogger.LogInfo($"Mobs Written");
+                EpicMMOSystem.MLLogger.LogInfo($"Mobs Jsons Written");
         }
         List<string> list = new List<string>();
         foreach (string file in Directory.GetFiles(folderpath, "*.json", SearchOption.AllDirectories))
@@ -217,7 +217,7 @@ public static class DataMonsters
             ZRoutedRpc.instance.InvokeRoutedRPC(peer.m_uid, $"{EpicMMOSystem.ModName} SetMonsterDB", MonsterDBL); //sync list
         }
     }
-    
+
     // [HarmonyPatch(typeof(Character), nameof(Character.GetHoverName))]
     // [HarmonyPriority(Priority.First)]
     // public static class MonsterColorText
@@ -241,7 +241,7 @@ public static class DataMonsters
     //         }
     //     }
     // }
-    
+
     [HarmonyPatch(typeof(EnemyHud), nameof(EnemyHud.ShowHud))]
     [HarmonyPriority(1)] //almost last
     public static class MonsterColorTexts
@@ -258,12 +258,12 @@ public static class DataMonsters
             int monsterLevel = getLevel(c.gameObject.name) + c.m_level - 1;
             GameObject component = ___m_huds[c].m_gui.transform.Find("Name").gameObject;
             GameObject levelName = Object.Instantiate(component, component.transform);
-            levelName.GetComponent<RectTransform>().anchoredPosition = new Vector2(40,-30);
+            levelName.GetComponent<RectTransform>().anchoredPosition = new Vector2(40, -30);
             if (c.m_boss)
             {
                 levelName.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 30);
             }
-            
+
             levelName.GetComponent<Text>().text = $"[{monsterLevel}]";
             Color color = monsterLevel > maxLevelExp ? Color.red : Color.white;
             if (monsterLevel < minLevelExp) color = Color.cyan;
@@ -275,7 +275,7 @@ public static class DataMonsters
             }
 
         }
-        
+
         [HarmonyPatch(typeof(EnemyHud), nameof(EnemyHud.UpdateHuds))]
         public static class StarVisibility
         {
@@ -318,6 +318,31 @@ public static class DataMonsters
             }
         }
     }
+    /*
+    [HarmonyPatch(typeof(Ragdoll), nameof(Ragdoll.SpawnLoot))]
+    public static class Ragdoll_SpawnLoot_Patch
+    {
+        public static void Postfix(Ragdoll __instance, Vector3 center)
+        {
+        }
+    }
+
+    [HarmonyPatch(typeof(CharacterDrop), nameof(CharacterDrop.OnDeath))]
+    public static class CharacterDrop_OnDeath_Patch_stop
+    {
+        [HarmonyPriority(Priority.VeryHigh)]
+        public static bool Prefix(CharacterDrop __instance)
+        {
+            List<KeyValuePair<GameObject, int>> drops = __instance.GenerateDropList(); // runs code twice so not great
+            if (drops.Count == 0)
+            {
+                return false; //stops, but also need to stop the postfix this just sucks for epicloot
+            }
+            return true;
+
+        }
+    }
+    */
 
     [HarmonyPatch(typeof(CharacterDrop), nameof(CharacterDrop.GenerateDropList))]
     public static class MonsterDropGenerate
