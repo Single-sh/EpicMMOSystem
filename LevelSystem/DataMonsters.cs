@@ -76,7 +76,7 @@ public static class DataMonsters
                 foreach (var monster in temp)
                 {
                     if (EpicMMOSystem.extraDebug.Value)
-                        EpicMMOSystem.MLLogger.LogInfo($"{monster.name}(Clone)");
+                        EpicMMOSystem.MLLogger.LogInfo($"{monster.name}");
 
                     dictionary.Add($"{monster.name}(Clone)", monster);
                 }
@@ -109,9 +109,10 @@ public static class DataMonsters
             cleartowrite = false; // default is false because it exists in the first place
 
             if (filev == "1.4.0")
-            {
                 cleartowrite = true;
-            }
+            if (filev == "1.4.1")
+                cleartowrite = true;
+
             if (filev == "1.5.0")
             {
                 cleartowrite = false;
@@ -242,7 +243,7 @@ public static class DataMonsters
     // }
     
     [HarmonyPatch(typeof(EnemyHud), nameof(EnemyHud.ShowHud))]
-    [HarmonyPriority(Priority.Last)]
+    [HarmonyPriority(1)] //almost last
     public static class MonsterColorTexts
     {
         public static void Postfix(EnemyHud __instance, Character c, Dictionary<Character, EnemyHud.HudData> ___m_huds, bool __state)
@@ -321,6 +322,8 @@ public static class DataMonsters
     [HarmonyPatch(typeof(CharacterDrop), nameof(CharacterDrop.GenerateDropList))]
     public static class MonsterDropGenerate
     {
+        [HarmonyPriority(1)] // maybe stop epic loot? Last is 0, so 1 will be almost last for any other mod
+
         public static void Postfix(CharacterDrop __instance, ref List<KeyValuePair<GameObject, int>> __result)
         {
             if (__instance.m_character.IsTamed()) return;

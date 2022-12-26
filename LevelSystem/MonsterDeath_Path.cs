@@ -5,6 +5,7 @@ using HarmonyLib;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+
 namespace EpicMMOSystem;
 
 public static class MonsterDeath_Path
@@ -148,7 +149,8 @@ public static class MonsterDeath_Path
                 int monsterLevel = DataMonsters.getLevel(__instance.gameObject.name) + __instance.m_level - 1;
                 if (monsterLevel > maxLevelExp)
                 {
-                    var damageFactor = (float)playerLevel / monsterLevel;
+                    int i = Mathf.Clamp(4, 1, 3);
+                    var damageFactor = Mathf.Clamp( (float)((playerLevel + EpicMMOSystem.lowDamageExtraConfig.Value) / monsterLevel),0.1f, 1.0f );
                     hit.ApplyModifier(damageFactor);
                 }
             }

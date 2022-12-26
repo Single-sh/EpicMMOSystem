@@ -16,15 +16,21 @@ public partial class MyUI
     internal static Text hpText;
     internal static Image hpImage;
     internal static Transform hp;
+    internal static Transform hpFill;
+    internal static Color hpFillColor;
 
     internal static Text staminaText;
     internal static Image staminaImage;
     internal static Transform stamina;
+    internal static Transform staminaBarFill;
+    internal static Color staminaBarColor;
 
     internal static Text Eitr;
     internal static Image EitrImage;
     internal static GameObject EitrGameObj;
     internal static Transform EitrTran;
+    internal static Transform EitrFill;
+    internal static Color EitrBarColor;
 
     internal static Transform expPanel;
     internal static Transform expPanelRoot;
@@ -33,6 +39,8 @@ public partial class MyUI
 
     internal static int flagforMove = 0;
     internal static bool firstload = false;
+    internal static bool firstloadHP = false;
+    internal static int frameCount = 0;
 
 
 
@@ -72,20 +80,26 @@ public partial class MyUI
         eBarImage = expPanel.Find("Container/Exp/Bar/Fill").GetComponent<Image>();
 
         hpText = expPanel.Find("Container/Hp/Text").GetComponent<Text>();
-        hpImage = expPanel.Find("Container/Hp/Bar/Fill").GetComponent<Image>();
+        hpFill = expPanel.Find("Container/Hp/Bar/Fill");
+        hpImage = hpFill.GetComponent<Image>();
+        hpFillColor = hpImage.color;
         hp = expPanel.Find("Container/Hp");
 
 
+
         staminaText = expPanel.Find("Container/Stamina/Text").GetComponent<Text>();
-        staminaImage = expPanel.Find("Container/Stamina/Bar/Fill").GetComponent<Image>();
+        staminaBarFill = expPanel.Find("Container/Stamina/Bar/Fill");
+        staminaImage = staminaBarFill.GetComponent<Image>();
+        staminaBarColor = staminaImage.color;
         stamina = expPanel.Find("Container/Stamina");
 
 
         EitrTran = expPanel.Find("Container/Eitr");
         EitrGameObj = expPanel.Find("Container/Eitr").gameObject;
         Eitr = expPanel.Find("Container/Eitr/Text").GetComponent<Text>();
-        EitrImage = expPanel.Find("Container/Eitr/Bar/Fill").GetComponent<Image>();
-
+        EitrFill = expPanel.Find("Container/Eitr/Bar/Fill");
+        EitrImage = EitrFill.GetComponent<Image>();
+        EitrBarColor = EitrImage.color;
     }
 
     [HarmonyPatch(typeof(Hud), nameof(Hud.Awake))]
@@ -136,15 +150,18 @@ public partial class MyUI
             {
                 return true;
             }
-            expPanelRoot.GetComponent<Canvas>().gameObject.SetActive(true); // idk
-            expPanelRoot.GetComponent<CanvasScaler>().scaleFactor = EpicMMOSystem.HudBarScale.Value;// scale factor Need to move so dynamic
-            
-            if (EpicMMOSystem.HudExpBackgroundCol.Value == "none")
-                expPanelBackground.SetActive(false);
-            else
+
+            if (!firstloadHP)
             {
-                expPanelBackground.SetActive(true);
-                expPanelBackgroundColor = ColorUtil.GetColorFromHex(EpicMMOSystem.HudExpBackgroundCol.Value);
+                expPanelRoot.GetComponent<Canvas>().gameObject.SetActive(true); // idk
+                firstloadHP = true;
+            }
+                frameCount++;
+            if (frameCount == 5)
+            {
+                
+
+                frameCount = 0;
             }
 
             var current = player.GetHealth();
@@ -205,8 +222,8 @@ public partial class MyUI
 
             var current = player.GetEitr();
             var max = player.GetMaxEitr();
-            if (firstload)
-                flagforMove = 0;
+           // if (firstload)
+            //    flagforMove = 0;
 
             if (flagforMove > 0)
             {

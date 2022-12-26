@@ -1,5 +1,5 @@
 # Description:
-This mod adds an RPG-like system of levels and attribute increases: - Wacky Branch 1.5.1
+This mod adds an RPG-like system of levels and attribute increases: - Wacky Branch 1.5.2
 WackyEpicMMOSystem release until author comes back. 
 
 Support me at https://www.buymeacoffee.com/WackyMole 
@@ -60,6 +60,7 @@ Fantasy-Creatures, AirAnimals, Defaults, DoOrDieMonsters, LandAnimals, Monsterla
 Monsters that are 1 level higher than the character + MaxLevelRange will curve XP.
 
 With Low_damage_level- Damage dealt to a higher level monster will be reduced by the difference in levels. E.g. (Character level 20/ Monster level 50 = 0.4. Damage dealt will be 0.4% of normal damage) 
+damageFactor = (float)(playerLevel + LowDamageConfig)/ monsterLevel; You can configure LowDamageConfig to adjust damage scaling up or down. Damage Factor will not go above 1 or below .1f
 
 Higher level monsters will have their names appear in red. Monsters within your range will be white.
 
@@ -69,6 +70,8 @@ All of these formulas functions can be configured in the settings file.
 A file listing all monsters and their levels is located in config/EpicMMOSystem/MonsterDB_"Version".jsons
 
 A file called Version.txt is created in the folder. It contains the mod version that was used to create it. Replace it with "NO" to stop it from overwritting on a future update.
+
+Latest Update for Jsons config is 1.5.0 (Number will be updated when Jsons recieve an update)
 
 Please note:
 When upgrading the mod to a newer version, new fields in the settings file will be created automatically. You will have to manually re-edit these values if you have changed them.
@@ -85,15 +88,25 @@ Note for other Mods: This mod uses hit.toolTier to pass the Lvl of player
 
 	1HudPanelPosition: Main UI Panel Draggable, default color set by HudBackgroundCol, Type "none" to make it disappear
 
-	2ExpPanelPosition: Dragable EXP BAR, to ONLY use EXP bar , enable eXP Bar Only and restart - not dragable in this mode
+	HudBarScale: Scale this up or down to resize ALL MMO UI elements. - 1.0 Should cover all of your screen horizontally 
 
-	4HpPanelPosition, 3StaminaPanelPosition: both Dragable
+	2-5 UI elements have Position, Scale and Color: 
+	 Scale (x, y, z)- z does not matter. - float
+	 Color: #(6 digit Hex),  optional 7-8 Digit means alpha. #986100FF (FF -alpha of 1) or use without # red, cyan, blue, 
+	 darkblue, lightblue, purple, yellow, lime, fuchsia, white, silver, grey, black, orange, brown, maroon, green, olive, navy, teal, aqua, magenta
+
+	2ExpPanelPosition: Dragable EXP BAR
+		To enable ONLY EXP bar , enable eXP Bar Only and restart - not dragable in this mode
+
+	3StaminaPanelPosition: Dragable
+	
+	4HpPanelPosition: Dragable
 
 	5EitrPanelPosition: Dragable, will disappear and reappear when you have Eitr.
 
-	DisabledHealthIcons: This disables the red Health Icon that is normall present under vanilla health bar
+	DisabledHealthIcons: This disables the red Health Icon that is normal present under vanilla health bar
 
-	HudBarScale: Scale this up or down to resize MMO UI elements. - 1.0 Should cover all of your screen horizontally 
+	
 
 </details> 
 
@@ -112,28 +125,30 @@ Original Creator: LambaSun or my [mod branch](https://discord.com/channels/82657
 
 </details> 
 
-<details><summary>Changelog</summary>
- - 1.5.1: Added Stamina regeneration
- - 1.5.0: Changed Config to WackyMole.EpicMMOSystem.cfg, Made all the UI elements dragable, Realtime setting of (x,y) position in config, type "none" in BackgroundColor to remove brown bar
-		  Added Filewatcher to Jsons- dedicated Server only- Added filewatcher to configs, Updated Group logic. Revamped Mentor mode. 
- - 1.4.1: Fix Version Check and Multiplayer Sync, moved Monster Bar again. 
- - 1.4.0: Fix for inventory to bag JC (hopefully), Changed Configs,PLEASE DELETE OLD CONFIGS!, added removeDropMax, removeDropMax,removeBossDropMax, removeBossDropMix, curveExp, curveBossExp. 
-		  Allow for multiple Jsons to be searched. Added admin rights to singleplayer hosting. Boss drop is determined by mob.faction(), curveBossExp Exp is just the 6 main bosses.  
-		  Updated Monster.json moved to configs instead of plugin. Added ExtraDebugmode for future issues. Updated MonserDB_Default for mistlands,
-		  LandAnimals mod, MonsterLabZ, Outsiders, SeaAnimals, Fantasy Creatures, Air Animals, and Outsiders. Json file in MMO folder is searched.
-		  Added Version text to easily update in future. Write "NO" in Ver.txt to skip future updates. Moved Monster lvl bar [] for boss and non boss
- - 1.3.1: Dual wield and EpicMMO Thanks to KG, sponsored by Aldhari/Skaldhari
- - 1.3.0: WackyEpicMMOSystem release, until author comes back. Code from Azumatt - Updated Chat, Group and ServerSync
- - 1.2.8: Added a limiter for the maximum attribute value. New view health and stamina bar (in the configuration you can return the old display where only the experience is displayed).
- - 1.2.7: Fix version check
- - 1.2.6: Fixed bug of different amount of experience. Added ability to add your own items or currency to reset attributes.
- - 1.2.5: Fix damage monsters and fix error for friends list
- - 1.2.4: Fix version check
- - 1.2.3: Add console command and xp loss on death
- - 1.2.2: Add button to open the quest journal (Marketplace) and profession window
- - 1.2.1: Fix errors with EAQS
- - 1.2.0: Add friends list feature
- - 1.1.0: Add creature level control
- - 1.0.1: Fix localization and append english text for config comments.
- - 1.0.0: Release
+<details>
+  <summary><b><span style="color:aqua;font-weight:200;font-size:20px">
+    ChangeLog
+</span></b></summary>
+
+| Version | Changes                                                                                                                                                                                                                                                                                                                                |
+|----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1.5.2: | - Added Colors and Scale to Individual UI elements.<br/> Fixed EpicLoot drop bug, made Nav Panel moveable, Eitr UI adjustments<br/> Low_damage_config for extra configurability on low damage mode
+| 1.5.1: | - Added Stamina regeneration<br/>
+| 1.5.0: | - Changed Config to WackyMole.EpicMMOSystem.cfg<br/> - Made all the UI elements dragable<br/> - Realtime setting of (x,y) position in config, type "none" in BackgroundColor to remove brown bar.<br/> - Added Filewatcher to Jsons<br/> - dedicated Server only<br/> - Added filewatcher to configs, Updated Group logic<br/> - Revamped Mentor mode.<br/>
+| 1.4.1: | - Fix Version Check and Multiplayer Sync, moved Monster Bar again.<br/>
+| 1.4.0: | - Fix for inventory to bag JC (hopefully)<br/> - Changed Configs,PLEASE DELETE OLD CONFIGS!<br/> - added removeDropMax, removeDropMax,removeBossDropMax, removeBossDropMix, curveExp, curveBossExp.<br/> - Allow for multiple Jsons to be searched<br/> - Added admin rights to singleplayer hosting<br/> - Boss drop is determined by mob.faction(), curveBossExp Exp is just the 6 main bosses. <br/> - Updated Monster.json moved to configs instead of plugin.<br/> - Added ExtraDebugmode for future issues.<br/> - Updated MonserDB_Default for mistlands,LandAnimals mod, MonsterLabZ, Outsiders, SeaAnimals, Fantasy Creatures, Air Animals, and Outsiders.<br/> - Json file in MMO folder is searched.<br/> - Added Version text to easily update in future.<br/> - Write "NO" in Ver.txt to skip future updates. Moved Monster lvl bar [] for boss and non boss<br/>
+| 1.3.1: | - Dual wield and EpicMMO Thanks to KG, sponsored by Aldhari/Skaldhari<br/>
+| 1.3.0: | - WackyEpicMMOSystem release, until author comes back. Code from Azumatt - Updated Chat, Group and ServerSync<br/>
+| 1.2.8: | - Added a limiter for the maximum attribute value.<br/>- New view health and stamina bar (in the configuration you can return the old display where only the experience is displayed).<br/>
+| 1.2.7: | - Fix version check<br/>
+| 1.2.6: | - Fixed bug of different amount of experience. Added ability to add your own items or currency to reset<br/> attributes.
+| 1.2.5: | - Fix damage monsters and fix error for friends list<br/>
+| 1.2.4: | - Fix version check<br/>
+| 1.2.3: | - Add console command and xp loss on death<br/>
+| 1.2.2: | - Add button to open the quest journal (Marketplace) and profession window<br/>
+| 1.2.1: | - Fix errors with EAQS<br/>
+| 1.2.0: | - Add friends list feature<br/>
+| 1.1.0: | - Add creature level control<br/>
+| 1.0.1: | - Fix localization and append english text for config comments.<br/>
+| 1.0.0: | - Release<br/>
 </details> 

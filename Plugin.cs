@@ -14,6 +14,7 @@ using LocalizationManager;
 using System.Collections.Generic;
 using fastJSON;
 using Groups;
+using UnityEngine.UI;
 
 namespace EpicMMOSystem;
 
@@ -22,7 +23,7 @@ namespace EpicMMOSystem;
 public partial class EpicMMOSystem : BaseUnityPlugin
 {
     internal const string ModName = "EpicMMOSystem";
-    internal const string ModVersion = "1.5.1";
+    internal const string ModVersion = "1.5.2";
     internal const string Author = "WackyMole";
     private const string ModGUID = Author + "." + ModName;
     private static string ConfigFileName = ModGUID + ".cfg";
@@ -88,7 +89,7 @@ public partial class EpicMMOSystem : BaseUnityPlugin
     #endregion
 
 
-    //Creature level control
+    //Creature level control 2
     public static ConfigEntry<bool> enabledLevelControl;
     public static ConfigEntry<bool> removeDropMax;
     public static ConfigEntry<bool> removeDropMin;
@@ -98,6 +99,7 @@ public partial class EpicMMOSystem : BaseUnityPlugin
     public static ConfigEntry<bool> curveExp;
     public static ConfigEntry<bool> curveBossExp;
     public static ConfigEntry<bool> lowDamageLevel;
+    public static ConfigEntry<int> lowDamageExtraConfig;
     public static ConfigEntry<int> maxLevelExp;
     public static ConfigEntry<int> minLevelExp;
 
@@ -113,13 +115,24 @@ public partial class EpicMMOSystem : BaseUnityPlugin
     public static ConfigEntry<string> HudPostionCords;
     public static ConfigEntry<bool> HealthIcons;
 
-
     // Position Saves
     internal static ConfigEntry<Vector2> HudPanelPosition = null!;
     internal static ConfigEntry<Vector2> ExpPanelPosition = null!;
     internal static ConfigEntry<Vector2> HpPanelPosition = null!;
     internal static ConfigEntry<Vector2> StaminaPanelPosition = null!;
     internal static ConfigEntry<Vector2> EitrPanelPosition = null!;
+
+    // HUD Colors
+    public static ConfigEntry<string> HpColor;
+    public static ConfigEntry<string> StaminaColor;
+    public static ConfigEntry<string> EitrColor;
+    public static ConfigEntry<string> ExpColor;
+
+    //HUD Scales
+    internal static ConfigEntry<Vector3> ExpScale = null!;
+    internal static ConfigEntry<Vector3> HPScale = null!;
+    internal static ConfigEntry<Vector3> EitrScale = null!;
+    internal static ConfigEntry<Vector3> StaminaScale = null!;
 
     //Optional
     public static ConfigEntry<float> addDefaultHealth;
@@ -153,7 +166,7 @@ public partial class EpicMMOSystem : BaseUnityPlugin
         lossExp = config(levelSystem, "LossExp", true, "Enabled exp loss");
         maxValueAttribute = config(levelSystem, "MaxValueAttribute", 200, "Maximum number of points you can put into one attribute");
         levelsForBinusFreePoint = config(levelSystem, "BonusLevelPoints", "5:5,10:5", "Added bonus point for level. Example(level:points): 5:10,15:20 add all 30 points ");
-        
+
         #region ParameterCofig
         string levelSystemStrngth = "1.LevelSystem Strength--";
         physicDamage = config(levelSystemStrngth, "PhysicDamage", 0.20f, "Damage multiplier per point. Умножитель урона за один поинт");
@@ -164,7 +177,7 @@ public partial class EpicMMOSystem : BaseUnityPlugin
         speedAttack = config(levelSystemAgility, "StaminaAttack", 0.1f, "Reduces attack stamina consumption. Уменьшает потребление стамины на атаку");
         staminaReduction = config(levelSystemAgility, "StaminaReduction", 0.15f, "Decrease stamina consumption for running, jumping for one point. Уменьшение расхода выносливости на бег, прыжок за один поинт");
         addStamina = config(levelSystemAgility, "AddStamina", 1f, "One Point Stamina Increase. Увеличение  выносливости за один поинт");
-        
+
         string levelSystemIntellect = "1.LevelSystem Intellect-";
         magicDamage = config(levelSystemIntellect, "MagicAttack", 0.20f, "Increase magic attack per point. Увеличение магической атаки за один поинт");
         magicArmor = config(levelSystemIntellect, "MagicArmor", 0.1f, "Increase magical protection per point. Увеличение магической защиты за один поинт");
@@ -176,7 +189,7 @@ public partial class EpicMMOSystem : BaseUnityPlugin
         physicArmor = config(levelSystemBody, "PhysicArmor", 0.15f, "Increase in physical protection per point. Увеличение физической защиты за один поинт");
         regenHp = config(levelSystemBody, "RegenHp", 0.1f, "Increase health regeneration per point. Увеличение регенерации здоровья за один поинт");
         #endregion
-        
+
         string creatureLevelControl = "2.Creature level control";
         mentor = config(creatureLevelControl, "Mentor", true, "Give full eXP for low level members in Groups");
         enabledLevelControl = config(creatureLevelControl, "Enabled_creature_level", true, "Enable creature Level control - Disable this to remove levels, but still get eXP gain");
@@ -187,23 +200,32 @@ public partial class EpicMMOSystem : BaseUnityPlugin
         curveExp = config(creatureLevelControl, "Curve_creature_exp", true, "Monsters after death will give less exp if player is outside Max or Min Level Range");
         curveBossExp = config(creatureLevelControl, "Curve_Boss_exp", true, "Bosses after death will give less exp if player is outside Max or Min Level Range");
         lowDamageLevel = config(creatureLevelControl, "Low_damage_level", false, "Decreased damage to the monster if the level is insufficient");
+        lowDamageExtraConfig = config(creatureLevelControl, "Low_damage_config", 0, "Extra paramater to low damage config - for reference(float)(playerLevel + lowDamageConfig) / monsterLevel; when player is below lvl");
         minLevelExp = config(creatureLevelControl, "MinLevelRange", 10, "Character level - MinLevelRange is less than the level of the monster, then you will receive reduced experience. Уровень персонажа - MinLevelRange меньше уровня монстра, то вы будете получать урезанный опыт");
         maxLevelExp = config(creatureLevelControl, "MaxLevelRange", 10, "Character level + MaxLevelRange is less than the level of the monster, then you will not receive experience. Уровень персонажа + MaxLevelRange меньше уровня монстра, то вы не будете получать опыт");
-        
+
         string resetAttributesItems = "3.Reset attributes items";
         prefabNameCoins = config(resetAttributesItems, "prefabName", "Coins", "Name prefab item");
         viewTextCoins = config(resetAttributesItems, "viewText", "coins", "Name item");
-        
+
         string hud = "4.Hud--------------------";
         oldExpBar = config(hud, "eXP Bar Only", false, "Use eXP Bar only (need restart, not server sync) Does not move or scale", false);
         showMaxHp = config(hud, "ShowMaxHp", true, "Show max hp (100 / 100)", false);
         HudBarScale = config(hud, "ScaleforMoveableBar", .90f, "Scale for ExpBar whichis moveable", false);
-        HudExpBackgroundCol = config(hud,"HudBackgroundCol", "#2F1600", "Background color in Hex, set to 'none' to make transparent", false);
+        HudExpBackgroundCol = config(hud, "HudBackgroundCol", "#2F1600", "Background color in Hex, set to 'none' to make transparent", false);
         HudPanelPosition = config(hud, "1HudPanelPosition", new Vector2(0, 0), "Position of the HUD panel (x,y)", false);
         ExpPanelPosition = config(hud, "2ExpPanelPosition", new Vector2(0, 0), "Position of the Exp panel (x,y)", false);
-        HpPanelPosition = config(hud, "4HpPanelPosition", new Vector2(0, 0), "Position of the Hp panel (x,y)", false);
+        ExpColor = config(hud, "2.1ExpColor", "#FFFFFF", "Exp fill color in Hex - White bleeds through with purple", false);
+        ExpScale = config(hud, "2.2ExpScale", new Vector3(1, 1, 1), "Exp Bar Scale factor", false);
         StaminaPanelPosition = config(hud, "3StaminaPanelPosition", new Vector2(0, 0), "Position of the Stamina panel (x,y)", false);
+        StaminaColor = config(hud, "3.1StaminaColor", "#986100", "Background color in Hex", false);
+        StaminaScale = config(hud, "3.2StaminaScale", new Vector3(1, 1, 1), "Stamina Bar Scale factor", false);
+        HpPanelPosition = config(hud, "4HpPanelPosition", new Vector2(0, 0), "Position of the Hp panel (x,y)", false);
+        HpColor = config(hud, "4.1HPColor", "#870000", "Background color in Hex", false);
+        HPScale = config(hud, "4.2HPScale", new Vector3(1, 1, 1), "HP Bar Scale factor", false);
         EitrPanelPosition = config(hud, "5EitrPanelPosition", new Vector2(0, 0), "Position of the Eitr panel (x,y)", false);
+        EitrColor = config(hud, "5.1EitrColor", "#84257C", "Background color in Hex", false);
+        EitrScale = config(hud, "5.2EitrScale", new Vector3(1, 1, 1), "Eitr Bar Scale factor", false);
         HealthIcons = config(hud, "DisabledHealthIcons", true, "Default is true, this may cause issues with some mods");
 
 
@@ -302,6 +324,42 @@ public partial class EpicMMOSystem : BaseUnityPlugin
         private void ReadConfigValues(object sender, FileSystemEventArgs e)
     {
         if (!File.Exists(ConfigFileFullPath)) return;
+
+        Color tempC;
+        MyUI.expPanelRoot.GetComponent<CanvasScaler>().scaleFactor = HudBarScale.Value;
+
+        if (EpicMMOSystem.HudExpBackgroundCol.Value == "none")
+            MyUI.expPanelBackground.SetActive(false);
+        else
+        {
+            MyUI.expPanelBackground.SetActive(true);
+            if (ColorUtility.TryParseHtmlString(HudExpBackgroundCol.Value, out tempC))
+                MyUI.expPanelBackground.GetComponent<Image>().color = tempC;
+        }
+
+        if (ColorUtility.TryParseHtmlString(HpColor.Value, out tempC ))
+            MyUI.hpImage.color = tempC;
+        if (ColorUtility.TryParseHtmlString(StaminaColor.Value, out tempC))
+            MyUI.staminaImage.color = tempC;
+        if (ColorUtility.TryParseHtmlString(EitrColor.Value, out tempC))
+            MyUI.EitrImage.color = tempC;
+        if (ColorUtility.TryParseHtmlString(ExpColor.Value, out tempC))
+        {
+            if (ExpColor.Value == "#FFFFFF")
+                MyUI.eBarImage.color = tempC;
+            else
+                MyUI.eBarImage.color = tempC * 2;
+        }
+
+        //MyUI.hpImage.color = ColorUtil.GetColorFromHex(HpColor.Value); // maybe  destoryed and color is not beingupdate on static element?
+        //MyUI.staminaImage.color = ColorUtil.GetColorFromHex(StaminaColor.Value);
+        //MyUI.EitrImage.color = ColorUtil.GetColorFromHex(EitrColor.Value);
+
+        MyUI.Exp.GetComponent<RectTransform>().localScale = ExpScale.Value;
+        MyUI.hp.GetComponent<RectTransform>().localScale = HPScale.Value;
+        MyUI.stamina.GetComponent<RectTransform>().localScale = StaminaScale.Value;
+        MyUI.EitrTran.GetComponent<RectTransform>().localScale = EitrScale.Value;
+
         try
         {
             if (EpicMMOSystem.extraDebug.Value)
