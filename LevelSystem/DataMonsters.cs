@@ -150,7 +150,7 @@ public static class DataMonsters
 
 
             if (EpicMMOSystem.extraDebug.Value)
-                EpicMMOSystem.MLLogger.LogInfo($"Mobs Written");
+                EpicMMOSystem.MLLogger.LogInfo($"Mobs Jsons Written");
         }
         List<string> list = new List<string>();
         foreach (string file in Directory.GetFiles(folderpath, "*.json", SearchOption.AllDirectories))

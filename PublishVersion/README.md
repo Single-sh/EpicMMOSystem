@@ -2,10 +2,6 @@
 This mod adds an RPG-like system of levels and attribute increases: - Wacky Branch 1.5.3
 WackyEpicMMOSystem release until author comes back. 
 
-Support me at https://www.buymeacoffee.com/WackyMole 
-
-<img src="https://wackymole.com/hosts/bmc_qr.png" width="100"/>
-
 Wacky Git https://github.com/Wacky-Mole/WackyEpicMMOSystem
 
 Original git - https://github.com/Single-sh/EpicMMOSystem
@@ -119,7 +115,11 @@ Admin only commands: - Should work in singleplayer now
 
 <details><summary>Feedback</summary>
 
-For questions or suggestions please join my discord channel: [Odin Plus Team](https://discord.gg/odinplus) -WackyMole on Odins
+For questions or suggestions please join my discord channel: [Odin Plus Team](https://discord.gg/odinplus)
+
+Support me at https://www.buymeacoffee.com/WackyMole 
+
+<img src="https://wackymole.com/hosts/bmc_qr.png" width="100"/>
 
 Original Creator: LambaSun or my [mod branch](https://discord.com/channels/826573164371902465/977656428670111794)
 
