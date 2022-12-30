@@ -1,5 +1,5 @@
 # Description:
-This mod adds an RPG-like system of levels and attribute increases: - Wacky Branch 1.5.2
+This mod adds an RPG-like system of levels and attribute increases: - Wacky Branch 1.5.3
 WackyEpicMMOSystem release until author comes back. 
 
 Support me at https://www.buymeacoffee.com/WackyMole 
@@ -71,7 +71,7 @@ A file listing all monsters and their levels is located in config/EpicMMOSystem/
 
 A file called Version.txt is created in the folder. It contains the mod version that was used to create it. Replace it with "NO" to stop it from overwritting on a future update.
 
-Latest Update for Jsons config is 1.5.0 (Number will be updated when Jsons recieve an update)
+Latest Update for Jsons config is 1.5.3 (Number will be updated when Jsons recieve an update)
 
 Please note:
 When upgrading the mod to a newer version, new fields in the settings file will be created automatically. You will have to manually re-edit these values if you have changed them.
@@ -132,6 +132,7 @@ Original Creator: LambaSun or my [mod branch](https://discord.com/channels/82657
 
 | Version | Changes                                                                                                                                                                                                                                                                                                                                |
 |----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1.5.3: | - Fixed bug in Groups exp sharing. <br/> Added MajesticChickens json
 | 1.5.2: | - Added Colors and Scale to Individual UI elements.<br/> Fixed EpicLoot drop bug, made Nav Panel moveable, Eitr UI adjustments<br/> Low_damage_config for extra configurability on low damage mode
 | 1.5.1: | - Added Stamina regeneration<br/>
 | 1.5.0: | - Changed Config to WackyMole.EpicMMOSystem.cfg<br/> - Made all the UI elements dragable<br/> - Realtime setting of (x,y) position in config, type "none" in BackgroundColor to remove brown bar.<br/> - Added Filewatcher to Jsons<br/> - dedicated Server only<br/> - Added filewatcher to configs, Updated Group logic<br/> - Revamped Mentor mode.<br/>

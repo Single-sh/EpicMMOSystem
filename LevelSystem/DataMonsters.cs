@@ -97,6 +97,7 @@ public static class DataMonsters
         var json5 = "MonsterDB_MonsterLabZ.json";
         var json6 = "MonsterDB_Outsiders.json";
         var json7 = "MonsterDB_DoorDieMonsters.json";
+        var json8 = "MonsterDB_MajesticChickens.json";
 
         if (!Directory.Exists(folderpath)){
             Directory.CreateDirectory(folderpath);
@@ -112,12 +113,13 @@ public static class DataMonsters
                 cleartowrite = true;
             if (filev == "1.4.1")
                 cleartowrite = true;
-
             if (filev == "1.5.0")
-            {
+                cleartowrite = true;
+
+            if (filev == "1.5.3")
                 cleartowrite = false;
-            }
-            if (filev == "NO" || filev == "no")
+
+            if (filev == "NO" || filev == "no" || filev == "No" || filev == "STOP" || filev == "stop" || filev == "Stop")
             {// don't update
                 cleartowrite = false;
             }
@@ -126,31 +128,26 @@ public static class DataMonsters
         if (cleartowrite)
         {
             //list.Clear();
-            File.WriteAllText(versionpath, "1.5.0"); // Write Version file
+            File.WriteAllText(versionpath, "1.5.3"); // Write Version file
 
             File.WriteAllText(Path.Combine(folderpath, json), getDefaultJsonMonster(json));
-           // list.Add(json);
 
             File.WriteAllText(Path.Combine(folderpath, json1), getDefaultJsonMonster(json1));
-            //list.Add(json1);
 
             File.WriteAllText(Path.Combine(folderpath, json2), getDefaultJsonMonster(json2));
-           // list.Add(json2);
 
             File.WriteAllText(Path.Combine(folderpath, json3), getDefaultJsonMonster(json3));
-            //list.Add(json3);
 
             File.WriteAllText(Path.Combine(folderpath, json4), getDefaultJsonMonster(json4));
-           // list.Add(json4);
 
             File.WriteAllText(Path.Combine(folderpath, json5), getDefaultJsonMonster(json5));
-            //list.Add(json5);
 
             File.WriteAllText(Path.Combine(folderpath, json6), getDefaultJsonMonster(json6));
 
             File.WriteAllText(Path.Combine(folderpath, json7), getDefaultJsonMonster(json7));
 
-            // MonsterDB = json + json1 + json2+ json3 + json4 + json5;// + json1 + json2
+            File.WriteAllText(Path.Combine(folderpath, json8), getDefaultJsonMonster(json8));
+
 
             if (EpicMMOSystem.extraDebug.Value)
                 EpicMMOSystem.MLLogger.LogInfo($"Mobs Written");
