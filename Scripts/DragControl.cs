@@ -53,7 +53,7 @@ public class DragControl : MonoBehaviour
                     rectTransform.anchoredPosition = EpicMMOSystem.HudPanelPosition.Value;
                     break;
                 case "Exp":
-                    if (EpicMMOSystem.ExpPanelPosition.Value != new Vector2(0, 0))
+                    if (EpicMMOSystem.ExpPanelPosition.Value != new Vector2(0, 0) )
                         rectTransform.anchoredPosition = EpicMMOSystem.ExpPanelPosition.Value;
                     break;
                 case "Hp":

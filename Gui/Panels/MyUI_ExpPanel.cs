@@ -12,18 +12,21 @@ public partial class MyUI
     internal static Text eExpText;
     internal static Image eBarImage;
     internal static Transform Exp;
+    internal static bool DisableExpBar = false;
 
     internal static Text hpText;
     internal static Image hpImage;
     internal static Transform hp;
     internal static Transform hpFill;
     internal static Color hpFillColor;
+    internal static bool DisableHPBar = false;
 
     internal static Text staminaText;
     internal static Image staminaImage;
     internal static Transform stamina;
     internal static Transform staminaBarFill;
     internal static Color staminaBarColor;
+    internal static bool DisableStaminaBar = false;
 
     internal static Text Eitr;
     internal static Image EitrImage;
@@ -31,6 +34,7 @@ public partial class MyUI
     internal static Transform EitrTran;
     internal static Transform EitrFill;
     internal static Color EitrBarColor;
+    internal static bool DisableEitrBar = false;
 
     internal static Transform expPanel;
     internal static Transform expPanelRoot;
@@ -150,6 +154,9 @@ public partial class MyUI
             {
                 return true;
             }
+            if (DisableHPBar)
+                return true;
+
 
             if (!firstloadHP)
             {
@@ -159,7 +166,6 @@ public partial class MyUI
                 frameCount++;
             if (frameCount == 5)
             {
-                
 
                 frameCount = 0;
             }
@@ -191,6 +197,8 @@ public partial class MyUI
             {
                 return true;
             }
+            if (DisableStaminaBar)
+                return true;
             
             var current = player.GetStamina();
             var max = player.GetMaxStamina();
@@ -219,6 +227,8 @@ public partial class MyUI
             {
                 return true;
             }
+            if (DisableEitrBar)
+                return true;
 
             var current = player.GetEitr();
             var max = player.GetMaxEitr();
@@ -236,7 +246,7 @@ public partial class MyUI
                 flagforMove = 0;
             }
 
-            if (max < 1 && EitrGameObj.activeSelf)
+            if (max < 2 && EitrGameObj.activeSelf)
             {
                 EitrGameObj.SetActive(false);
                 expPanel.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 1050);
@@ -244,7 +254,7 @@ public partial class MyUI
                 flagforMove = 1;
 
             }
-            if (max > 0 && !EitrGameObj.activeSelf)
+            if (max > 2 && !EitrGameObj.activeSelf) // for god mode in serverdev
             {
                 EitrGameObj.SetActive(true);
                 expPanel.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 1475);

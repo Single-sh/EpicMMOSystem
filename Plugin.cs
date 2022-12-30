@@ -218,13 +218,13 @@ public partial class EpicMMOSystem : BaseUnityPlugin
         ExpColor = config(hud, "2.1ExpColor", "#FFFFFF", "Exp fill color in Hex - White bleeds through with purple", false);
         ExpScale = config(hud, "2.2ExpScale", new Vector3(1, 1, 1), "Exp Bar Scale factor", false);
         StaminaPanelPosition = config(hud, "3StaminaPanelPosition", new Vector2(0, 0), "Position of the Stamina panel (x,y)", false);
-        StaminaColor = config(hud, "3.1StaminaColor", "#986100", "Background color in Hex", false);
+        StaminaColor = config(hud, "3.1StaminaColor", "#986100", "Stamina color in Hex", false);
         StaminaScale = config(hud, "3.2StaminaScale", new Vector3(1, 1, 1), "Stamina Bar Scale factor", false);
         HpPanelPosition = config(hud, "4HpPanelPosition", new Vector2(0, 0), "Position of the Hp panel (x,y)", false);
-        HpColor = config(hud, "4.1HPColor", "#870000", "Background color in Hex", false);
+        HpColor = config(hud, "4.1HPColor", "#870000", "HP color in Hex", false);
         HPScale = config(hud, "4.2HPScale", new Vector3(1, 1, 1), "HP Bar Scale factor", false);
         EitrPanelPosition = config(hud, "5EitrPanelPosition", new Vector2(0, 0), "Position of the Eitr panel (x,y)", false);
-        EitrColor = config(hud, "5.1EitrColor", "#84257C", "Background color in Hex", false);
+        EitrColor = config(hud, "5.1EitrColor", "#84257C", "Eitr color in Hex", false);
         EitrScale = config(hud, "5.2EitrScale", new Vector3(1, 1, 1), "Eitr Bar Scale factor", false);
         HealthIcons = config(hud, "DisabledHealthIcons", true, "Default is true, this may cause issues with some mods");
 
@@ -336,6 +336,11 @@ public partial class EpicMMOSystem : BaseUnityPlugin
             if (ColorUtility.TryParseHtmlString(HudExpBackgroundCol.Value, out tempC))
                 MyUI.expPanelBackground.GetComponent<Image>().color = tempC;
         }
+        MyUI.DisableHPBar =  (HpColor.Value == "none");
+        MyUI.DisableStaminaBar = (StaminaColor.Value == "none");
+        MyUI.DisableEitrBar = (EitrColor.Value == "none");
+        MyUI.DisableExpBar = (ExpColor.Value == "none");
+
 
         if (ColorUtility.TryParseHtmlString(HpColor.Value, out tempC ))
             MyUI.hpImage.color = tempC;
