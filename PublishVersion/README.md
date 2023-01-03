@@ -109,8 +109,10 @@ Note for other Mods: This mod uses hit.toolTier to pass the Lvl of player
 <details><summary>Console commands</summary>
 
 Admin only commands: - Should work in singleplayer now
- - To set a character's level: `epicmmosystem level [value] [name]` - (If the name contains a space, replace the space with the ampersand (&) symbol)
- - To reset attribute points: `epicmmosystem reset_points [name]` - (If the name contains a space, replace the space with the ampersand (&) symbol)
+ - To set a character's level: `epicmmosystem level [value] [name]` 
+ - To reset attribute points: `epicmmosystem reset_points [name]` 
+ - To recalc levels based on total experience: `epicmmosystem recalc [name]` 
+ - Should work with spaces in names now or replace spaces with '&'
 </details> 
 
 <details><summary>Feedback</summary>
