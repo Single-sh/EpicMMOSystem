@@ -19,7 +19,7 @@ Features:
 
 <details><summary>Attributes</summary>
 
-	Strength: Physical Damage increase, Carry Weight Increase, 
+	Strength: Physical Damage increase, Carry Weight Increase, Stamina Regeneration
 
 	Agility: Attack Stamina Consumption decrease, Stamina increase, Stamina consumption (running, jumping) decreased
 
@@ -132,6 +132,7 @@ Original Creator: LambaSun or my [mod branch](https://discord.com/channels/82657
 
 | Version | Changes                                                                                                                                                                                                                                                                                                                                |
 |----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1.5.4: | - Updated to allow level and reset commands for Spaced Names. <br/>Updated Jsons, Added extra text file for people who don't read readme or version changes... you know who you are....anyway <br/> Added abilty for EpicMMO to recalculate maxlvls on serversync updates. I still don't recommend live updating with this mod, but less bugs now. <br/> Serious discussion: It appears if you ever changed expierence values(rateExp,expForLvlMonster, etc) after players started playing, things could get wonky unless you reset them(even after game restarts). I added a TotalExp tracker, but it won't be useful unless you restart all your players back to 0. I have added another command to Terminal recalc, but it will reset players levels to 0 if not a new charc on this update.  
 | 1.5.3: | - Fixed bug in Groups exp sharing. <br/> Added MajesticChickens json
 | 1.5.2: | - Added Colors and Scale to Individual UI elements.<br/> Fixed EpicLoot drop bug, made Nav Panel moveable, Eitr UI adjustments<br/> Low_damage_config for extra configurability on low damage mode
 | 1.5.1: | - Added Stamina regeneration<br/>

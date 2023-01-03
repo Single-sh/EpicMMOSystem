@@ -56,6 +56,24 @@ public partial class LevelSystem
         if (!Player.m_localPlayer) return;
         Player.m_localPlayer.m_knownTexts[$"{pluginKey}_{midleKey}_Level"]= value.ToString();
     }
+
+    public void recalcLevel()
+    {
+        var currentexp = getTotalExp();
+        setLevel(0);
+
+        var need = getNeedExp();
+        int addLvl = 0;
+        while (currentexp > need)
+        {
+            currentexp -= need;
+            addLvl++;
+            need = getNeedExp(addLvl);
+        }
+        setCurrentExp(currentexp);
+        setLevel(addLvl);
+
+    }
     
     public long getCurrentExp()
     {
@@ -72,7 +90,28 @@ public partial class LevelSystem
         if (!Player.m_localPlayer) return;
         Player.m_localPlayer.m_knownTexts[$"{pluginKey}_{midleKey}_CurrentExp"]= value.ToString();
     }
-    
+
+    public long getTotalExp()
+    {
+        if (!Player.m_localPlayer) return 0;
+        if (!Player.m_localPlayer.m_knownTexts.ContainsKey($"{pluginKey}_{midleKey}_TotalExp"))
+        {
+            return 0;
+        }
+        return int.Parse(Player.m_localPlayer.m_knownTexts[$"{pluginKey}_{midleKey}_TotalExp"]);
+    }
+
+    private void setTotalExp(long value)
+    {
+        if (!Player.m_localPlayer) return;
+        Player.m_localPlayer.m_knownTexts[$"{pluginKey}_{midleKey}_TotalExp"] = value.ToString();
+    }
+    public void addTotalExp(long value)
+    {
+        if (!Player.m_localPlayer) return;
+        Player.m_localPlayer.m_knownTexts[$"{pluginKey}_{midleKey}_TotalExp"] = int.Parse(Player.m_localPlayer.m_knownTexts[$"{pluginKey}_{midleKey}_TotalExp"]) + value.ToString();
+    }
+
     private void setParameter(Parameter parameter, int value)
     {
         if (!Player.m_localPlayer) return;
@@ -184,13 +223,19 @@ public partial class LevelSystem
         var need = getNeedExp();
         current += (int)giveExp;
         int addLvl = 0;
+        var currentcopy = current;
         while (current > need)
         {
             current -= need;
             addLvl++;
             need = getNeedExp(addLvl);
         }
-        AddLevel(addLvl);
+        if (addLvl > 0)
+        {
+            AddLevel(addLvl);
+            addTotalExp(currentcopy - current);// add to total the exp used to go up levels, this will take a while for people to see benefit as before exp was lost and no way to recalc levels. 
+        }
+        
         setCurrentExp(current);
         MyUI.updateExpBar();
         Player.m_localPlayer.Message(

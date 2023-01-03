@@ -23,7 +23,7 @@ namespace EpicMMOSystem;
 public partial class EpicMMOSystem : BaseUnityPlugin
 {
     internal const string ModName = "EpicMMOSystem";
-    internal const string ModVersion = "1.5.3";
+    internal const string ModVersion = "1.5.4";
     internal const string Author = "WackyMole";
     private const string ModGUID = Author + "." + ModName;
     private static string ConfigFileName = ModGUID + ".cfg";
@@ -184,7 +184,7 @@ public partial class EpicMMOSystem : BaseUnityPlugin
         MagicEitrRegen = config(levelSystemIntellect, "MagicEitrReg", 0.3f, "Increase magical Eitr Regeneration per point. Увеличивает регенерацию магического Эйтра на единицу.");
 
         string levelSystemBody = "1.LevelSystem Body------";
-        addHp = config(levelSystemBody, "AddHp", 2f, "One Point Health Increase. Увеличение здоровья за один поинт");
+        addHp = config(levelSystemBody, "AddHp", 1f, "One Point Health Increase. Увеличение здоровья за один поинт");
         staminaBlock = config(levelSystemBody, "StaminaBlock", 0.2f, "Decrease stamina consumption per unit per point. Уменьшение расхода выносливости на блок за один поинт");
         physicArmor = config(levelSystemBody, "PhysicArmor", 0.15f, "Increase in physical protection per point. Увеличение физической защиты за один поинт");
         regenHp = config(levelSystemBody, "RegenHp", 0.1f, "Increase health regeneration per point. Увеличение регенерации здоровья за один поинт");
@@ -324,6 +324,9 @@ public partial class EpicMMOSystem : BaseUnityPlugin
         private void ReadConfigValues(object sender, FileSystemEventArgs e)
     {
         if (!File.Exists(ConfigFileFullPath)) return;
+
+        var updatelvl = LevelSystem.Instance;
+        updatelvl.FillLevelsExp(); // updates when people change levelExp,multiNextLeve, maxlevel
 
         Color tempC;
         MyUI.expPanelRoot.GetComponent<CanvasScaler>().scaleFactor = HudBarScale.Value;

@@ -89,6 +89,7 @@ public static class DataMonsters
     {
         var versionpath = Path.Combine(Paths.ConfigPath, EpicMMOSystem.ModName, $"Version.txt");
         var folderpath = Path.Combine(Paths.ConfigPath, EpicMMOSystem.ModName);
+        var warningtext = Path.Combine(Paths.ConfigPath, EpicMMOSystem.ModName, $"If you want to stop from updating.txt");
         var json = "MonsterDB_Default.json";
         var json1 = "MonsterDB_AirAnimals.json";
         var json2 = "MonsterDB_LandAnimals.json";
@@ -115,8 +116,10 @@ public static class DataMonsters
                 cleartowrite = true;
             if (filev == "1.5.0")
                 cleartowrite = true;
-
             if (filev == "1.5.3")
+                cleartowrite = true;
+
+            if (filev == "1.5.4")
                 cleartowrite = false;
 
             if (filev == "NO" || filev == "no" || filev == "No" || filev == "STOP" || filev == "stop" || filev == "Stop")
@@ -128,7 +131,9 @@ public static class DataMonsters
         if (cleartowrite)
         {
             //list.Clear();
-            File.WriteAllText(versionpath, "1.5.3"); // Write Version file
+            File.WriteAllText(versionpath, "1.5.4"); // Write Version file
+
+            File.WriteAllText(warningtext, "Erase numbers in Version.txt and write NO or stop in file. This should stop DB json files from updating on an update");
 
             File.WriteAllText(Path.Combine(folderpath, json), getDefaultJsonMonster(json));
 
