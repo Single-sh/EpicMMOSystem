@@ -115,7 +115,7 @@ Admin only commands: - Should work in singleplayer now
 
 <details><summary>Feedback</summary>
 
-For questions or suggestions please join my discord channel: [Odin Plus Team](https://discord.gg/odinplus)
+For questions or suggestions please join discord channel: [Odin Plus Team](https://discord.gg/odinplus)
 
 Support me at https://www.buymeacoffee.com/WackyMole 
 

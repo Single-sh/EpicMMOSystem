@@ -39,7 +39,7 @@ public static class TerminalCommands
     private static void RPC_Recalc(long sender)
     {
         LevelSystem.Instance.recalcLevel();
-        Chat.instance.RPC_ChatMessage(200, Vector3.zero, 0, local["$notify"], String.Format(local["Recalc your Level"]), PrivilegeManager.GetNetworkUserId());
+        Chat.instance.RPC_ChatMessage(200, Vector3.zero, 0, local["$notify"], "Recalc your Level", PrivilegeManager.GetNetworkUserId());
     }
 
     //Сброс поинтов
@@ -138,10 +138,10 @@ public static class TerminalCommands
 
                         args.Context.AddString("level [value] [name] - set level for player name");
                         args.Context.AddString("reset_points [name] - reset points from attribute for player name");
-                        args.Context.AddString("recalc [name] - recalc level for player name - beta as of 1.5.4 only");
+                        args.Context.AddString("recalc [name] - recalc level for player name based on total gained XP - beta as of 1.5.4 only");
                     }),
                 optionsFetcher: () => new List<string>
-                    { "level", "reset_points" });
+                    { "level", "reset_points", "recalc" });
         }
     }
 }

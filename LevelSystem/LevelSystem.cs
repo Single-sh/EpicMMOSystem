@@ -60,7 +60,8 @@ public partial class LevelSystem
     public void recalcLevel()
     {
         var currentexp = getTotalExp();
-        setLevel(0);
+        setLevel(1);
+        FillLevelsExp();
 
         var need = getNeedExp();
         int addLvl = 0;
@@ -71,7 +72,8 @@ public partial class LevelSystem
             need = getNeedExp(addLvl);
         }
         setCurrentExp(currentexp);
-        setLevel(addLvl);
+        setLevel(addLvl+1);
+        MyUI.updateExpBar();
 
     }
     
@@ -109,7 +111,12 @@ public partial class LevelSystem
     public void addTotalExp(long value)
     {
         if (!Player.m_localPlayer) return;
-        Player.m_localPlayer.m_knownTexts[$"{pluginKey}_{midleKey}_TotalExp"] = int.Parse(Player.m_localPlayer.m_knownTexts[$"{pluginKey}_{midleKey}_TotalExp"]) + value.ToString();
+        if (!Player.m_localPlayer.m_knownTexts.ContainsKey($"{pluginKey}_{midleKey}_TotalExp"))
+        {
+            Player.m_localPlayer.m_knownTexts[$"{pluginKey}_{midleKey}_TotalExp"] = "1";
+        }
+        long total = int.Parse(Player.m_localPlayer.m_knownTexts[$"{pluginKey}_{midleKey}_TotalExp"]) + value;
+        Player.m_localPlayer.m_knownTexts[$"{pluginKey}_{midleKey}_TotalExp"] = total.ToString();
     }
 
     private void setParameter(Parameter parameter, int value)
@@ -232,10 +239,9 @@ public partial class LevelSystem
         }
         if (addLvl > 0)
         {
-            AddLevel(addLvl);
-            addTotalExp(currentcopy - current);// add to total the exp used to go up levels, this will take a while for people to see benefit as before exp was lost and no way to recalc levels. 
+            AddLevel(addLvl); 
         }
-        
+        addTotalExp((int)giveExp);// add to total the exp used to go up levels, this will take a while for people to see benefit as before exp was lost and no way to recalc levels. 
         setCurrentExp(current);
         MyUI.updateExpBar();
         Player.m_localPlayer.Message(
@@ -312,9 +318,12 @@ public partial class LevelSystem
         var minExp = EpicMMOSystem.minLossExp.Value;
         var maxExp = EpicMMOSystem.maxLossExp.Value;
         var lossExp = 1f - Random.Range(minExp, maxExp);
+        var TotalExp = getTotalExp();
+        
         var currentExp = getCurrentExp();
         long newExp = (long)(currentExp * lossExp);
         setCurrentExp(newExp);
+        setTotalExp(TotalExp - (long)(currentExp * lossExp));// remove some totalexp as well
         MyUI.updateExpBar();
         
     }
