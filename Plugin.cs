@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using fastJSON;
 using Groups;
 using UnityEngine.UI;
+using ItemManager;
 
 namespace EpicMMOSystem;
 
@@ -54,6 +55,7 @@ public partial class EpicMMOSystem : BaseUnityPlugin
     public static ConfigEntry<int> priceResetPoints;
     public static ConfigEntry<int> freePointForLevel;
     public static ConfigEntry<int> startFreePoint;
+    public static ConfigEntry<bool> levelexpforeachlevel;
     public static ConfigEntry<int> levelExp;
     public static ConfigEntry<float> multiNextLevel;
     public static ConfigEntry<float> expForLvlMonster;
@@ -121,6 +123,8 @@ public partial class EpicMMOSystem : BaseUnityPlugin
     internal static ConfigEntry<Vector2> HpPanelPosition = null!;
     internal static ConfigEntry<Vector2> StaminaPanelPosition = null!;
     internal static ConfigEntry<Vector2> EitrPanelPosition = null!;
+    internal static ConfigEntry<Vector2> MobLevelPosition = null!;
+    internal static ConfigEntry<Vector2> BossLevelPosition = null!;
 
     // HUD Colors
     public static ConfigEntry<string> HpColor;
@@ -157,6 +161,7 @@ public partial class EpicMMOSystem : BaseUnityPlugin
         freePointForLevel = config(levelSystem, "FreePointForLevel", 5, "Free points per level. Свободных поинтов за один уровень");
         startFreePoint = config(levelSystem, "StartFreePoint", 5, "Additional free points start. Дополнительных свободных поинтов");
         levelExp = config(levelSystem, "FirstLevelExperience", 500, "Amount of experience needed per level. Количество опыта необходимого на 1 уровень");
+        levelexpforeachlevel = config(levelSystem, "FirstLevelExperience used on each level", true, "By default the calculations per level are (previous_amount * 1.04 + 500) disabled it will be (previous_amount * 1.04) per level ");
         multiNextLevel = config(levelSystem, "MultiplyNextLevelExperience", 1.04f, "Experience multiplier for the next level - Should never go below 1.00. Умножитель опыта для следующего уровня");
         expForLvlMonster = config(levelSystem, "ExpForLvlMonster", 0.25f, "Extra experience (from the sum of the basic experience) for the level of the monster. Доп опыт (из суммы основного опыта) за уровень монстра");
         rateExp = config(levelSystem, "RateExp", 1f, "Experience multiplier. Множитель опыта");
@@ -203,6 +208,8 @@ public partial class EpicMMOSystem : BaseUnityPlugin
         lowDamageExtraConfig = config(creatureLevelControl, "Low_damage_config", 0, "Extra paramater to low damage config - for reference(float)(playerLevel + lowDamageConfig) / monsterLevel; when player is below lvl");
         minLevelExp = config(creatureLevelControl, "MinLevelRange", 10, "Character level - MinLevelRange is less than the level of the monster, then you will receive reduced experience. Уровень персонажа - MinLevelRange меньше уровня монстра, то вы будете получать урезанный опыт");
         maxLevelExp = config(creatureLevelControl, "MaxLevelRange", 10, "Character level + MaxLevelRange is less than the level of the monster, then you will not receive experience. Уровень персонажа + MaxLevelRange меньше уровня монстра, то вы не будете получать опыт");
+        MobLevelPosition = config(creatureLevelControl, "LevelBar Position", new Vector2(40, -30), "LevelBar Position for regular mobs - synced");
+        BossLevelPosition = config(creatureLevelControl, "Boss LevelBar Position", new Vector2(0, 30), "LevelBar Position for Boss Bars - synced");
 
         string resetAttributesItems = "3.Reset attributes items";
         prefabNameCoins = config(resetAttributesItems, "prefabName", "Coins", "Name prefab item");
@@ -239,11 +246,19 @@ public partial class EpicMMOSystem : BaseUnityPlugin
         _harmony.PatchAll(assembly);
         
         _asset = GetAssetBundle("epicasset");
-
+        itemassets();
         localization = new Localization();
         MyUI.Init();
     }
 
+    private static void itemassets()
+    {
+        Item ResetTrophy = new("epicmmoitems", "ResetTrophy", "asset");
+        ResetTrophy.Name.English("ResetTrophy");
+        ResetTrophy.Description.English("A Trophy you can use to reset MMO points. Rare");
+        ResetTrophy.ToggleConfigurationVisibility(Configurability.Drop);
+        ResetTrophy.Snapshot();
+    }
     private void Start()
     {
         DataMonsters.Init();

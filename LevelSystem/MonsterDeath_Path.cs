@@ -161,7 +161,7 @@ public static class MonsterDeath_Path
                 if (__instance.IsPlayer()) return;
                 if (!DataMonsters.contains(__instance.gameObject.name)) return;
                 int playerLevel = LevelSystem.Instance.getLevel();
-                int maxLevelExp = playerLevel + EpicMMOSystem.maxLevelExp.Value;
+                int maxLevelExp = playerLevel + EpicMMOSystem.maxLevelExp.Value +EpicMMOSystem.lowDamageExtraConfig.Value;
                 int monsterLevel = DataMonsters.getLevel(__instance.gameObject.name) + __instance.m_level - 1;
                 if (monsterLevel > maxLevelExp)
                 {

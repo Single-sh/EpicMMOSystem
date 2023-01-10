@@ -96,6 +96,10 @@
     <Reference Include="GroupsAPI, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>Libs\GroupsAPI.dll</HintPath>
     </Reference>
+    <Reference Include="ItemManager, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\ItemManager.dll</HintPath>
+    </Reference>
     <Reference Include="LocalizationManager, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libs\LocalizationManager.dll</HintPath>
@@ -341,6 +345,7 @@
     <Content Include="ILRepack.targets" />
     <Content Include="Libs\fastJSON.dll" />
     <Content Include="Libs\GroupsAPI.dll" />
+    <Content Include="Libs\ItemManager.dll" />
     <Content Include="Libs\LocalizationManager.dll" />
     <Content Include="Libs\ServerSync.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -360,6 +365,7 @@
     <EmbeddedResource Include="Data\MonsterDB_Outsiders.json" />
     <EmbeddedResource Include="Data\MonsterDB_DoorDieMonsters.json" />
     <EmbeddedResource Include="Data\MonsterDB_MajesticChickens.json" />
+    <EmbeddedResource Include="asset\epicmmoitems" />
     <None Include="packages.config" />
     <EmbeddedResource Include="translations\Russian.yml" />
     <EmbeddedResource Include="translations\English.yml" />

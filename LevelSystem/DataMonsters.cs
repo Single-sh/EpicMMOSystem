@@ -260,10 +260,10 @@ public static class DataMonsters
             int monsterLevel = getLevel(c.gameObject.name) + c.m_level - 1;
             GameObject component = ___m_huds[c].m_gui.transform.Find("Name").gameObject;
             GameObject levelName = Object.Instantiate(component, component.transform);
-            levelName.GetComponent<RectTransform>().anchoredPosition = new Vector2(40,-30);
+            levelName.GetComponent<RectTransform>().anchoredPosition = EpicMMOSystem.MobLevelPosition.Value;
             if (c.m_boss)
             {
-                levelName.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 30);
+                levelName.GetComponent<RectTransform>().anchoredPosition = EpicMMOSystem.BossLevelPosition.Value;
             }
             
             levelName.GetComponent<Text>().text = $"[{monsterLevel}]";

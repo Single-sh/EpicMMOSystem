@@ -335,11 +335,23 @@ public partial class LevelSystem
         var multiply = EpicMMOSystem.multiNextLevel.Value;
         var maxLevel = EpicMMOSystem.maxLevel.Value;
         levelsExp = new ();
-        long current = 0;
-        for (int i = 1; i <= maxLevel; i++)
+        if (EpicMMOSystem.levelexpforeachlevel.Value)
         {
-            current = (long) Math.Round(current * multiply + levelExp);
-            levelsExp[i + 1] = current;
+            long current = 0;
+            for (int i = 1; i <= maxLevel; i++)
+            {
+                current = (long)Math.Round(current * multiply + levelExp);
+                levelsExp[i + 1] = current;
+            }
+        }else
+        {
+            long current = levelExp;
+            for (int i = 1; i <= maxLevel; i++)
+            {
+                current = (long)Math.Round(current * multiply);
+                levelsExp[i + 1] = current;
+            }
+
         }
     }
     

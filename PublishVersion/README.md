@@ -55,6 +55,8 @@ Fantasy-Creatures, AirAnimals, Defaults, DoOrDieMonsters, LandAnimals, Monsterla
 
 Monsters that are 1 level higher than the character + MaxLevelRange will curve XP.
 
+With defaults, starting exp req is 500 with a 1.04 multiplayer.  So first 5 levels of experience required will be: level 1 is 500, 2 is 1020, 3 is 1560, 4 is 2122, 5 is 2707
+
 With Low_damage_level- Damage dealt to a higher level monster will be reduced by the difference in levels. E.g. (Character level 20/ Monster level 50 = 0.4. Damage dealt will be 0.4% of normal damage) 
 damageFactor = (float)(playerLevel + LowDamageConfig)/ monsterLevel; You can configure LowDamageConfig to adjust damage scaling up or down. Damage Factor will not go above 1 or below .1f
 
@@ -67,7 +69,7 @@ A file listing all monsters and their levels is located in config/EpicMMOSystem/
 
 A file called Version.txt is created in the folder. It contains the mod version that was used to create it. Replace it with "NO" to stop it from overwritting on a future update.
 
-Latest Update for Jsons config is 1.5.3 (Number will be updated when Jsons recieve an update)
+Latest Update for Jsons config is 1.5.4 (Number will be updated when Jsons recieve an update)
 
 Please note:
 When upgrading the mod to a newer version, new fields in the settings file will be created automatically. You will have to manually re-edit these values if you have changed them.
@@ -134,7 +136,7 @@ Original Creator: LambaSun or my [mod branch](https://discord.com/channels/82657
 
 | Version | Changes                                                                                                                                                                                                                                                                                                                                |
 |----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 1.5.4: | - Updated to allow level and reset commands for Spaced Names. <br/>Updated Jsons, Added extra text file for people who don't read readme or version changes... you know who you are.... <br/> Added abilty for EpicMMO to recalculate maxlvls on serversync updates. I still don't recommend live updating with this mod, but less bugs now. <br/> Serious discussion: It appears if you ever changed expierence values(rateExp,expForLvlMonster, etc) after players started playing, things could get wonky unless you reset them(even after game restarts). I added a TotalExp tracker, but it won't be useful unless you restart all your players back to 0. I have added another command to Terminal recalc, but it will reset players levels to 0 if not a new charc on this update.  
+| 1.5.4: | - Updated to allow level and reset commands for Spaced Names. <br/>Updated Jsons, Added extra text file for people who don't read readme or version changes... you know who you are.... <br/> Added abilty for EpicMMO to recalculate maxlvls on serversync updates. I still don't recommend live updating with this mod, but less bugs now. <br/> Serious discussion: It appears if you ever changed expierence values(rateExp,expForLvlMonster, etc) after players started playing, things could get wonky unless you reset them(even after game restarts). I added a TotalExp tracker, but it won't be useful unless you restart all your players back to 0. I have added another command to Terminal recalc, but it will reset players levels to 0 if not a new charc on this update.  <br/> Added MobLevelPosition and BossLevelPosition for server admins to config mob bar placement. </br> Fixed lowDamageExtraConfig, small oversight <br/> Added ResetTrophy item for people to add to droplists
 | 1.5.3: | - Fixed bug in Groups exp sharing. <br/> Added MajesticChickens json
 | 1.5.2: | - Added Colors and Scale to Individual UI elements.<br/> Fixed EpicLoot drop bug, made Nav Panel moveable, Eitr UI adjustments<br/> Low_damage_config for extra configurability on low damage mode
 | 1.5.1: | - Added Stamina regeneration<br/>

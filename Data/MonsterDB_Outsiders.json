@@ -12,7 +12,7 @@
 		"level": 30
 	},
 	{
-		"name": "Out_Void Cultist",
+		"name": "Out_VoidCultist",
 		"minExp": 425,
 		"maxExp": 480,
 		"level": 55
@@ -36,7 +36,7 @@
 		"level": 45
 	},
 	{
-		"name": "Out_Void Lord",
+		"name": "Out_VoidLord",
 		"minExp": 1100,
 		"maxExp": 1500,
 		"level": 60

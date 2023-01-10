@@ -1,5 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EpicMmoSystem", "EpicMmoSystem.csproj", "{4358610B-F3F4-4843-B7AF-98B7BC60DCDE}"
 EndProject
 Global
@@ -12,5 +15,11 @@ Global
 		{4358610B-F3F4-4843-B7AF-98B7BC60DCDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4358610B-F3F4-4843-B7AF-98B7BC60DCDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4358610B-F3F4-4843-B7AF-98B7BC60DCDE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {78C38D1D-B62F-4628-969A-3E0FB9F5CB3B}
 	EndGlobalSection
 EndGlobal

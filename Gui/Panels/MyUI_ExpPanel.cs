@@ -163,12 +163,6 @@ public partial class MyUI
                 expPanelRoot.GetComponent<Canvas>().gameObject.SetActive(true); // idk
                 firstloadHP = true;
             }
-                frameCount++;
-            if (frameCount == 5)
-            {
-
-                frameCount = 0;
-            }
 
             var current = player.GetHealth();
             var max = player.GetMaxHealth();
