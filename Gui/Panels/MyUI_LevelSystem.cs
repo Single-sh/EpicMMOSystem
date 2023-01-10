@@ -30,10 +30,12 @@ public partial class MyUI
     private static Text speedAttackText;
     private static Text reducedStaminaText;
     
+    
     //Description intellect
     private static Text magicDamageText;
     private static Text magicArmorText;
     private static Text magicEitrRegText;
+    private static Text eitrIncreaseText;
 
     //Description body
     private static Text addHpText;
@@ -97,10 +99,12 @@ public partial class MyUI
         speedAttackText = contentStats.transform.Find("SpeedAttack").GetComponent<Text>();
         reducedStaminaText = contentStats.transform.Find("StaminaReduction").GetComponent<Text>();
         addStaminaText = contentStats.transform.Find("Stamina").GetComponent<Text>();
+        
         //Description intellect
         magicDamageText = contentStats.transform.Find("MagicDamage").GetComponent<Text>();
         magicArmorText = contentStats.transform.Find("MagicDamageReduction").GetComponent<Text>();
         magicEitrRegText = contentStats.transform.Find("EitrReg").GetComponent<Text>();
+        eitrIncreaseText = contentStats.transform.Find("EitrIncr").GetComponent<Text>();
         //Description body
         addHpText = contentStats.transform.Find("Hp").GetComponent<Text>();
         physicArmorText = contentStats.transform.Find("DamageReduction").GetComponent<Text>();
@@ -166,11 +170,13 @@ public partial class MyUI
         speedAttackText.text = $"{localization["$speed_attack"]}: -{LevelSystem.Instance.getAddStaminaAttack()}%";
         reducedStaminaText.text = $"{localization["$reduced_stamina"]}: -{LevelSystem.Instance.getStaminaReduction()}%";
         addStaminaText.text = $"{localization["$add_stamina"]}: +{LevelSystem.Instance.getAddStamina()}";
-    
+        
+
         //Description intellect
         magicDamageText.text = $"{localization["$magic_damage"]}: +{LevelSystem.Instance.getAddMagicDamage()}%";
         magicArmorText.text = $"{localization["$magic_armor"]}: +{LevelSystem.Instance.getAddMagicArmor()}%";
-    
+        eitrIncreaseText.text = $"{localization["$add_eitr"]}: +{LevelSystem.Instance.getAddEitr()}";
+
         //Description body
         addHpText.text = $"{localization["$add_hp"]}: +{LevelSystem.Instance.getAddHp()}";
         physicArmorText.text = $"{localization["$physic_armor"]}: +{LevelSystem.Instance.getAddPhysicArmor()}%";

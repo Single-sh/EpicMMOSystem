@@ -1,0 +1,158 @@
+ManifestFileVersion: 0
+CRC: 4144373992
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: eba971aaba6e741d6e497fad041f718f
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 69e328e282bdcc724f72677fab5f30c6
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 82
+  Script: {instanceID: 0}
+- Class: 83
+  Script: {instanceID: 0}
+- Class: 90
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+- Class: 95
+  Script: {instanceID: 0}
+- Class: 108
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: afbe7e1ba824e3e43b46e935750599f4, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 937d83c441ae8804d8a5f264c74e6332, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 31c1398c6b5d63046ab48327d028d5f5, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: bde9fbe3ba0fd694b87d8e0def07bf1a, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 8c5a6953535bb9d4fba8e0cb752485d0, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: d199490a83bb2b844b9695cbf13b01ef, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 2a4db7a114972834c8e4117be1d82ba3, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 3522e15910c023f479bd01acc2fe5ea4, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: dad281257c5cebe438f4e60ac7d609f5, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: ab13f95a127285045acbde9fb5ed0bd8, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 128
+  Script: {instanceID: 0}
+- Class: 137
+  Script: {instanceID: 0}
+- Class: 198
+  Script: {instanceID: 0}
+- Class: 199
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+- Class: 222
+  Script: {instanceID: 0}
+- Class: 223
+  Script: {instanceID: 0}
+- Class: 224
+  Script: {instanceID: 0}
+- Class: 225
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers:
+- AssemblyName: UnityEngine.CoreModule
+  ClassName: UnityEngine.Events.ArgumentCache
+- AssemblyName: UnityEngine.CoreModule
+  ClassName: UnityEngine.Events.PersistentCallGroup
+- AssemblyName: UnityEngine.CoreModule
+  ClassName: UnityEngine.Events.PersistentListenerMode
+- AssemblyName: UnityEngine.CoreModule
+  ClassName: UnityEngine.RectOffset
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.EventSystems.EventTrigger/Entry
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.EventSystems.EventTrigger/TriggerEvent
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.AnimationTriggers
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.Button/ButtonClickedEvent
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.ColorBlock
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.FontData
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.InputField/OnChangeEvent
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.InputField/SubmitEvent
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.MaskableGraphic/CullStateChangedEvent
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.Navigation
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.ScrollRect/ScrollRectEvent
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.Scrollbar/ScrollEvent
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.SpriteState
+Assets:
+- Assets/CustomItems/EPICMMO/_CustomModsAsset/EpickLevelSystem/UI/Classes/Class2.png
+- Assets/CustomItems/EPICMMO/_CustomModsAsset/EpickLevelSystem/UI/Classes/Class1.png
+- Assets/CustomItems/EPICMMO/_CustomModsAsset/EpickLevelSystem/LevelHud.prefab
+- Assets/CustomItems/EPICMMO/_CustomModsAsset/EpickLevelSystem/ExpPanel.prefab
+- Assets/CustomItems/EPICMMO/_CustomModsAsset/EpickLevelSystem/UI/Classes/Class12.png
+- Assets/CustomItems/EPICMMO/_CustomModsAsset/EpickLevelSystem/LevelUpVFX.prefab
+- Assets/CustomItems/EPICMMO/_CustomModsAsset/EpickLevelSystem/UI/Classes/Class11.png
+- Assets/CustomItems/EPICMMO/_CustomModsAsset/EpickLevelSystem/UI/FriendCell.prefab
+- Assets/CustomItems/EPICMMO/_CustomModsAsset/EpickLevelSystem/UI/Classes/Class8.png
+- Assets/CustomItems/EPICMMO/_CustomModsAsset/EpickLevelSystem/UI/Classes/Class5.png
+- Assets/CustomItems/EPICMMO/_CustomModsAsset/EpickLevelSystem/UI/Classes/Class13.png
+- Assets/CustomItems/EPICMMO/_CustomModsAsset/EpickLevelSystem/EpicHudPanelCanvas.prefab
+- Assets/CustomItems/EPICMMO/_CustomModsAsset/EpickLevelSystem/UI/Classes/Class7.png
+- Assets/CustomItems/EPICMMO/_CustomModsAsset/EpickLevelSystem/UI/Classes/Class4.png
+- Assets/CustomItems/EPICMMO/_CustomModsAsset/EpickLevelSystem/UI/Classes/Class9.png
+- Assets/CustomItems/EPICMMO/_CustomModsAsset/EpickLevelSystem/UI/Classes/Class3.png
+- Assets/CustomItems/EPICMMO/_CustomModsAsset/EpickLevelSystem/UI/Classes/Class6.png
+- Assets/CustomItems/EPICMMO/_CustomModsAsset/EpickLevelSystem/UI/Classes/Class14.png
+- Assets/CustomItems/EPICMMO/_CustomModsAsset/EpickLevelSystem/UI/Classes/Class10.png
+- Assets/CustomItems/EPICMMO/_CustomModsAsset/EpickLevelSystem/EpicHudPanel.prefab
+Dependencies: []

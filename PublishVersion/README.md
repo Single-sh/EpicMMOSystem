@@ -21,9 +21,9 @@ Features:
 
 	Strength: Physical Damage increase, Carry Weight Increase, Stamina Regeneration
 
-	Agility: Attack Stamina Consumption decrease, Stamina increase, Stamina consumption (running, jumping) decreased
+	Agility: Attack Stamina Consumption decrease, Stamina increase, Stamina consumption (running, jumping) decreased, Eitr Max Increase
 
-	Intellect: Elemental Damage increase, Elemental Armor increase, Eitrl regen increases
+	Intellect: Elemental Damage increase, Elemental Armor increase, Eitr regen increases
 
 	Endurance: Physical Armor increase, HP increase, Health Regeneration
 
@@ -49,7 +49,7 @@ The player will receive a friend request. Once accepted, the character will appe
 This mod assigns levels to all in-game monsters.
 ![https://i.imgur.com/IySsj3j.png](https://i.imgur.com/IySsj3j.png)
 
-Mobs from other mods are included:
+Mobs (names) from other mods are included:
 
 Fantasy-Creatures, AirAnimals, Defaults, DoOrDieMonsters, LandAnimals, MonsterlabZ, Outsiders, SeaAnimals
 
@@ -78,6 +78,16 @@ If you have no custom settings in the configuration file, you should delete the 
 Note for other Mods: This mod uses hit.toolTier to pass the Lvl of player
 
 
+
+</details>
+
+<details><summary>Reset Skill Points</summary>
+
+There are configs for setting the Reset currency, default is coins. You set the ammount per level.
+
+There is also an Item called ResetTrophy that you can spawn or add to the builtin droplist that will allow any level reset with only 1 ResetTrophy.
+
+The mod looks for your reset currency first and then ResetTrophies. Only consumes 1, so make this a very rare item. 
 
 </details>
 

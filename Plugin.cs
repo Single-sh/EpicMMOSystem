@@ -77,6 +77,7 @@ public partial class EpicMMOSystem : BaseUnityPlugin
     public static ConfigEntry<float> speedAttack;
     public static ConfigEntry<float> staminaReduction;
     public static ConfigEntry<float> addStamina;
+    public static ConfigEntry<float> addEitr;
 
     //LevelSystem arg property <Intellect>
     public static ConfigEntry<float> magicDamage;
@@ -182,11 +183,13 @@ public partial class EpicMMOSystem : BaseUnityPlugin
         speedAttack = config(levelSystemAgility, "StaminaAttack", 0.1f, "Reduces attack stamina consumption. Уменьшает потребление стамины на атаку");
         staminaReduction = config(levelSystemAgility, "StaminaReduction", 0.15f, "Decrease stamina consumption for running, jumping for one point. Уменьшение расхода выносливости на бег, прыжок за один поинт");
         addStamina = config(levelSystemAgility, "AddStamina", 1f, "One Point Stamina Increase. Увеличение  выносливости за один поинт");
+        
 
         string levelSystemIntellect = "1.LevelSystem Intellect-";
         magicDamage = config(levelSystemIntellect, "MagicAttack", 0.20f, "Increase magic attack per point. Увеличение магической атаки за один поинт");
         magicArmor = config(levelSystemIntellect, "MagicArmor", 0.1f, "Increase magical protection per point. Увеличение магической защиты за один поинт");
         MagicEitrRegen = config(levelSystemIntellect, "MagicEitrReg", 0.3f, "Increase magical Eitr Regeneration per point. Увеличивает регенерацию магического Эйтра на единицу.");
+        addEitr = config(levelSystemIntellect, "AddEitr", 0.3f, "Eitr Increase per point ONLY when player has above 1 base Eitr");
 
         string levelSystemBody = "1.LevelSystem Body------";
         addHp = config(levelSystemBody, "AddHp", 1f, "One Point Health Increase. Увеличение здоровья за один поинт");
@@ -213,7 +216,7 @@ public partial class EpicMMOSystem : BaseUnityPlugin
 
         string resetAttributesItems = "3.Reset attributes items";
         prefabNameCoins = config(resetAttributesItems, "prefabName", "Coins", "Name prefab item");
-        viewTextCoins = config(resetAttributesItems, "viewText", "coins", "Name item");
+        viewTextCoins = config(resetAttributesItems, "viewText", "coins or 1 Reset Trophy", "Name item");
 
         string hud = "4.Hud--------------------";
         oldExpBar = config(hud, "eXP Bar Only", false, "Use eXP Bar only (need restart, not server sync) Does not move or scale", false);

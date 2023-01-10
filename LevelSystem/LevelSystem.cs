@@ -211,7 +211,19 @@ public partial class LevelSystem
         var name = pref.GetComponent<ItemDrop>().m_itemData.m_shared.m_name;
         var price = getPriceResetPoints();
         var currentCoins = Player.m_localPlayer.m_inventory.CountItems(name);
-        if (currentCoins < price) return;
+        if (currentCoins < price)
+        {
+            var prefTrophy = ZNetScene.instance.GetPrefab("ResetTrophy");
+            var TrophyName = prefTrophy.GetComponent<ItemDrop>().m_itemData.m_shared.m_name;
+            var currentTrophy = Player.m_localPlayer.m_inventory.CountItems(TrophyName);
+            if (currentTrophy > 0)
+            {
+                Player.m_localPlayer.m_inventory.RemoveItem(TrophyName, 1);
+                ResetAllParameter();
+                return;
+            }
+            return;// return if no coins and no ResetTrophy
+        }
         Player.m_localPlayer.m_inventory.RemoveItem(name, price);
         ResetAllParameter();
     }

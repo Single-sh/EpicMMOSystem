@@ -25,6 +25,23 @@ public partial class LevelSystem
         return parameter * multiplayer;
     }
 
+    public float getAddEitr()
+    {
+        var parameter = getParameter(Parameter.Intellect);
+        var multiplayer = EpicMMOSystem.addEitr.Value;
+        return parameter * multiplayer;
+    }
+
+    [HarmonyPatch(typeof(Player), nameof(Player.GetMaxEitr))]
+    public static class AddEitr_Path
+    {
+        public static void Postfix(ref float __result)
+        {
+            if (__result > 2)
+                __result += Instance.getAddEitr();
+        }
+    }
+
     [HarmonyPatch(typeof(ItemDrop.ItemData), nameof(ItemDrop.ItemData.GetDamage), typeof(int))]
     public class AddDamageIntellect_Path
     {
