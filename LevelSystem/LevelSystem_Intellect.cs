@@ -32,7 +32,7 @@ public partial class LevelSystem
         return parameter * multiplayer;
     }
 
-    [HarmonyPatch(typeof(Player), nameof(Player.GetMaxEitr))]
+    [HarmonyPatch(typeof(Player), nameof(Player.GetEitr))]
     public static class AddEitr_Path
     {
         public static void Postfix(ref float __result)
