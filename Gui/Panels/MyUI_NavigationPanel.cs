@@ -1,3 +1,4 @@
+using EpicMMOSystem.MonoScripts;
 using EpicMMOSystem.OtherApi;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,7 +18,8 @@ public partial class MyUI
         navigationPanel = UI.transform.Find("Canvas/NavigatePanel").gameObject;
         buttonLevelSystem = navigationPanel.transform.Find("Buttons/ButtonLevelSystem");
         buttonLevelSystem.GetComponent<Button>().onClick.AddListener(ClickButtonLevelSystem);
-        
+        DragWindowCntrl.ApplyDragWindowCntrl(navigationPanel);
+
         buttonFriendsList = navigationPanel.transform.Find("Buttons/ButtonFriends");
         buttonFriendsList.GetComponent<Button>().onClick.AddListener(ClickButtonFriendsList);
 

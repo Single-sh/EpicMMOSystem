@@ -1,0 +1,64 @@
+[
+  {
+    "name": "AlligatorTurtle",
+    "minExp": 200,
+    "maxExp": 250,
+    "level": 25
+  },
+
+  {
+    "name": "BrownBear",
+    "minExp": 70,
+    "maxExp": 100,
+    "level": 15
+  },
+
+  {
+    "name": "Capybara",
+    "minExp": 60,
+    "maxExp": 80,
+    "level": 12
+  },
+
+  {
+    "name": "Fox",
+    "minExp": 60,
+    "maxExp": 70,
+    "level": 13
+  },
+
+  {
+    "name": "Ibex",
+    "minExp": 60,
+    "maxExp": 80,
+    "level": 12
+  },
+
+  {
+    "name": "Viper",
+    "minExp": 90,
+    "maxExp": 120,
+    "level": 16
+  },
+
+  {
+    "name": "Casuar",
+    "minExp": 70,
+    "maxExp": 130,
+    "level": 14
+  },
+
+  {
+    "name": "Jabuti",
+    "minExp": 50,
+    "maxExp": 100,
+    "level": 12
+  },
+
+  {
+    "name": "BlueFrog",
+    "minExp": 40,
+    "maxExp": 80,
+    "level": 5
+  }
+]

@@ -5,6 +5,7 @@ using HarmonyLib;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+
 namespace EpicMMOSystem;
 
 public static class MonsterDeath_Path
@@ -24,15 +25,42 @@ public static class MonsterDeath_Path
 
     public static void RPC_AddGroupExp(long sender, int exp, Vector3 position, int monsterLevel)
     {
+        if (EpicMMOSystem.extraDebug.Value)
+            EpicMMOSystem.MLLogger.LogInfo("Player was in group so applying exp from group kill");
+
         if ((double)Vector3.Distance(position, Player.m_localPlayer.transform.position) >= 50f) return;
-        int maxRangeLevel = LevelSystem.Instance.getLevel() + EpicMMOSystem.maxLevelExp.Value;
-        if (monsterLevel > maxRangeLevel && !EpicMMOSystem.mentor.Value) return;
-        int minRangeLevel = LevelSystem.Instance.getLevel() - EpicMMOSystem.minLevelExp.Value;
-        if (monsterLevel < minRangeLevel)
+
+        var playerExp = exp;
+        var MobisBoss = false;
+        if (monsterLevel < 0)
         {
-            exp = Convert.ToInt32( exp / ( minRangeLevel - monsterLevel));
+            MobisBoss = true;
+            monsterLevel = -1 * monsterLevel; // or -monsterLevel
         }
-        LevelSystem.Instance.AddExp(exp);
+
+        if (EpicMMOSystem.enabledLevelControl.Value && (EpicMMOSystem.curveExp.Value ||MobisBoss ))
+        {
+            if (EpicMMOSystem.extraDebug.Value)
+                EpicMMOSystem.MLLogger.LogInfo("Checking player lvl for group exp");
+
+            int maxRangeLevel = LevelSystem.Instance.getLevel() + EpicMMOSystem.maxLevelExp.Value;
+            if (monsterLevel > maxRangeLevel)
+            {
+                playerExp = Convert.ToInt32(exp / (monsterLevel - maxRangeLevel));
+            }
+            int minRangeLevel = LevelSystem.Instance.getLevel() - EpicMMOSystem.minLevelExp.Value;
+            if (monsterLevel < minRangeLevel)
+            {
+                playerExp = Convert.ToInt32(exp / (minRangeLevel - monsterLevel));
+            }
+
+            if (monsterLevel > maxRangeLevel && EpicMMOSystem.mentor.Value)
+                playerExp = exp; // give full *group exp with mentor mode
+        }
+
+
+
+        LevelSystem.Instance.AddExp(playerExp);
     }
     
 
@@ -52,17 +80,18 @@ public static class MonsterDeath_Path
         }
         int monsterLevel = DataMonsters.getLevel(monsterName) + level - 1;
 
-        var DontSkip = true;
-        if (!EpicMMOSystem.curveBossExp.Value)
+        var MobisBoss = false;
+        if (EpicMMOSystem.curveBossExp.Value) 
         {
-            switch (monsterName) // if a boss then skip lvl check if disableBossExp if false
+            switch (monsterName) // if a boss then check otherwise false
             {
-                case "Eikthyr": DontSkip = false; break;
-                case "gd_king": DontSkip = false; break;
-                case "Bonemass":DontSkip = false; break;
-                case "Dragon":  DontSkip= false; break;
-                case "GoblinKing":DontSkip= false; break;
-                default: DontSkip = true; break;
+                case "Eikthyr": MobisBoss = true; break;
+                case "gd_king": MobisBoss = true; break;
+                case "Bonemass": MobisBoss = true; break;
+                case "Dragon": MobisBoss = true; break;
+                case "GoblinKing": MobisBoss = true; break;
+                case "SeekerQueen": MobisBoss = true; break;
+                default: MobisBoss = false; break;// all other mobs
             }
         }
         
@@ -77,9 +106,11 @@ public static class MonsterDeath_Path
         var playerExp = exp;
 
 
-        if (EpicMMOSystem.enabledLevelControl.Value && (EpicMMOSystem.curveExp.Value) && DontSkip)
+        if (EpicMMOSystem.enabledLevelControl.Value && (EpicMMOSystem.curveExp.Value || MobisBoss))
         {
-            EpicMMOSystem.MLLogger.LogDebug("Checking player lvl");
+            if (EpicMMOSystem.extraDebug.Value) 
+                EpicMMOSystem.MLLogger.LogInfo("Checking player lvl");
+
             int maxRangeLevel = LevelSystem.Instance.getLevel() + EpicMMOSystem.maxLevelExp.Value;
             if (monsterLevel > maxRangeLevel)
             {
@@ -94,6 +125,14 @@ public static class MonsterDeath_Path
         
         LevelSystem.Instance.AddExp(playerExp);
         if (!Groups.API.IsLoaded()) return;
+
+        if (EpicMMOSystem.extraDebug.Value)
+            EpicMMOSystem.MLLogger.LogInfo("Player in Group");
+
+        //Convert Monsterlvl to negative if boss because max send amount is 3 para
+        if (MobisBoss)
+            monsterLevel = -1 * monsterLevel;
+
         var groupFactor = EpicMMOSystem.groupExp.Value;
         foreach (var playerReference in Groups.API.GroupPlayers())
         {
@@ -103,7 +142,7 @@ public static class MonsterDeath_Path
                 ZRoutedRpc.instance.InvokeRoutedRPC(
                     playerReference.peerId, 
                     $"{EpicMMOSystem.ModName} AddGroupExp", 
-                    new object[] { (int)sendExp, position, monsterLevel}
+                    new object[] { (int)sendExp, position, monsterLevel }
                     );
             }
         }
@@ -122,11 +161,12 @@ public static class MonsterDeath_Path
                 if (__instance.IsPlayer()) return;
                 if (!DataMonsters.contains(__instance.gameObject.name)) return;
                 int playerLevel = LevelSystem.Instance.getLevel();
-                int maxLevelExp = playerLevel + EpicMMOSystem.maxLevelExp.Value;
+                int maxLevelExp = playerLevel + EpicMMOSystem.maxLevelExp.Value +EpicMMOSystem.lowDamageExtraConfig.Value;
                 int monsterLevel = DataMonsters.getLevel(__instance.gameObject.name) + __instance.m_level - 1;
                 if (monsterLevel > maxLevelExp)
                 {
-                    var damageFactor = (float)playerLevel / monsterLevel;
+                    int i = Mathf.Clamp(4, 1, 3);
+                    var damageFactor = Mathf.Clamp( (float)((playerLevel + EpicMMOSystem.lowDamageExtraConfig.Value) / monsterLevel),0.1f, 1.0f );
                     hit.ApplyModifier(damageFactor);
                 }
             }
@@ -164,11 +204,14 @@ public static class MonsterDeath_Path
                     }
                     else /// No lvl check
                     {
-                        EpicMMOSystem.MLLogger.LogInfo("else ZDO epic playerLevel to 0");
+                        if (EpicMMOSystem.extraDebug.Value) 
+                            EpicMMOSystem.MLLogger.LogInfo("else ZDO epic playerLevel to 0");
+
                         if (0 != __instance.m_nview.GetZDO().GetInt("epic playerLevel"))
                         {
                             __instance.m_nview.GetZDO().Set("epic playerLevel", 0); // if not set to 0 then set to 0 - minimize zdo traffic
-                            EpicMMOSystem.MLLogger.LogInfo("Set ZDO epic playerLevel to 0");
+                            if (EpicMMOSystem.extraDebug.Value) 
+                                EpicMMOSystem.MLLogger.LogInfo("Set ZDO epic playerLevel to 0");
                         }  
                     }
                    
@@ -180,7 +223,9 @@ public static class MonsterDeath_Path
                         CharacterLastDamageList[__instance] = 100;
                         if (EpicMMOSystem.enabledLevelControl.Value && (EpicMMOSystem.removeBossDropMax.Value || EpicMMOSystem.removeBossDropMin.Value || EpicMMOSystem.removeDropMax.Value || EpicMMOSystem.removeDropMin.Value))
                         {
-                            EpicMMOSystem.MLLogger.LogInfo("Not A player that dmg mob");
+                            //if (EpicMMOSystem.extraDebug.Value) 
+                               // EpicMMOSystem.MLLogger.LogInfo("Player Hit");
+
                             __instance.m_nview.GetZDO().Set("epic playerLevel", 0);
                         }
                     }

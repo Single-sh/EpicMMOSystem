@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,15 +24,19 @@ public partial class MyUI
     //Description strength
     private static Text physicDamageText;
     private static Text addWeightText;
-    
+    private static Text staminaRegen;
+
     //Description agility
     private static Text speedAttackText;
     private static Text reducedStaminaText;
     
+    
     //Description intellect
     private static Text magicDamageText;
     private static Text magicArmorText;
-    
+    private static Text magicEitrRegText;
+    private static Text eitrIncreaseText;
+
     //Description body
     private static Text addHpText;
     private static Text addStaminaText;
@@ -75,27 +80,31 @@ public partial class MyUI
         freePointsPanel.transform.Find("Apply/Text").GetComponent<Text>().text = localization["$apply"];
         
         levelSystemPanel.transform.Find("Points/ResetButton/Button").GetComponent<Button>().onClick.AddListener(ResetParameters);
-        levelSystemPanel.transform.Find("Points/ResetButton/Button/Text").GetComponent<Text>().text = localization["$reset_parameters"];
+        levelSystemPanel.transform.Find("Points/ResetButton/Button/Text").GetComponent<Text>().text = localization["$reset_parameters"]; 
         
         //CurrentLevel
         currentLevelText = levelSystemPanel.transform.Find("CurrentLevel/Content/Lvl").GetComponent<Text>();
         expText = levelSystemPanel.transform.Find("CurrentLevel/Content/Exp").GetComponent<Text>();
-        
-        //Description
+
+        //Description Content 
         Transform contentStats = levelSystemPanel.transform.Find("DescriptionStats/Scroll View/Viewport/Content");
         contentStats.transform.Find("HeaderDamage/Text").GetComponent<Text>().text = localization["$damage"];
         contentStats.transform.Find("HeaderDefence/Text").GetComponent<Text>().text = localization["$armor"];
-        contentStats.transform.Find("HeaderSurvarior/Text").GetComponent<Text>().text = localization["$survival"];
+        contentStats.transform.Find("HeaderSurv/Text").GetComponent<Text>().text = localization["$survival"];
         //Description strength
         physicDamageText = contentStats.transform.Find("PhysicDamage").GetComponent<Text>();
         addWeightText = contentStats.transform.Find("Weight").GetComponent<Text>();
+        staminaRegen = contentStats.transform.Find("StaminaRegeneration").GetComponent<Text>();
         //Description agility
         speedAttackText = contentStats.transform.Find("SpeedAttack").GetComponent<Text>();
         reducedStaminaText = contentStats.transform.Find("StaminaReduction").GetComponent<Text>();
         addStaminaText = contentStats.transform.Find("Stamina").GetComponent<Text>();
+        
         //Description intellect
         magicDamageText = contentStats.transform.Find("MagicDamage").GetComponent<Text>();
         magicArmorText = contentStats.transform.Find("MagicDamageReduction").GetComponent<Text>();
+        magicEitrRegText = contentStats.transform.Find("EitrReg").GetComponent<Text>();
+        eitrIncreaseText = contentStats.transform.Find("EitrIncr").GetComponent<Text>();
         //Description body
         addHpText = contentStats.transform.Find("Hp").GetComponent<Text>();
         physicArmorText = contentStats.transform.Find("DamageReduction").GetComponent<Text>();
@@ -155,21 +164,25 @@ public partial class MyUI
         //Description strength
         physicDamageText.text = $"{localization["$physic_damage"]}: +{LevelSystem.Instance.getAddPhysicDamage()}%";
         addWeightText.text = $"{localization["$add_weight"]}: +{LevelSystem.Instance.getAddWeight()}";
+        staminaRegen.text = $"{localization["$stamina_reg"]}: +{LevelSystem.Instance.getStaminaRegen()}";
 
         //Description agility
         speedAttackText.text = $"{localization["$speed_attack"]}: -{LevelSystem.Instance.getAddStaminaAttack()}%";
         reducedStaminaText.text = $"{localization["$reduced_stamina"]}: -{LevelSystem.Instance.getStaminaReduction()}%";
         addStaminaText.text = $"{localization["$add_stamina"]}: +{LevelSystem.Instance.getAddStamina()}";
-    
+        
+
         //Description intellect
         magicDamageText.text = $"{localization["$magic_damage"]}: +{LevelSystem.Instance.getAddMagicDamage()}%";
         magicArmorText.text = $"{localization["$magic_armor"]}: +{LevelSystem.Instance.getAddMagicArmor()}%";
-    
+        eitrIncreaseText.text = $"{localization["$add_eitr"]}: +{LevelSystem.Instance.getAddEitr()}";
+
         //Description body
         addHpText.text = $"{localization["$add_hp"]}: +{LevelSystem.Instance.getAddHp()}";
         physicArmorText.text = $"{localization["$physic_armor"]}: +{LevelSystem.Instance.getAddPhysicArmor()}%";
         reducedStaminaBlockText.text = $"{localization["$reduced_stamina_block"]}: -{LevelSystem.Instance.getReducedStaminaBlock()}%";
         regenHpText.text = $"{localization["$regen_hp"]}: +{LevelSystem.Instance.getAddRegenHp()}%";
+        magicEitrRegText.text = $"{localization["$regen_eitr"]}: +{LevelSystem.Instance.getEitrRegen()}%";
         #endregion
     }
 

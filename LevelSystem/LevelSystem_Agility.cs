@@ -24,7 +24,8 @@ public partial class LevelSystem
         var multiplayer = EpicMMOSystem.addStamina.Value;
         return parameter * multiplayer;
     }
-    
+
+
     [HarmonyPatch(typeof(Player), nameof(Player.GetTotalFoodValue))]
     public static class AddStamina_Path
     {

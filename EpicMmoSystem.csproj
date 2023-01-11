@@ -9,10 +9,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>EpicMMOSystem</RootNamespace>
     <AssemblyName>EpicMMOSystem</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <LangVersion>10</LangVersion>
     <Nullable>enable</Nullable>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -95,12 +96,24 @@
     <Reference Include="GroupsAPI, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>Libs\GroupsAPI.dll</HintPath>
     </Reference>
+    <Reference Include="ItemManager, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\ItemManager.dll</HintPath>
+    </Reference>
+    <Reference Include="LocalizationManager, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\LocalizationManager.dll</HintPath>
+    </Reference>
     <Reference Include="ServerSync, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>Libs\ServerSync.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Numerics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>$(GamePath)\unstripped_corlib\UnityEngine.dll</HintPath>
@@ -285,10 +298,16 @@
     <Reference Include="UnityEngine.XRModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>$(GamePath)\unstripped_corlib\UnityEngine.XRModule.dll</HintPath>
     </Reference>
+    <Reference Include="YamlDotNet, Version=11.0.0.0, Culture=neutral, PublicKeyToken=ec19458f3c15af5e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\YamlDotNet.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="color.cs" />
     <Compile Include="Data\Monster.cs" />
     <Compile Include="Data\MonsterOld.cs" />
+    <Compile Include="Scripts\Drag.cs" />
     <Compile Include="EpicMMOSystem_API.cs" />
     <Compile Include="FriendList\FriendsData.cs" />
     <Compile Include="FriendList\FriendsSystem.cs" />
@@ -311,8 +330,10 @@
     <Compile Include="OtherApi\Marketplace_API.cs" />
     <Compile Include="OtherApi\Professions_API.cs" />
     <Compile Include="OtherApi\DonatShop_API.cs" />
+    <Compile Include="PanelRefs.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scripts\DragControl.cs" />
     <Compile Include="StatusEffects\EffectPatches.cs" />
     <Compile Include="TerminalCommands.cs" />
     <Compile Include="VersionHandshake.cs" />
@@ -320,19 +341,35 @@
   <ItemGroup>
     <Content Include=".gitignore" />
     <EmbeddedResource Include="asset\epicasset" />
-    <EmbeddedResource Include="Data\MonstersDB.json" />
+    <EmbeddedResource Include="Data\MonsterDB_Default.json" />
     <Content Include="ILRepack.targets" />
     <Content Include="Libs\fastJSON.dll" />
     <Content Include="Libs\GroupsAPI.dll" />
+    <Content Include="Libs\ItemManager.dll" />
+    <Content Include="Libs\LocalizationManager.dll" />
     <Content Include="Libs\ServerSync.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Libs\YamlDotNet.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="LICENSE.txt" />
     <Content Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Data\MonstersBosses.json" />
+    <EmbeddedResource Include="Data\MonsterDB-Fantasy-Creatures.json" />
+    <EmbeddedResource Include="Data\MonsterDB_AirAnimals.json" />
+    <EmbeddedResource Include="Data\MonsterDB_LandAnimals.json" />
+    <EmbeddedResource Include="Data\MonsterDB_SeaAnimals.json" />
+    <EmbeddedResource Include="Data\MonsterDB_MonsterLabZ.json" />
+    <EmbeddedResource Include="Data\MonsterDB_Outsiders.json" />
+    <EmbeddedResource Include="Data\MonsterDB_DoorDieMonsters.json" />
+    <EmbeddedResource Include="Data\MonsterDB_MajesticChickens.json" />
+    <EmbeddedResource Include="asset\epicmmoitems" />
     <None Include="packages.config" />
+    <EmbeddedResource Include="translations\Russian.yml" />
+    <EmbeddedResource Include="translations\English.yml" />
+    <EmbeddedResource Include="translations\Spanish.yml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\ILRepack.Lib.MSBuild.Task.2.0.18.2\build\ILRepack.Lib.MSBuild.Task.targets" Condition="Exists('packages\ILRepack.Lib.MSBuild.Task.2.0.18.2\build\ILRepack.Lib.MSBuild.Task.targets')" />

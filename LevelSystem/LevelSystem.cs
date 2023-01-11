@@ -56,6 +56,26 @@ public partial class LevelSystem
         if (!Player.m_localPlayer) return;
         Player.m_localPlayer.m_knownTexts[$"{pluginKey}_{midleKey}_Level"]= value.ToString();
     }
+
+    public void recalcLevel()
+    {
+        var currentexp = getTotalExp();
+        setLevel(1);
+        FillLevelsExp();
+
+        var need = getNeedExp();
+        int addLvl = 0;
+        while (currentexp > need)
+        {
+            currentexp -= need;
+            addLvl++;
+            need = getNeedExp(addLvl);
+        }
+        setCurrentExp(currentexp);
+        setLevel(addLvl+1);
+        MyUI.updateExpBar();
+
+    }
     
     public long getCurrentExp()
     {
@@ -72,7 +92,33 @@ public partial class LevelSystem
         if (!Player.m_localPlayer) return;
         Player.m_localPlayer.m_knownTexts[$"{pluginKey}_{midleKey}_CurrentExp"]= value.ToString();
     }
-    
+
+    public long getTotalExp()
+    {
+        if (!Player.m_localPlayer) return 0;
+        if (!Player.m_localPlayer.m_knownTexts.ContainsKey($"{pluginKey}_{midleKey}_TotalExp"))
+        {
+            return 0;
+        }
+        return int.Parse(Player.m_localPlayer.m_knownTexts[$"{pluginKey}_{midleKey}_TotalExp"]);
+    }
+
+    private void setTotalExp(long value)
+    {
+        if (!Player.m_localPlayer) return;
+        Player.m_localPlayer.m_knownTexts[$"{pluginKey}_{midleKey}_TotalExp"] = value.ToString();
+    }
+    public void addTotalExp(long value)
+    {
+        if (!Player.m_localPlayer) return;
+        if (!Player.m_localPlayer.m_knownTexts.ContainsKey($"{pluginKey}_{midleKey}_TotalExp"))
+        {
+            Player.m_localPlayer.m_knownTexts[$"{pluginKey}_{midleKey}_TotalExp"] = "1";
+        }
+        long total = int.Parse(Player.m_localPlayer.m_knownTexts[$"{pluginKey}_{midleKey}_TotalExp"]) + value;
+        Player.m_localPlayer.m_knownTexts[$"{pluginKey}_{midleKey}_TotalExp"] = total.ToString();
+    }
+
     private void setParameter(Parameter parameter, int value)
     {
         if (!Player.m_localPlayer) return;
@@ -165,7 +211,19 @@ public partial class LevelSystem
         var name = pref.GetComponent<ItemDrop>().m_itemData.m_shared.m_name;
         var price = getPriceResetPoints();
         var currentCoins = Player.m_localPlayer.m_inventory.CountItems(name);
-        if (currentCoins < price) return;
+        if (currentCoins < price)
+        {
+            var prefTrophy = ZNetScene.instance.GetPrefab("ResetTrophy");
+            var TrophyName = prefTrophy.GetComponent<ItemDrop>().m_itemData.m_shared.m_name;
+            var currentTrophy = Player.m_localPlayer.m_inventory.CountItems(TrophyName);
+            if (currentTrophy > 0)
+            {
+                Player.m_localPlayer.m_inventory.RemoveItem(TrophyName, 1);
+                ResetAllParameter();
+                return;
+            }
+            return;// return if no coins and no ResetTrophy
+        }
         Player.m_localPlayer.m_inventory.RemoveItem(name, price);
         ResetAllParameter();
     }
@@ -184,13 +242,18 @@ public partial class LevelSystem
         var need = getNeedExp();
         current += (int)giveExp;
         int addLvl = 0;
+        var currentcopy = current;
         while (current > need)
         {
             current -= need;
             addLvl++;
             need = getNeedExp(addLvl);
         }
-        AddLevel(addLvl);
+        if (addLvl > 0)
+        {
+            AddLevel(addLvl); 
+        }
+        addTotalExp((int)giveExp);// add to total the exp used to go up levels, this will take a while for people to see benefit as before exp was lost and no way to recalc levels. 
         setCurrentExp(current);
         MyUI.updateExpBar();
         Player.m_localPlayer.Message(
@@ -267,9 +330,12 @@ public partial class LevelSystem
         var minExp = EpicMMOSystem.minLossExp.Value;
         var maxExp = EpicMMOSystem.maxLossExp.Value;
         var lossExp = 1f - Random.Range(minExp, maxExp);
+        var TotalExp = getTotalExp();
+        
         var currentExp = getCurrentExp();
         long newExp = (long)(currentExp * lossExp);
         setCurrentExp(newExp);
+        setTotalExp(TotalExp - (long)(currentExp * lossExp));// remove some totalexp as well
         MyUI.updateExpBar();
         
     }
@@ -281,11 +347,23 @@ public partial class LevelSystem
         var multiply = EpicMMOSystem.multiNextLevel.Value;
         var maxLevel = EpicMMOSystem.maxLevel.Value;
         levelsExp = new ();
-        long current = 0;
-        for (int i = 1; i <= maxLevel; i++)
+        if (EpicMMOSystem.levelexpforeachlevel.Value)
         {
-            current = (long) Math.Round(current * multiply + levelExp);
-            levelsExp[i + 1] = current;
+            long current = 0;
+            for (int i = 1; i <= maxLevel; i++)
+            {
+                current = (long)Math.Round(current * multiply + levelExp);
+                levelsExp[i + 1] = current;
+            }
+        }else
+        {
+            long current = levelExp;
+            for (int i = 1; i <= maxLevel; i++)
+            {
+                current = (long)Math.Round(current * multiply);
+                levelsExp[i + 1] = current;
+            }
+
         }
     }
     

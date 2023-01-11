@@ -17,14 +17,42 @@ public partial class LevelSystem
         var multiplayer = EpicMMOSystem.magicArmor.Value;
         return parameter * multiplayer;
     }
-    
+
+    public float getEitrRegen()
+    {
+        var parameter = getParameter(Parameter.Intellect);
+        var multiplayer = EpicMMOSystem.MagicEitrRegen.Value;
+        return parameter * multiplayer;
+    }
+
+    public float getAddEitr()
+    {
+        var parameter = getParameter(Parameter.Intellect);
+        var multiplayer = EpicMMOSystem.addEitr.Value;
+        return parameter * multiplayer;
+    }
+
+    [HarmonyPatch(typeof(Player), nameof(Player.GetTotalFoodValue))]
+    public static class AddEitrFood_Path
+    {
+        public static void Postfix(ref float eitr)
+        {
+            if (eitr > 2)
+            {
+                var addeitr = Instance.getAddEitr();
+                eitr += addeitr;
+            }
+        }
+    }
+
     [HarmonyPatch(typeof(ItemDrop.ItemData), nameof(ItemDrop.ItemData.GetDamage), typeof(int))]
     public class AddDamageIntellect_Path
     {
         public static void Postfix(ref ItemDrop.ItemData __instance, ref HitData.DamageTypes __result)
-        {   
+        {
+            if (Player.m_localPlayer == null) return;
             if (!Player.m_localPlayer.m_inventory.ContainsItem(__instance)) return;
-            if (Player.m_localPlayer == null)  return;
+            
 
             float add = Instance.getAddMagicDamage();
             var value = add / 100 + 1;
@@ -53,6 +81,20 @@ public partial class LevelSystem
             hit.m_damage.m_lightning *= value;
             hit.m_damage.m_poison *= value;
             hit.m_damage.m_spirit *= value;
+            //hit.m_damage.m_elemntal?
+        }
+    }
+
+    [HarmonyPatch(typeof(SEMan), nameof(SEMan.ModifyEitrRegen))]
+    public static class RegenEitr_Patch
+    {
+        public static void Postfix(SEMan __instance, ref float eitrMultiplier)
+        {
+            if (__instance.m_character.IsPlayer())
+            {
+                float add = Instance.getEitrRegen();
+                eitrMultiplier += add / 100;
+            }
         }
     }
 }

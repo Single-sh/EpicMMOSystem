@@ -24,6 +24,8 @@ public static class TerminalCommands
             //Приняли приглашение в друзья
             ZRoutedRpc.instance.Register($"{modName} terminal_ResetPoints",
                 new Action<long>(RPC_ResetPoints));
+            ZRoutedRpc.instance.Register($"{modName} terminal_Recalc",
+                new Action<long>(RPC_Recalc));
         }
     }
     
@@ -33,7 +35,13 @@ public static class TerminalCommands
         LevelSystem.Instance.terminalSetLevel(level);
         Chat.instance.RPC_ChatMessage(200, Vector3.zero, 0, local["$notify"], String.Format(local["$terminal_set_level"], level), PrivilegeManager.GetNetworkUserId());
     }
-    
+
+    private static void RPC_Recalc(long sender)
+    {
+        LevelSystem.Instance.recalcLevel();
+        Chat.instance.RPC_ChatMessage(200, Vector3.zero, 0, local["$notify"], "Recalc your Level", PrivilegeManager.GetNetworkUserId());
+    }
+
     //Сброс поинтов
     private static void RPC_ResetPoints(long sender)
     {
@@ -75,19 +83,33 @@ public static class TerminalCommands
                             }
                         }
 
-                        if (args.Length == 4 && args[1] == "level")
+                        if ( args[1] == "level")
                         {
                             int level = Int32.Parse(args[2]);
                             string name = args[3];
+                            if (args.Length > 4)
+                            {
+                                for (var i = 4; i < args.Length; i++){ 
+                                    name += " " + args[i];
+                                 }
+
+                            }
                             var userId = getPlayerId(name);
                             if (userId == null)
                             {
                                 EpicMMOSystem.print("Player is not found");
                             }
                             ZRoutedRpc.instance.InvokeRoutedRPC(userId ?? 200,$"{modName} terminal_SetLevel", level);
-                        }else if (args.Length == 3 && args[1] == "reset_points")
+                        }else if ( args[1] == "reset_points")
                         {
                             string name = args[2];
+                            if (args.Length > 3)
+                            {
+                                for (var i = 3; i < args.Length; i++){ 
+                                    name += " " + args[i];
+                                 }
+
+                            }
                             var userId = getPlayerId(name);
                             if (userId == null)
                             {
@@ -95,12 +117,31 @@ public static class TerminalCommands
                             }
                             ZRoutedRpc.instance.InvokeRoutedRPC(userId ?? 200,$"{modName} terminal_ResetPoints");
                         }
-                        
+                        else if (args[1] == "recalc")
+                        {
+                            string name = args[2];
+                            if (args.Length > 3)
+                            {
+                                for (var i = 3; i < args.Length; i++)
+                                {
+                                    name += " " + args[i];
+                                }
+
+                            }
+                            var userId = getPlayerId(name);
+                            if (userId == null)
+                            {
+                                EpicMMOSystem.print("Player is not found");
+                            }
+                            ZRoutedRpc.instance.InvokeRoutedRPC(userId ?? 200, $"{modName} terminal_Recalc");
+                        }
+
                         args.Context.AddString("level [value] [name] - set level for player name");
                         args.Context.AddString("reset_points [name] - reset points from attribute for player name");
+                        args.Context.AddString("recalc [name] - recalc level for player name based on total gained XP - beta as of 1.5.4 only");
                     }),
                 optionsFetcher: () => new List<string>
-                    { "level", "reset_points" });
+                    { "level", "reset_points", "recalc" });
         }
     }
 }
