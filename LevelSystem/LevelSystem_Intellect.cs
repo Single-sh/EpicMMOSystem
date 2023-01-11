@@ -32,13 +32,16 @@ public partial class LevelSystem
         return parameter * multiplayer;
     }
 
-    [HarmonyPatch(typeof(Player), nameof(Player.GetEitr))]
-    public static class AddEitr_Path
+    [HarmonyPatch(typeof(Player), nameof(Player.GetTotalFoodValue))]
+    public static class AddEitrFood_Path
     {
-        public static void Postfix(ref float __result)
+        public static void Postfix(ref float eitr)
         {
-            if (__result > 2)
-                __result += Instance.getAddEitr();
+            if (eitr > 2)
+            {
+                var addeitr = Instance.getAddEitr();
+                eitr += addeitr;
+            }
         }
     }
 
